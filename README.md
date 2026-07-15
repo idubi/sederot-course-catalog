@@ -1,0 +1,1 @@
+# sederot-course-catalog
