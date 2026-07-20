@@ -8,9 +8,12 @@
 - [ ] Tests complete
 - [ ] Documentation updated
 - [ ] Skill completion record updated
-- [ ] Pull request created
-- [ ] Review complete
-- [ ] Merged
+- [ ] Task pull request to dev created
+- [ ] Task pull request review complete
+- [ ] Merged to dev
+- [ ] Promotion pull request from dev to main created
+- [ ] Promotion pull request review complete
+- [ ] Merged to main
 
 ## Branch
 
@@ -32,6 +35,7 @@ TASK-002
 
 - `.codex/skills/development-lifecycle/SKILL.md`
 - `.codex/skills/git-task-workflow/SKILL.md`
+- `.codex/skills/deployment/SKILL.md`
 
 ## Scope
 
@@ -73,11 +77,12 @@ Unrelated backlog tasks, unapproved requirement changes, production data collect
 
 - Branch:
 - Commit:
-- Pull request:
+- Task pull request (task to dev):
+- Promotion pull request (dev to main):
 - Tests executed:
 - Test result:
 - Files changed:
 - Documentation changed:
 - Risks or follow-up work:
 
-No task may be marked complete without evidence and an approved, reviewed pull request. Do not merge automatically.
+No task may be marked complete without evidence and approved, reviewed task-to-dev and dev-to-main pull requests. Do not merge automatically.
