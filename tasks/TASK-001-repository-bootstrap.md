@@ -3,15 +3,15 @@
 ## Status
 
 - [ ] Not started
-- [ ] In progress
-- [ ] Implementation complete
-- [ ] Tests complete
-- [ ] Documentation updated
-- [ ] Skill completion record updated
-- [ ] Task pull request to dev created
-- [ ] Task pull request review complete
-- [ ] Merged to dev
-- [ ] Promotion pull request from dev to main created
+- [x] In progress
+- [x] Implementation complete
+- [x] Tests complete
+- [x] Documentation updated
+- [x] Skill completion record updated
+- [x] Task pull request to dev created
+- [x] Task pull request review complete
+- [x] Merged to dev
+- [x] Promotion pull request from dev to main created
 - [ ] Promotion pull request review complete
 - [ ] Merged to main
 
@@ -47,24 +47,24 @@ Unrelated backlog tasks, unapproved requirement changes, production data collect
 
 ## Implementation checklist
 
-- [ ] Inspect repository
-- [ ] reconcile paths and conflicts
-- [ ] create lifecycle artifacts
-- [ ] validate plan links
-- [ ] Preserve unrelated work and keep the change within this task.
-- [ ] Update this checklist and the master checklist consistently.
+- [x] Inspect repository
+- [x] reconcile paths and conflicts
+- [x] create lifecycle artifacts
+- [x] validate plan links
+- [x] Preserve unrelated work and keep the change within this task.
+- [x] Update this checklist and the master checklist consistently.
 
 ## Testing checklist
 
-- [ ] Validate all plan invariants and diff hygiene
-- [ ] Run relevant regression checks and `git diff --check`.
-- [ ] Record exact commands and results under Completion evidence.
+- [x] Validate all plan invariants and diff hygiene
+- [x] Run relevant regression checks and `git diff --check`.
+- [x] Record exact commands and results under Completion evidence.
 
 ## Documentation checklist
 
-- [ ] Record baseline paths, conflicts, and workflow
-- [ ] Update authoritative artifacts for any approved behavior or contract change.
-- [ ] Update operator/user guidance when commands or workflows change.
+- [x] Record baseline paths, conflicts, and workflow
+- [x] Update authoritative artifacts for any approved behavior or contract change.
+- [x] Update operator/user guidance when commands or workflows change.
 
 ## Acceptance criteria
 
@@ -74,14 +74,14 @@ Unrelated backlog tasks, unapproved requirement changes, production data collect
 
 ## Completion evidence
 
-- Branch:
-- Commit:
-- Task pull request (task to dev):
-- Promotion pull request (dev to main):
-- Tests executed:
-- Test result:
-- Files changed:
-- Documentation changed:
-- Risks or follow-up work:
+- Branch: `task/001-repository-bootstrap`
+- Commit: `fd0de4e08e828408e096fd20cea835ad1b664df3`, `e62aa79d775b0f29ceace7a25719f643a0551ab7`
+- Task pull request (task to dev): [PR #2](https://github.com/idubi/sederot-course-catalog/pull/2), merged as `d1c4cc71ba676982f4900af63b98d39482bc2a30`
+- Promotion pull request (dev to main): [PR #3](https://github.com/idubi/sederot-course-catalog/pull/3), open and awaiting review
+- Tests executed: task/master count comparison; task-link resolution; unique task-ID and branch checks; dependency existence and ordering checks; required-section and status-field counts; canonical `artifacts/SDD.md` path check; staged secret scan; `git diff --cached --check`
+- Test result: Passed. All 32 task files link from the master backlog, all dependencies resolve and precede dependents, required sections are present, no staged secrets were found, and diff hygiene passed.
+- Files changed: `AGENTS.md`, `bootstrap-codex.md`, `.gitattributes`, five project skills, `artifacts/CODEX_BOOTSTRAP.md`, `artifacts/DEVELOPMENT_TASKS.md`, `artifacts/SDD.md`, `artifacts/content-import.md`, 32 task forms, and the approved complete artifact/reference set.
+- Documentation changed: repository rules, Codex bootstrap, development backlog, individual task forms, content-import guidance, and branch/deployment workflow.
+- Risks or follow-up work: PR #1 was merged directly to `main` before the new `dev` workflow was established. PR #2 synchronized TASK-001 into `dev`; PR #3 carries the remaining workflow corrections to `main`. The unrelated local `.gitignore`, `.vscode/`, and root shortcut remain untracked and excluded.
 
 No task may be marked complete without evidence and approved, reviewed task-to-dev and dev-to-main pull requests. Do not merge automatically.
