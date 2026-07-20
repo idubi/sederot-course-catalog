@@ -19,7 +19,7 @@ Consolidate the Markdown design hierarchy, program-level registration flow, repo
 - [x] Add or update tests and documentation proportional to the change.
 - [x] Run relevant validation and record exact evidence below.
 - [x] Review the diff for unrelated files and secrets.
-- [ ] Commit, push, and open one reviewed pull request directly to `main`.
+- [x] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
@@ -34,8 +34,8 @@ Consolidate the Markdown design hierarchy, program-level registration flow, repo
 - **Documentation:** Updated canonical SDD, v1.0 baseline, v1.1 extension, detailed design, use cases, bootstrap guidance, repository instructions, master backlog, and task forms.
 - **Security/privacy:** Registration audience remains self-declared and unverified; no personal data, tracking, course-level registration, or unsafe URL construction introduced; `.env` excluded.
 - **Skill compliance:** Development, git, deployment, brainstorming, content-import, and skill-creator guidance followed. Automated skill validation was unavailable because the validator environment lacks the `yaml` Python module; affected skill changes were manually reviewed.
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Commit:** `8602114` (`docs: reconcile program registration flow and tasks`)
+- **Pull request:** [#9](https://github.com/idubi/sederot-course-catalog/pull/9), targeting `main`, awaiting review; no automatic merge requested.
 
 ## Completion record
 
