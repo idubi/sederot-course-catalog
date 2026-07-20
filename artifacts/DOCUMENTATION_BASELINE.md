@@ -29,6 +29,8 @@ No source automatically overrides a conflicting source merely because it appears
 | `artifacts/Sderot_Courses_Detailed_Design_v1.0.docx` | 1.0, dated 2026-07-19 | Components, routes, algorithms, editor/importer design, tests | Read-only authoritative detailed design. |
 | `artifacts/Sderot_Courses_Use_Case_Specification_v1.0.docx` | 1.0 | UC-001 through UC-015 and business rules | Read-only authoritative behavior source. |
 | `artifacts/content-import.md` | Undated supplemental design | DOCX preservation/import rules and local correction workflow | Required for content-related tasks. |
+| `artifacts/תשפז - חוברת קורסים פתיחת שנה.docx` | Current תשפ״ז source; SHA-256 `ebd6c445eb167cfc51dc9e420accfffbf650b76f2bed77c616a3119ca673c78a` | Canonical read-only course import source | Never modify or require reformatting; TASK-008 investigates this exact file. |
+| `artifacts/2027 registration presentation.pptx` | Supplied reference; SHA-256 `5bdab8976acb0d85401fa43ff546f7c3cd082eed15daffb6bec98dac33efe60d` | Registration presentation/reference | Valid image-based PPTX with no extractable slide text; do not infer or approve requirements from it without explicit visual review/owner direction. |
 | `artifacts/CODEX_BOOTSTRAP.md` | Current governance | Session/task workflow | Process guidance, not product requirements. |
 | `artifacts/DEVELOPMENT_TASKS.md` and `tasks/` | Current plan | Ordered delivery and evidence checklists | Planning/traceability, not authority to add product scope. |
 | `artifacts/חוברת דיגיטלית פתיחת שנה מצטיינים 2025-2026.pdf` | 2025–2026 reference | Prior/public course booklet reference | Source/reference only; not the תשפ״ז importer input. |
@@ -42,7 +44,7 @@ No source automatically overrides a conflicting source merely because it appears
 |---|---|---|---|---|
 | GAP-001 | No standalone requirements file or `artifacts/requirements/` directory exists. | The DOCX files refer to a requirements baseline; UC traceability cites `FR-002..FR-022`, but their definitions are not present as a repository source. | FR-level completeness cannot be independently verified. Do not invent FR text. | Product owner supplies/identifies the baseline, or TASK-002 follow-up records an approved decision that the SDD/UC text is sufficient. |
 | GAP-002 | No `artifacts/templates/` directory exists. | Repository inventory. | No template may be assumed. This is not an MVP blocker because the SDD makes a controlled Word template optional/future. | Revisit only if explicitly requested. |
-| GAP-003 | The actual תשפ״ז source DOCX referenced as `content-source/תשפז - חוברת קורסים פתיחת שנה(2).docx` / `courses-tashpaz.docx` is absent. | Repository inventory contains design DOCX files and a prior-year PDF, not the course-source DOCX. | TASK-008 can design an investigation procedure but cannot establish real source counts/patterns until the file is supplied at an approved path. | TASK-008; source remains unchanged when provided. |
+| GAP-003 | Resolved: the actual תשפ״ז source DOCX is `artifacts/תשפז - חוברת קורסים פתיחת שנה.docx`. | File identified by the owner; OOXML ZIP integrity passes and its checksum is recorded above. | TASK-008 can perform source-specific read-only investigation. | TASK-008; source must remain byte-for-byte unchanged. |
 | GAP-004 | Version 1.0 DOCX guidance points to `docs/requirements.md`, `docs/SDD.md`, and a `docs/` tree. | SDD and detailed-design repository guidance sections. | Those paths are stale and conflict with repository rules. | Resolved operationally: `artifacts/` is authoritative and `artifacts/SDD.md` is canonical; DOCX files remain read-only historical sources. |
 | GAP-005 | The questionnaire answers and the referenced Requirements v0.1 are not available as discrete files. | SDD/Detailed Design provenance statements; current `index.html` contains the questionnaire application. | Do not derive new approved requirements from unanswered questionnaire UI. | Product owner or TASK-002 follow-up if provenance is required. |
 
@@ -135,11 +137,11 @@ The UC-to-FR references above are preserved exactly as identifiers/ranges; GAP-0
 - **Trade-offs:** A/B look simpler but risk silent requirement loss. C adds explicit review work while preserving provenance and parallel source detail.
 - **Recommendation/decision:** Use option C. This is a documentation-control decision, not approval of any unresolved product/schema choice.
 - **SDD impact:** Adds a link to this baseline; no architecture behavior changes.
-- **Task impact:** TASK-005/006 own schema conflicts; TASK-008/009 own source/importer location; TASK-029 owns final gates. GAP-001 and GAP-003 remain visible blockers for their affected work.
+- **Task impact:** TASK-005/006 own schema conflicts; TASK-008/009 own source/importer location; TASK-029 owns final gates. GAP-001 remains visible; GAP-003 is resolved by the canonical source DOCX now present.
 - **Owner/approval:** TASK-002 recommendation pending PR review by the repository owner. Final approval is the reviewed merge of this task PR.
 
 ## 9. Review checklist
 
 - [ ] Confirm whether a standalone Requirements v0.1 exists outside the repository and should be added under `artifacts/`.
-- [ ] Confirm/provide the actual תשפ״ז source DOCX before TASK-008 needs source-specific findings.
+- [x] Confirm/provide the actual תשפ״ז source DOCX before TASK-008 needs source-specific findings.
 - [ ] Review conflict owners and terminology; do not resolve contract names inside this baseline without an approved design decision.

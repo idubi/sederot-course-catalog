@@ -4,7 +4,7 @@
 
 The source Word document is:
 
-`content-source/תשפז - חוברת קורסים פתיחת שנה(2).docx`
+`artifacts/תשפז - חוברת קורסים פתיחת שנה.docx`
 
 The source document must not be reformatted to satisfy the importer.
 

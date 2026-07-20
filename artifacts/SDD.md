@@ -142,7 +142,7 @@ sderot-courses/
 ├── AGENTS.md
 ├── artifacts/requirements.md
 ├── artifacts/SDD.md
-├── content-source/courses-tashpaz.docx
+├── artifacts/תשפז - חוברת קורסים פתיחת שנה.docx
 ├── content/approved/catalog.json
 ├── content/draft/catalog.imported.json
 ├── content/diagnostics/import-report.json

@@ -2,6 +2,7 @@
 *.jpg binary
 *.jpeg binary
 *.pdf binary
+*.pptx binary
 *.lnk binary
 
 *.md text eol=lf

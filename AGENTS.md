@@ -20,7 +20,7 @@
 
 ## Content import rules
 
-- The existing תשפ״ז DOCX must remain unchanged and must never be reformatted for the importer. The importer adapts to the actual DOCX.
+- The source is `artifacts/תשפז - חוברת קורסים פתיחת שנה.docx`. It must remain unchanged and must never be reformatted for the importer. The importer adapts to the actual DOCX.
 - Preserve original source text and report parsing uncertainty through structured diagnostics and the closest valid draft JSON. Never silently discard content or assignments.
 - Resolve uncertain values in the local HTML content editor. Approved, validated JSON is the sole Astro build input; production must never parse DOCX.
 - The local content editor and draft/diagnostic tooling must never be included in the public production build.
