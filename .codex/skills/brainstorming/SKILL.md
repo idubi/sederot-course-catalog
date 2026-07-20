@@ -12,7 +12,7 @@ Create a concise decision record in the current task or applicable artifact cove
 4. At least two viable alternatives when they exist.
 5. Trade-offs: correctness, maintainability, accessibility, security, performance, operations, and delivery risk.
 6. Recommended option and why it best satisfies current evidence.
-7. Impact on `artifacts/sdd.md` and detailed design.
+7. Impact on `artifacts/SDD.md` and detailed design.
 8. Impact on backlog tasks, dependencies, tests, and acceptance criteria.
 9. Decision owner, approval state, and where the final decision is recorded.
 

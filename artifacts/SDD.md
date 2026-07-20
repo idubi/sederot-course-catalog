@@ -6,6 +6,10 @@
 **Environments:** Local development and Production only
 **Hosting:** Provider-neutral; temporary managed URL first, council subdomain later
 
+## Documentation authority
+
+The reconciled source inventory, terminology baseline, traceability map, and unresolved conflicts are maintained in [`DOCUMENTATION_BASELINE.md`](DOCUMENTATION_BASELINE.md). Contract conflicts listed there remain open until the assigned owner task records an approved decision; this SDD must not be treated as silently resolving them.
+
 ## 1. Scope
 
 The production system is a public course catalog. It does not authenticate users, store personal information, process payments, or receive registration callbacks.
