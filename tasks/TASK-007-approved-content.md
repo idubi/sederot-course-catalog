@@ -1,82 +1,44 @@
-# TASK-007 — Approved-content structure and seed fixture
+# TASK-007: Create approved content structure and seed fixture
 
-## Status
-
-- [ ] Not started
-- [ ] In progress
-- [ ] Implementation complete
-- [ ] Tests complete
-- [ ] Documentation updated
-- [ ] Skill completion record updated
-- [ ] Pull request to main created
-- [ ] Pull request review complete
-- [ ] Merged to main
-
-## Branch
-
-`task/007-approved-content`
+- **Status:** Not started
+- **Phase:** Content
+- **Branch:** `task/007-approved-content`
+- **Depends on:** `TASK-006`
+- **Pull request target:** `main` (one reviewed PR; do not auto-merge)
+- **Sources:** `AGENTS.md`, `artifacts/SDD.md`, `artifacts/Sderot_Courses_SDD_v1.0_final.md`, `artifacts/Sderot_Courses_SDD_v1.1.md`, `artifacts/Sderot_Courses_Detailed_Design_v1.0.md`, `artifacts/Sderot_Courses_Use_Case_Specification_v1.0.md`, `artifacts/registration process described heb.md`
 
 ## Objective
 
-Create repository locations, a valid non-production seed fixture, and a loader that makes approved JSON the sole build source.
-
-## Context and source documents
-
-Read `AGENTS.md`, `artifacts/SDD.md`, `artifacts/Sderot_Courses_Detailed_Design_v1.0.docx`, current task file. Record conflicts rather than changing approved requirements silently.
-
-## Dependencies
-
-TASK-006
-
-## Required skills
-
-- `.codex/skills/development-lifecycle/SKILL.md`
-- `.codex/skills/git-task-workflow/SKILL.md`
-- `.codex/skills/deployment/SKILL.md`
-
-## Scope
-
-Expected changes: content/approved/; content/draft/; content/diagnostics/; loader.
-
-## Out of scope
-
-Unrelated backlog tasks, unapproved requirement changes, production data collection, and automatic PR merge. Content tasks must not modify the source DOCX; local tools must not enter the public build.
+Create approved/draft/diagnostic directories and a minimal program-first fixture.
 
 ## Implementation checklist
 
-- [ ] Create paths and ignore policy
-- [ ] seed minimal valid content
-- [ ] enforce approved-only loader
-- [ ] Preserve unrelated work and keep the change within this task.
-- [ ] Update this checklist and the master checklist consistently.
-
-## Testing checklist
-
-- [ ] Validate seed and prove draft/DOCX are not build inputs
-- [ ] Run relevant regression checks and `git diff --check`.
-- [ ] Record exact commands and results under Completion evidence.
-
-## Documentation checklist
-
-- [ ] Document source-of-truth workflow
-- [ ] Update authoritative artifacts for any approved behavior or contract change.
-- [ ] Update operator/user guidance when commands or workflows change.
+- [ ] Re-read the task sources and record conflicts or missing inputs.
+- [ ] Implement only this task's focused scope on its task branch.
+- [ ] Preserve RTL, mobile-first, static-output, approved-JSON, privacy, and program-level registration constraints.
+- [ ] Add or update tests and documentation proportional to the change.
+- [ ] Run relevant validation and record exact evidence below.
+- [ ] Review the diff for unrelated files and secrets.
+- [ ] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
-- Build code can load only validated approved JSON.
-- All implementation, test, documentation, and evidence checkboxes applicable to this task are satisfied.
-- No unrelated changes, secrets, editor tooling, drafts, diagnostics, or source DOCX modifications leak into production.
+- [ ] Production consumes only approved catalog JSON and fixture validation passes.
+- [ ] No individual course or offering gains a registration action or target.
+- [ ] Referenced files and task dependencies exist and use canonical Markdown paths.
 
 ## Completion evidence
 
-- Branch:
-- Commit:
-- Pull request (task to main):
-- Tests executed:
-- Test result:
-- Files changed:
-- Documentation changed:
-- Risks or follow-up work:
+- **Implementation:** Pending
+- **Tests:** Pending
+- **Documentation:** Pending
+- **Security/privacy:** Pending
+- **Skill compliance:** Pending
+- **Commit:** Pending
+- **Pull request:** Pending
 
-No task may be marked complete without evidence and an approved, reviewed task-to-main pull request. Do not merge automatically.
+## Completion record
+
+- **Completed by:** Pending
+- **Completed at:** Pending
+- **Notes:** Pending

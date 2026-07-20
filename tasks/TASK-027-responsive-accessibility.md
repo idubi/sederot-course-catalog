@@ -1,15 +1,15 @@
-# TASK-011: Produce draft content and structured diagnostics
+# TASK-027: Complete responsive RTL and accessibility behavior
 
 - **Status:** Not started
-- **Phase:** Import
-- **Branch:** `task/011-import-diagnostics`
-- **Depends on:** `TASK-010`
+- **Phase:** Quality
+- **Branch:** `task/027-responsive-accessibility`
+- **Depends on:** `TASK-021`, `TASK-022`, `TASK-023`, `TASK-024`, `TASK-025`, `TASK-026`
 - **Pull request target:** `main` (one reviewed PR; do not auto-merge)
 - **Sources:** `AGENTS.md`, `artifacts/SDD.md`, `artifacts/Sderot_Courses_SDD_v1.0_final.md`, `artifacts/Sderot_Courses_SDD_v1.1.md`, `artifacts/Sderot_Courses_Detailed_Design_v1.0.md`, `artifacts/Sderot_Courses_Use_Case_Specification_v1.0.md`, `artifacts/registration process described heb.md`
 
 ## Objective
 
-Emit draft JSON plus actionable warnings/errors with source locations and retained source text.
+Verify mobile-first layout, keyboard flow, focus, semantics, contrast, long Hebrew text, and reduced motion.
 
 ## Implementation checklist
 
@@ -23,7 +23,7 @@ Emit draft JSON plus actionable warnings/errors with source locations and retain
 
 ## Acceptance criteria
 
-- [ ] No uncertain value is silently discarded.
+- [ ] Critical flow works at 320px and by keyboard/screen-reader semantics.
 - [ ] No individual course or offering gains a registration action or target.
 - [ ] Referenced files and task dependencies exist and use canonical Markdown paths.
 

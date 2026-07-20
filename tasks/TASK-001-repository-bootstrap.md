@@ -22,7 +22,7 @@ Establish the repository governance, task system, skills, and planning baseline 
 
 ## Context and source documents
 
-Read `AGENTS.md`, `artifacts/SDD.md`, `artifacts/Sderot_Courses_Detailed_Design_v1.0.docx`, current task file. Record conflicts rather than changing approved requirements silently.
+Read `AGENTS.md`, `artifacts/SDD.md`, `artifacts/Sderot_Courses_Detailed_Design_v1.0.md`, current task file. Record conflicts rather than changing approved requirements silently.
 
 ## Dependencies
 

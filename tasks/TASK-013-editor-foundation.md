@@ -1,87 +1,44 @@
-# TASK-013 — Local content-editor foundation
+# TASK-013: Create local-only content editor foundation
 
-## Status
-
-- [ ] Not started
-- [ ] In progress
-- [ ] Implementation complete
-- [ ] Tests complete
-- [ ] Documentation updated
-- [ ] Skill completion record updated
-- [ ] Pull request to main created
-- [ ] Pull request review complete
-- [ ] Merged to main
-
-## Branch
-
-`task/013-editor-foundation`
+- **Status:** Not started
+- **Phase:** Editor
+- **Branch:** `task/013-editor-foundation`
+- **Depends on:** `TASK-006`, `TASK-007`
+- **Pull request target:** `main` (one reviewed PR; do not auto-merge)
+- **Sources:** `AGENTS.md`, `artifacts/SDD.md`, `artifacts/Sderot_Courses_SDD_v1.0_final.md`, `artifacts/Sderot_Courses_SDD_v1.1.md`, `artifacts/Sderot_Courses_Detailed_Design_v1.0.md`, `artifacts/Sderot_Courses_Use_Case_Specification_v1.0.md`, `artifacts/registration process described heb.md`
 
 ## Objective
 
-Create the local-only editor and loopback API boundary with explicit production exclusion.
-
-## Context and source documents
-
-Read `AGENTS.md`, `artifacts/SDD.md`, `artifacts/Sderot_Courses_Detailed_Design_v1.0.docx`, current task file, `artifacts/content-import.md`, actual תשפ״ז source DOCX when present. Record conflicts rather than changing approved requirements silently.
-
-## Dependencies
-
-TASK-007
-
-## Required skills
-
-- `.codex/skills/development-lifecycle/SKILL.md`
-- `.codex/skills/git-task-workflow/SKILL.md`
-- `.codex/skills/deployment/SKILL.md`
-- `.codex/skills/content-import/SKILL.md`
-
-## Scope
-
-Expected changes: tools/content-editor/; local API/config; production exclusion tests.
-
-## Out of scope
-
-Unrelated backlog tasks, unapproved requirement changes, production data collection, and automatic PR merge. Content tasks must not modify the source DOCX; local tools must not enter the public build.
+Create the loopback-only editor/API boundary and local application shell.
 
 ## Implementation checklist
 
-- [ ] Scaffold editor
-- [ ] bind API to 127.0.0.1
-- [ ] constrain repository writes
-- [ ] dashboard and diagnostics shell
-- [ ] isolate dependencies
-- [ ] Preserve unrelated work and keep the change within this task.
-- [ ] Update this checklist and the master checklist consistently.
-
-## Testing checklist
-
-- [ ] Start locally
-- [ ] test bind/write restrictions
-- [ ] inspect production graph/output
-- [ ] Run relevant regression checks and `git diff --check`.
-- [ ] Record exact commands and results under Completion evidence.
-
-## Documentation checklist
-
-- [ ] Document local startup and security boundary
-- [ ] Update authoritative artifacts for any approved behavior or contract change.
-- [ ] Update operator/user guidance when commands or workflows change.
+- [ ] Re-read the task sources and record conflicts or missing inputs.
+- [ ] Implement only this task's focused scope on its task branch.
+- [ ] Preserve RTL, mobile-first, static-output, approved-JSON, privacy, and program-level registration constraints.
+- [ ] Add or update tests and documentation proportional to the change.
+- [ ] Run relevant validation and record exact evidence below.
+- [ ] Review the diff for unrelated files and secrets.
+- [ ] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
-- Editor works locally and cannot become a public route or production artifact.
-- All implementation, test, documentation, and evidence checkboxes applicable to this task are satisfied.
-- No unrelated changes, secrets, editor tooling, drafts, diagnostics, or source DOCX modifications leak into production.
+- [ ] Editor runs only locally, binds to 127.0.0.1, and is absent from production output.
+- [ ] No individual course or offering gains a registration action or target.
+- [ ] Referenced files and task dependencies exist and use canonical Markdown paths.
 
 ## Completion evidence
 
-- Branch:
-- Commit:
-- Pull request (task to main):
-- Tests executed:
-- Test result:
-- Files changed:
-- Documentation changed:
-- Risks or follow-up work:
+- **Implementation:** Pending
+- **Tests:** Pending
+- **Documentation:** Pending
+- **Security/privacy:** Pending
+- **Skill compliance:** Pending
+- **Commit:** Pending
+- **Pull request:** Pending
 
-No task may be marked complete without evidence and an approved, reviewed task-to-main pull request. Do not merge automatically.
+## Completion record
+
+- **Completed by:** Pending
+- **Completed at:** Pending
+- **Notes:** Pending

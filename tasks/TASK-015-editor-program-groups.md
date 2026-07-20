@@ -1,15 +1,15 @@
-# TASK-011: Produce draft content and structured diagnostics
+# TASK-015: Edit programs and audience groups
 
 - **Status:** Not started
-- **Phase:** Import
-- **Branch:** `task/011-import-diagnostics`
-- **Depends on:** `TASK-010`
+- **Phase:** Editor
+- **Branch:** `task/015-editor-program-groups`
+- **Depends on:** `TASK-014`
 - **Pull request target:** `main` (one reviewed PR; do not auto-merge)
 - **Sources:** `AGENTS.md`, `artifacts/SDD.md`, `artifacts/Sderot_Courses_SDD_v1.0_final.md`, `artifacts/Sderot_Courses_SDD_v1.1.md`, `artifacts/Sderot_Courses_Detailed_Design_v1.0.md`, `artifacts/Sderot_Courses_Use_Case_Specification_v1.0.md`, `artifacts/registration process described heb.md`
 
 ## Objective
 
-Emit draft JSON plus actionable warnings/errors with source locations and retained source text.
+Provide forms for program, grade, self-declared gender/audience, schedule, and group ordering.
 
 ## Implementation checklist
 
@@ -23,7 +23,7 @@ Emit draft JSON plus actionable warnings/errors with source locations and retain
 
 ## Acceptance criteria
 
-- [ ] No uncertain value is silently discarded.
+- [ ] Program/group edits preserve references and reflect the public selection funnel.
 - [ ] No individual course or offering gains a registration action or target.
 - [ ] Referenced files and task dependencies exist and use canonical Markdown paths.
 

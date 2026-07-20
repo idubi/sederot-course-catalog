@@ -1,83 +1,44 @@
-# TASK-002 — Authoritative documentation baseline
+# TASK-002: Reconcile authoritative documentation and registration flow
 
-## Status
-
-- [ ] Not started
-- [ ] In progress
-- [ ] Implementation complete
-- [ ] Tests complete
-- [ ] Documentation updated
-- [ ] Skill completion record updated
-- [ ] Pull request to main created
-- [ ] Pull request review complete
-- [ ] Merged to main
-
-## Branch
-
-`task/002-documentation-baseline`
+- **Status:** Ready for review
+- **Phase:** Documentation
+- **Branch:** `task/002-documentation-baseline`
+- **Depends on:** `TASK-001`
+- **Pull request target:** `main` (one reviewed PR; do not auto-merge)
+- **Sources:** `AGENTS.md`, `artifacts/SDD.md`, `artifacts/Sderot_Courses_SDD_v1.0_final.md`, `artifacts/Sderot_Courses_SDD_v1.1.md`, `artifacts/Sderot_Courses_Detailed_Design_v1.0.md`, `artifacts/Sderot_Courses_Use_Case_Specification_v1.0.md`, `artifacts/registration process described heb.md`
 
 ## Objective
 
-Reconcile authoritative Markdown and DOCX sources, missing requirement/template paths, terminology, and traceability before code design.
-
-## Context and source documents
-
-Read `AGENTS.md`, `artifacts/SDD.md`, `artifacts/Sderot_Courses_Detailed_Design_v1.0.docx`, current task file. Record conflicts rather than changing approved requirements silently.
-
-## Dependencies
-
-TASK-001
-
-## Required skills
-
-- `.codex/skills/development-lifecycle/SKILL.md`
-- `.codex/skills/git-task-workflow/SKILL.md`
-- `.codex/skills/deployment/SKILL.md`
-- `.codex/skills/brainstorming/SKILL.md`
-
-## Scope
-
-Expected changes: artifacts/SDD.md; artifacts planning/decision records.
-
-## Out of scope
-
-Unrelated backlog tasks, unapproved requirement changes, production data collection, and automatic PR merge. Content tasks must not modify the source DOCX; local tools must not enter the public build.
+Consolidate the Markdown design hierarchy, program-level registration flow, repository structure, and regenerated backlog.
 
 ## Implementation checklist
 
-- [ ] Inventory design sources
-- [ ] record conflicts without silent decisions
-- [ ] establish requirement and UC traceability
-- [ ] Preserve unrelated work and keep the change within this task.
-- [ ] Update this checklist and the master checklist consistently.
-
-## Testing checklist
-
-- [ ] Review traceability completeness and broken references
-- [ ] Run relevant regression checks and `git diff --check`.
-- [ ] Record exact commands and results under Completion evidence.
-
-## Documentation checklist
-
-- [ ] Update authoritative artifacts only
-- [ ] Update authoritative artifacts for any approved behavior or contract change.
-- [ ] Update operator/user guidance when commands or workflows change.
+- [x] Re-read the task sources and record conflicts or missing inputs.
+- [x] Implement only this task's focused scope on its task branch.
+- [x] Preserve RTL, mobile-first, static-output, approved-JSON, privacy, and program-level registration constraints.
+- [x] Add or update tests and documentation proportional to the change.
+- [x] Run relevant validation and record exact evidence below.
+- [x] Review the diff for unrelated files and secrets.
+- [x] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
-- A reviewed baseline identifies sources, conflicts, and unresolved owner decisions.
-- All implementation, test, documentation, and evidence checkboxes applicable to this task are satisfied.
-- No unrelated changes, secrets, editor tooling, drafts, diagnostics, or source DOCX modifications leak into production.
+- [x] All authoritative Markdown sources agree; retired design DOCX references are absent; every task/reference path validates.
+- [x] No individual course or offering gains a registration action or target.
+- [x] Referenced files and task dependencies exist and use canonical Markdown paths.
 
 ## Completion evidence
 
-- Branch:
-- Commit:
-- Pull request (task to main):
-- Tests executed:
-- Test result:
-- Files changed:
-- Documentation changed:
-- Risks or follow-up work:
+- **Implementation:** Replaced the design DOCX set with canonical Markdown references; reconciled the program-level registration flow; rebuilt TASK-002 through TASK-033 while retaining TASK-001.
+- **Tests:** 51 Markdown files and 33 task forms audited; relative links and dependency order passed; stale design-DOCX/non-canonical-SDD searches returned no matches; `git diff --check` passed.
+- **Documentation:** Updated canonical SDD, v1.0 baseline, v1.1 extension, detailed design, use cases, bootstrap guidance, repository instructions, master backlog, and task forms.
+- **Security/privacy:** Registration audience remains self-declared and unverified; no personal data, tracking, course-level registration, or unsafe URL construction introduced; `.env` excluded.
+- **Skill compliance:** Development, git, deployment, brainstorming, content-import, and skill-creator guidance followed. Automated skill validation was unavailable because the validator environment lacks the `yaml` Python module; affected skill changes were manually reviewed.
+- **Commit:** `8602114` (`docs: reconcile program registration flow and tasks`)
+- **Pull request:** [#9](https://github.com/idubi/sederot-course-catalog/pull/9), targeting `main`, awaiting review; no automatic merge requested.
 
-No task may be marked complete without evidence and an approved, reviewed task-to-main pull request. Do not merge automatically.
+## Completion record
+
+- **Completed by:** Pending
+- **Completed at:** Pending
+- **Notes:** The actual current course-content DOCX is not present at the documented path. TASK-008 must locate it or record an explicitly approved replacement input contract before parser work. Design Markdown files are not importer inputs.

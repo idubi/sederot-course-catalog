@@ -4,7 +4,7 @@
 
 1. Read this file and `README.md`.
 2. Run `git status --short --branch` and preserve existing work.
-3. Read `artifacts/SDD.md`, the applicable detailed-design and use-case documents under `artifacts/`, applicable requirements, and the current `tasks/TASK-*.md` file before changing code.
+3. Read `artifacts/SDD.md`, `artifacts/Sderot_Courses_SDD_v1.0_final.md`, `artifacts/Sderot_Courses_SDD_v1.1.md`, the applicable detailed-design and use-case Markdown files, applicable requirements, and the current `tasks/TASK-*.md` file before changing code.
 4. Load every skill named by the current task from `.codex/skills/<skill>/SKILL.md`.
 
 ## Permanent repository rules
@@ -17,6 +17,7 @@
 - Do not automatically merge pull requests; merge to `main` only after human approval.
 - Preserve user changes, unrelated uncommitted files, mobile-first RTL behavior, print behavior, and secrets such as `.env`.
 - Keep the public application free of authentication, databases, analytics, tracking, and runtime APIs unless approved requirements change.
+- For public navigation or registration, read `artifacts/registration process described heb.md`. Registration belongs to the selected program group, never an individual course; registration information must precede the external link.
 
 ## Content import rules
 

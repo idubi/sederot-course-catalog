@@ -15,7 +15,7 @@ Use this skill for every implementation task in this repository.
 2. Verify all dependency task evidence and merged status. Stop and record any unmet dependency.
 3. Confirm the worktree is understood, update local `main`, then create the task’s specified branch from `main`. Direct application work on `main` is prohibited.
 4. Mark only “In progress” in both checklists and record assumptions or blockers.
-5. Read the task’s source documents and load all required skills before implementation.
+5. Read the task’s source documents and load all required skills before implementation. Canonical design sources are `artifacts/SDD.md`, `artifacts/Sderot_Courses_SDD_v1.0_final.md`, `artifacts/Sderot_Courses_SDD_v1.1.md`, `artifacts/Sderot_Courses_Detailed_Design_v1.0.md`, and `artifacts/Sderot_Courses_Use_Case_Specification_v1.0.md`; public-flow work also reads `artifacts/registration process described heb.md`.
 6. Implement only the stated scope; use brainstorming before ambiguous or architecture-changing decisions.
 7. Run the task tests, relevant regression tests, content validation, and build gates proportional to risk.
 8. Update authoritative documentation when behavior, contracts, operations, or decisions change.

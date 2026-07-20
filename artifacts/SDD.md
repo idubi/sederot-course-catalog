@@ -1,88 +1,93 @@
 # Sderot Courses Catalog — Software Design Description
 
-**Version:** 1.1
+**Version:** 1.2 (consolidated current design)
 **Language:** Hebrew UI, RTL
-**Architecture:** Astro static site + DOCX importer + local content editor
+**Architecture:** Astro static site + source-content importer + local content editor
 **Environments:** Local development and Production only
-**Hosting:** Provider-neutral; temporary managed URL first, council subdomain later
 
-## 1. Scope
+## 1. Scope and authoritative sources
 
-The production system is a public course catalog. It does not authenticate users, store personal information, process payments, or receive registration callbacks.
+The production system is a public, program-first course catalog. It does not authenticate users, store personal information, process payments, or receive registration callbacks.
 
-The content workflow is:
+Read the authoritative sources in this order:
 
-```text
-Current-format DOCX -> dedicated importer -> draft JSON -> local browser editor
--> validation -> approved catalog.json -> Git -> Astro build -> production hosting
-```
+1. `artifacts/SDD.md` — consolidated current design
+2. `artifacts/Sderot_Courses_SDD_v1.0_final.md` — full baseline
+3. `artifacts/Sderot_Courses_SDD_v1.1.md` — current extension and decisions
+4. `artifacts/Sderot_Courses_Detailed_Design_v1.0.md` — detailed implementation design
+5. `artifacts/Sderot_Courses_Use_Case_Specification_v1.0.md` — use cases
+6. `artifacts/registration process described heb.md` — authoritative public registration flow
+7. `artifacts/2027 cources details - blueprint.md` — course/program content reference
 
-### 1.1 Non-negotiable DOCX source rule
+The former design DOCX files are retired. References to DOCX in this design apply only to the existing course-content import source, when that source is present.
 
-The existing תשפ״ז Word document is accepted in its current structure and must not be reformatted, normalized, or rewritten to satisfy the application. The importer is responsible for adapting to the existing document structure.
-
-The importer must recognize, as far as technically possible:
-
-- Program sections
-- Grade and gender group headings
-- Day and time descriptions
-- Numbered course lists
-- Course descriptions located later in the document
-- Instructor labels such as `מורה`, `המורה`, and `בהנחיית`
-- Courses assigned to multiple groups
-- Temporary course names and minor formatting inconsistencies
-
-When the importer cannot determine a value confidently, it must preserve the source text, create a structured diagnostic, and expose the uncertain value for correction in the local HTML editor. It must not silently discard a course, instructor, description, audience assignment, schedule, or registration target.
-
-The source-of-truth hierarchy is:
-
-1. Existing DOCX — source material for import
-2. Draft JSON — importer output
-3. Local HTML editor — manual correction and approval
-4. Approved JSON — sole input to the Astro production build
-5. Generated static site — public output
-
-The application never modifies the source DOCX. A controlled Word template may be considered only as an optional future enhancement and is not an MVP requirement.
-
-## 2. Architecture decisions
-
-- DOCX is an editorial import source; production builds only from approved JSON.
-- A single filter screen supports Program, Grade/Age Group, and Gender in any order.
-- Hebrew only, full RTL.
-- Basic accessibility: keyboard, labels, focus, semantic HTML, contrast.
-- No policies page, course status, analytics, tracking, staging, backend, database, or auth.
-- Registration modes: `DIRECT_REGISTRATION` and `FORM_REDIRECT`.
-- Local editor runs only in the local development environment.
-- Course image is optional. `CourseOffering.imageOverride` overrides `Course.image`; otherwise no image.
-
-## 3. Runtime architecture
+## 2. Public user flow
 
 ```text
-Public user -> provider-neutral HTTPS static hosting -> Astro static site
-                                                     -> direct registration/payment site
-                                                     -> city-program intermediate form
-                                                     -> phone / WhatsApp / email
+Choose program (gifted/excellence)
+-> choose grade
+-> choose boys/girls/mixed (self-declared; never identity-verified)
+-> open the matching program-group page and its course cluster
+   -> optionally open one course detail
+   -> return only to the same program-group page
+-> open registration-information page from the program-group page
+-> follow its approved external registration/payment link
 ```
 
-All filtering occurs in the browser. No runtime API is required.
+Rules:
 
-## 4. Main components
+- Registration is for the selected program/group, never for an individual course or offering.
+- Course cards and course-detail pages do not expose a registration CTA.
+- Course details preserve the selected program context and provide a return action to that program.
+- The internal registration-information page is mandatory before any external registration/payment destination.
+- Closing or going back from registration information returns to the selected program.
+- Gender/audience choice is a navigation preference supplied by the parent and is not checked against identity data.
+- Course clusters may overlap across boys, girls, and mixed groups.
 
-1. Astro pages and layouts
-2. Client-side filter engine
-3. Minimal course card
-4. Course details view
-5. Registration resolver
-6. Image resolver
-7. Contact actions
-8. Print renderer
-9. DOCX-specific importer
-10. Local React content editor
-11. Local Node API bound to `127.0.0.1`
-12. Shared Zod/JSON schema validator
-13. Static build pipeline
+## 3. Content workflow
 
-## 5. Data model
+```text
+Existing course-content source -> dedicated importer -> draft JSON
+-> local browser editor -> validation -> approved catalog.json
+-> Git -> Astro build -> production hosting
+```
+
+The importer adapts to the source; it never requires an existing source Word document to be reformatted. Uncertain values retain their source text, produce structured diagnostics, and remain editable locally. Approved JSON is the sole production-build input. The public application and local tools never modify the source document.
+
+The current repository contains Markdown/PDF content references. Before importer implementation, TASK-008 must identify the actual current-format course-source DOCX or formally record an approved replacement input contract; design Markdown files must never be treated as importer input.
+
+## 4. Architecture decisions
+
+- Astro generates a dependency-light static public site from approved JSON.
+- Hebrew only, full RTL, mobile first, printable, and accessible by keyboard.
+- No policies page, course status, analytics, tracking, staging, backend, database, or authentication.
+- The selection funnel is Program -> Grade -> Gender/Audience.
+- Public results are a program-group/course-cluster page, not a flat offering search result.
+- Registration targets belong to `AudienceGroup`, with an optional `Program` default fallback.
+- Every external registration link is mediated by an internal registration-information page.
+- The local editor runs only in local development and binds its API to `127.0.0.1`.
+- `CourseOffering.imageOverride` overrides `Course.image`; otherwise the image is optional.
+
+## 5. Runtime architecture and routes
+
+```text
+Public user -> HTTPS static hosting -> Astro static site
+                                  -> approved external registration/payment site
+                                  -> phone / WhatsApp / email
+```
+
+No runtime API is required.
+
+Required routes:
+
+- `/` — program, grade, and gender/audience selection
+- `/programs/[groupId]` — selected program-group page and course cluster
+- `/programs/[groupId]/courses/[offeringId]` — course detail in program context
+- `/programs/[groupId]/registration` — registration information and external CTA
+- `/print` — printable selected-program view
+- `/404` — static not-found page
+
+## 6. Data model
 
 - `Catalog`
 - `Program`
@@ -93,63 +98,79 @@ All filtering occurs in the browser. No runtime API is required.
 - `ImageAsset`
 - `Contacts`
 
-### Image resolution
+Key relations:
+
+- `AudienceGroup.programId -> Program.id`
+- `CourseOffering.groupId -> AudienceGroup.id`
+- `CourseOffering.courseId -> Course.id`
+- `AudienceGroup.registrationTargetId? -> RegistrationTarget.id`
+- `Program.defaultRegistrationTargetId? -> RegistrationTarget.id`
+
+An offering does not own a registration target.
 
 ```ts
-function resolveCourseImage(course, offering) {
-  if (offering.imageOverride) return offering.imageOverride;
-  if (course.image) return course.image;
-  return null;
+function resolveRegistration(program, group, targets) {
+  const id = group.registrationTargetId
+    ?? program.defaultRegistrationTargetId
+    ?? null;
+  return id ? targets[id] ?? null : null;
 }
 ```
 
-### Registration resolution
+Only enabled HTTPS targets from approved JSON may be rendered. Missing required group targets fail content validation and never degrade to an offering-level link.
 
-```ts
-const targetId =
-  offering.registrationTargetId ??
-  program.defaultRegistrationTargetId ??
-  null;
-```
+## 7. Main components
 
-## 6. Local editor
+1. Selection funnel
+2. Program-group/course-cluster page
+3. Course card and contextual course details
+4. Registration-information page and group registration resolver
+5. Image resolver
+6. Contact actions
+7. Print renderer
+8. Source-specific content importer
+9. Local content editor and loopback-only API
+10. Shared schema and referential validator
+11. Static build and deployment pipeline
 
-The editor is a separate local-only tool under `tools/content-editor`.
+## 8. Local editor
 
-Required features:
+The editor under `tools/content-editor` must:
 
-- Load imported draft JSON or approved JSON
-- Edit all course fields
-- Rich-text HTML description editing with sanitation
-- Add/remove/reorder offerings
-- Configure registration mode and approved URL
-- Upload a general course image
-- Upload an offering-specific image override
-- Preview card/details in mobile and desktop widths
-- Live validation and diagnostics
-- Save draft and export approved JSON
+- load imported draft or approved JSON;
+- edit programs, audience groups, courses, offerings, contacts, and registration information;
+- associate registration targets with groups/program defaults, never offerings;
+- preview selection, program, course, and registration-information screens;
+- manage course images and offering overrides;
+- expose importer diagnostics and source text;
+- validate references, safe URLs, and required program registration data;
+- save drafts and export approved JSON.
 
-The local API must bind to `127.0.0.1` only and write files inside the repository.
-
-## 7. Repository structure
+## 9. Repository structure
 
 ```text
-sderot-courses/
+.
 ├── AGENTS.md
-├── artifacts/requirements.md
-├── artifacts/SDD.md
-├── content-source/courses-tashpaz.docx
-├── content/approved/catalog.json
-├── content/draft/catalog.imported.json
-├── content/diagnostics/import-report.json
+├── README.md
+├── artifacts/                       # authoritative design and source references
+│   ├── SDD.md
+│   ├── Sderot_Courses_SDD_v1.0_final.md
+│   ├── Sderot_Courses_SDD_v1.1.md
+│   ├── Sderot_Courses_Detailed_Design_v1.0.md
+│   ├── Sderot_Courses_Use_Case_Specification_v1.0.md
+│   └── registration process described heb.md
+├── content/approved/catalog.json    # only production content input
+├── content/draft/                   # local-only working content
+├── content/diagnostics/             # importer/editor diagnostics
 ├── public/content/images/
 ├── src/
 ├── tools/docx-importer/
 ├── tools/content-editor/
+├── tasks/
 └── tests/
 ```
 
-## 8. Production gate
+## 10. Production gate
 
 ```bash
 npm run content:validate
@@ -158,16 +179,17 @@ npm run test
 npm run build
 ```
 
-Deployment is prohibited if any step fails. The `tools/` and `content/draft/` trees must not be present in `dist/`.
+Deployment is prohibited if any step fails. Local tooling, draft content, diagnostics containing source excerpts, and source documents must not appear in `dist/`.
 
-## 9. Acceptance highlights
+## 11. Acceptance highlights
 
-- Filters work in any order and combine using AND.
-- Minimal course card matches the approved field set.
-- Full details include all fields defined in questionnaire answer 29.
-- Offering image overrides the general course image.
-- Direct and form-based external registration flows work.
-- No personal data, analytics, tracking, cookies, auth, or runtime database.
-- Importer adapts to the existing DOCX structure without requiring source-document reformatting.
-- Importer preserves uncertain source content and produces diagnostics for manual correction.
-- Approved JSON is the only build source.
+- Program, grade, and gender/audience choices lead to the correct program group.
+- The program page shows the correct course cluster for the chosen group.
+- Course details return to the selected program and contain no registration CTA.
+- Registration starts only from a program page.
+- Registration information always precedes the approved external payment/registration link.
+- Closing registration information returns to the selected program.
+- Gender/audience choice is never identity-verified or stored as personal data.
+- Approved JSON is the only production-build source.
+- Content uncertainty is preserved as diagnostics for local correction.
+- No personal data, analytics, tracking, cookies, authentication, or runtime database is introduced.

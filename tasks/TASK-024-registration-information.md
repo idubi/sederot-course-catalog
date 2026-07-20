@@ -1,15 +1,15 @@
-# TASK-011: Produce draft content and structured diagnostics
+# TASK-024: Implement registration-information and external-link flow
 
 - **Status:** Not started
-- **Phase:** Import
-- **Branch:** `task/011-import-diagnostics`
-- **Depends on:** `TASK-010`
+- **Phase:** Public UI
+- **Branch:** `task/024-registration-information`
+- **Depends on:** `TASK-017`, `TASK-022`
 - **Pull request target:** `main` (one reviewed PR; do not auto-merge)
 - **Sources:** `AGENTS.md`, `artifacts/SDD.md`, `artifacts/Sderot_Courses_SDD_v1.0_final.md`, `artifacts/Sderot_Courses_SDD_v1.1.md`, `artifacts/Sderot_Courses_Detailed_Design_v1.0.md`, `artifacts/Sderot_Courses_Use_Case_Specification_v1.0.md`, `artifacts/registration process described heb.md`
 
 ## Objective
 
-Emit draft JSON plus actionable warnings/errors with source locations and retained source text.
+Create /programs/[groupId]/registration, group/program target resolution, close/back, and approved external CTA.
 
 ## Implementation checklist
 
@@ -23,7 +23,7 @@ Emit draft JSON plus actionable warnings/errors with source locations and retain
 
 ## Acceptance criteria
 
-- [ ] No uncertain value is silently discarded.
+- [ ] Information always precedes external navigation; close/back restores the same group.
 - [ ] No individual course or offering gains a registration action or target.
 - [ ] Referenced files and task dependencies exist and use canonical Markdown paths.
 

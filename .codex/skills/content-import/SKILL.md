@@ -2,6 +2,8 @@
 
 Use for DOCX investigation/parsing, normalization, diagnostics, content validation, approved JSON, or the local editor.
 
+Read `artifacts/SDD.md`, `artifacts/Sderot_Courses_Detailed_Design_v1.0.md`, `artifacts/Sderot_Courses_Use_Case_Specification_v1.0.md`, and `artifacts/content-import.md` first. Design Markdown files are requirements, never importer inputs.
+
 ## Non-negotiable rule
 
 The existing תשפ״ז Word document remains unchanged. Never require restructuring, normalization, or reformatting; the importer adapts to the document.
