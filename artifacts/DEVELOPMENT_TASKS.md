@@ -15,7 +15,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 
 ### Phase 1 — Governance and baseline
 
-- [ ] [TASK-001 — Repository and lifecycle bootstrap](../tasks/TASK-001-repository-bootstrap.md)
+- [x] [TASK-001 — Repository and lifecycle bootstrap](../tasks/TASK-001-repository-bootstrap.md)
 - [ ] [TASK-002 — Authoritative documentation baseline](../tasks/TASK-002-documentation-baseline.md)
 
 ### Phase 2 — Foundation and contracts
