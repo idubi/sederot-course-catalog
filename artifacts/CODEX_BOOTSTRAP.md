@@ -15,13 +15,15 @@ For every task, read:
 
 1. `AGENTS.md` and `README.md`.
 2. `artifacts/SDD.md` (the canonical Markdown SDD).
-3. `artifacts/Sderot_Courses_Detailed_Design_v1.0.docx` when detailed component or test design applies.
-4. `artifacts/Sderot_Courses_Use_Case_Specification_v1.0.docx` when public/editor/deployment behavior applies.
-5. `artifacts/content-import.md` for importer, normalization, validation, approved JSON, or editor work.
-6. `artifacts/DEVELOPMENT_TASKS.md` and the selected `tasks/TASK-XXX-*.md`.
-7. Any task-specific specification, decision record, requirement, fixture description, or template under `artifacts/`.
+3. `artifacts/Sderot_Courses_SDD_v1.0_final.md` and `artifacts/Sderot_Courses_SDD_v1.1.md` for baseline and extension decisions.
+4. `artifacts/Sderot_Courses_Detailed_Design_v1.0.md` when detailed component or test design applies.
+5. `artifacts/Sderot_Courses_Use_Case_Specification_v1.0.md` when public/editor/deployment behavior applies.
+6. `artifacts/registration process described heb.md` for public navigation or registration behavior.
+7. `artifacts/content-import.md` for importer, normalization, validation, approved JSON, or editor work.
+8. `artifacts/DEVELOPMENT_TASKS.md` and the selected `tasks/TASK-XXX-*.md`.
+9. Any task-specific specification, decision record, requirement, fixture description, or template under `artifacts/`.
 
-The repository currently has no `artifacts/templates/` or `artifacts/requirements/` directory and no standalone requirements Markdown file. The design DOCX files reference a requirements baseline that is not present as a separate repository file. TASK-002 must record/reconcile this gap; Codex must not invent missing requirements. The canonical Markdown SDD is `artifacts/SDD.md`. Never create a duplicate under `docs/`.
+The repository currently has no `artifacts/templates/` or `artifacts/requirements/` directory and no standalone requirements Markdown file. The design Markdown files reference a requirements baseline that is not present as a separate repository file. Codex must record the gap and must not invent missing requirements. The canonical consolidated SDD is `artifacts/SDD.md`. Never create a duplicate under `docs/`.
 
 ## Loading skills
 

@@ -332,7 +332,7 @@ After creating the files:
 3. Check that dependencies reference existing task IDs.
 4. Check that every task has checklists and acceptance criteria.
 5. Check that AGENTS.md refers to ./artifacts/, not ./docs/.
-6. Search for stale references to docs/SDD.md.
+6. Search for stale references to retired design DOCX files or non-canonical SDD paths; use `artifacts/SDD.md` and the named design Markdown files.
 7. Run git diff --check.
 8. Show a concise summary containing:
    - files created

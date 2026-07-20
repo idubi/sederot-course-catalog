@@ -1,85 +1,44 @@
-# TASK-019 — HTML sanitization and content validation
+# TASK-019: Finalize sanitation and production content validation
 
-## Status
-
-- [ ] Not started
-- [ ] In progress
-- [ ] Implementation complete
-- [ ] Tests complete
-- [ ] Documentation updated
-- [ ] Skill completion record updated
-- [ ] Pull request to main created
-- [ ] Pull request review complete
-- [ ] Merged to main
-
-## Branch
-
-`task/019-content-validation`
+- **Status:** Not started
+- **Phase:** Content
+- **Branch:** `task/019-content-validation`
+- **Depends on:** `TASK-014`, `TASK-017`, `TASK-018`
+- **Pull request target:** `main` (one reviewed PR; do not auto-merge)
+- **Sources:** `AGENTS.md`, `artifacts/SDD.md`, `artifacts/Sderot_Courses_SDD_v1.0_final.md`, `artifacts/Sderot_Courses_SDD_v1.1.md`, `artifacts/Sderot_Courses_Detailed_Design_v1.0.md`, `artifacts/Sderot_Courses_Use_Case_Specification_v1.0.md`, `artifacts/registration process described heb.md`
 
 ## Objective
 
-Unify schema, reference, HTML, URL, and image validation for editor export and production gates.
-
-## Context and source documents
-
-Read `AGENTS.md`, `artifacts/SDD.md`, `artifacts/Sderot_Courses_Detailed_Design_v1.0.docx`, current task file, `artifacts/content-import.md`, actual תשפ״ז source DOCX when present. Record conflicts rather than changing approved requirements silently.
-
-## Dependencies
-
-TASK-006, TASK-017, TASK-018
-
-## Required skills
-
-- `.codex/skills/development-lifecycle/SKILL.md`
-- `.codex/skills/git-task-workflow/SKILL.md`
-- `.codex/skills/deployment/SKILL.md`
-- `.codex/skills/content-import/SKILL.md`
-
-## Scope
-
-Expected changes: shared sanitizer/validator; CLI.
-
-## Out of scope
-
-Unrelated backlog tasks, unapproved requirement changes, production data collection, and automatic PR merge. Content tasks must not modify the source DOCX; local tools must not enter the public build.
+Sanitize rich text and enforce all schema, URL, asset, registration, and publication rules.
 
 ## Implementation checklist
 
-- [ ] Allowlist HTML
-- [ ] sanitize paste/save/build
-- [ ] validate URLs/domains/assets/refs
-- [ ] stable reports
-- [ ] approval blocking
-- [ ] Preserve unrelated work and keep the change within this task.
-- [ ] Update this checklist and the master checklist consistently.
-
-## Testing checklist
-
-- [ ] Security fixtures for scripts/events/unsafe URLs plus CLI/editor parity tests
-- [ ] Run relevant regression checks and `git diff --check`.
-- [ ] Record exact commands and results under Completion evidence.
-
-## Documentation checklist
-
-- [ ] Document allowed HTML, severity, remediation
-- [ ] Update authoritative artifacts for any approved behavior or contract change.
-- [ ] Update operator/user guidance when commands or workflows change.
+- [ ] Re-read the task sources and record conflicts or missing inputs.
+- [ ] Implement only this task's focused scope on its task branch.
+- [ ] Preserve RTL, mobile-first, static-output, approved-JSON, privacy, and program-level registration constraints.
+- [ ] Add or update tests and documentation proportional to the change.
+- [ ] Run relevant validation and record exact evidence below.
+- [ ] Review the diff for unrelated files and secrets.
+- [ ] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
-- The same validator protects editor export and build with no unsafe markup.
-- All implementation, test, documentation, and evidence checkboxes applicable to this task are satisfied.
-- No unrelated changes, secrets, editor tooling, drafts, diagnostics, or source DOCX modifications leak into production.
+- [ ] Only fully valid approved JSON can enter a build.
+- [ ] No individual course or offering gains a registration action or target.
+- [ ] Referenced files and task dependencies exist and use canonical Markdown paths.
 
 ## Completion evidence
 
-- Branch:
-- Commit:
-- Pull request (task to main):
-- Tests executed:
-- Test result:
-- Files changed:
-- Documentation changed:
-- Risks or follow-up work:
+- **Implementation:** Pending
+- **Tests:** Pending
+- **Documentation:** Pending
+- **Security/privacy:** Pending
+- **Skill compliance:** Pending
+- **Commit:** Pending
+- **Pull request:** Pending
 
-No task may be marked complete without evidence and an approved, reviewed task-to-main pull request. Do not merge automatically.
+## Completion record
+
+- **Completed by:** Pending
+- **Completed at:** Pending
+- **Notes:** Pending

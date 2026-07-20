@@ -1,15 +1,15 @@
-# TASK-011: Produce draft content and structured diagnostics
+# TASK-031: Deploy validated main to temporary hosting
 
 - **Status:** Not started
-- **Phase:** Import
-- **Branch:** `task/011-import-diagnostics`
-- **Depends on:** `TASK-010`
+- **Phase:** Deployment
+- **Branch:** `task/031-temporary-deployment`
+- **Depends on:** `TASK-030`
 - **Pull request target:** `main` (one reviewed PR; do not auto-merge)
 - **Sources:** `AGENTS.md`, `artifacts/SDD.md`, `artifacts/Sderot_Courses_SDD_v1.0_final.md`, `artifacts/Sderot_Courses_SDD_v1.1.md`, `artifacts/Sderot_Courses_Detailed_Design_v1.0.md`, `artifacts/Sderot_Courses_Use_Case_Specification_v1.0.md`, `artifacts/registration process described heb.md`
 
 ## Objective
 
-Emit draft JSON plus actionable warnings/errors with source locations and retained source text.
+Deploy only reviewed main artifacts, capture evidence, smoke-test the complete program flow, and record rollback.
 
 ## Implementation checklist
 
@@ -23,7 +23,7 @@ Emit draft JSON plus actionable warnings/errors with source locations and retain
 
 ## Acceptance criteria
 
-- [ ] No uncertain value is silently discarded.
+- [ ] Temporary HTTPS release passes smoke tests and rollback is documented.
 - [ ] No individual course or offering gains a registration action or target.
 - [ ] Referenced files and task dependencies exist and use canonical Markdown paths.
 

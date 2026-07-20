@@ -1,15 +1,15 @@
-# TASK-011: Produce draft content and structured diagnostics
+# TASK-032: Connect council subdomain and operations
 
 - **Status:** Not started
-- **Phase:** Import
-- **Branch:** `task/011-import-diagnostics`
-- **Depends on:** `TASK-010`
+- **Phase:** Deployment
+- **Branch:** `task/032-subdomain-operations`
+- **Depends on:** `TASK-031`
 - **Pull request target:** `main` (one reviewed PR; do not auto-merge)
 - **Sources:** `AGENTS.md`, `artifacts/SDD.md`, `artifacts/Sderot_Courses_SDD_v1.0_final.md`, `artifacts/Sderot_Courses_SDD_v1.1.md`, `artifacts/Sderot_Courses_Detailed_Design_v1.0.md`, `artifacts/Sderot_Courses_Use_Case_Specification_v1.0.md`, `artifacts/registration process described heb.md`
 
 ## Objective
 
-Emit draft JSON plus actionable warnings/errors with source locations and retained source text.
+Configure DNS/TLS, provider-neutral security settings, monitoring-free operational checks, and rollback ownership.
 
 ## Implementation checklist
 
@@ -23,7 +23,7 @@ Emit draft JSON plus actionable warnings/errors with source locations and retain
 
 ## Acceptance criteria
 
-- [ ] No uncertain value is silently discarded.
+- [ ] Council URL serves the validated static release over HTTPS.
 - [ ] No individual course or offering gains a registration action or target.
 - [ ] Referenced files and task dependencies exist and use canonical Markdown paths.
 
