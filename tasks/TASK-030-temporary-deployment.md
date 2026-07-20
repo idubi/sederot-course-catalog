@@ -8,11 +8,8 @@
 - [ ] Tests complete
 - [ ] Documentation updated
 - [ ] Skill completion record updated
-- [ ] Task pull request to dev created
-- [ ] Task pull request review complete
-- [ ] Merged to dev
-- [ ] Promotion pull request from dev to main created
-- [ ] Promotion pull request review complete
+- [ ] Pull request to main created
+- [ ] Pull request review complete
 - [ ] Merged to main
 
 ## Branch
@@ -81,12 +78,11 @@ Unrelated backlog tasks, unapproved requirement changes, production data collect
 
 - Branch:
 - Commit:
-- Task pull request (task to dev):
-- Promotion pull request (dev to main):
+- Pull request (task to main):
 - Tests executed:
 - Test result:
 - Files changed:
 - Documentation changed:
 - Risks or follow-up work:
 
-No task may be marked complete without evidence and approved, reviewed task-to-dev and dev-to-main pull requests. Do not merge automatically.
+No task may be marked complete without evidence and an approved, reviewed task-to-main pull request. Do not merge automatically.

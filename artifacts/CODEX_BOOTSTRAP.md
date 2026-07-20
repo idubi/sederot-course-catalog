@@ -1,13 +1,13 @@
 # Codex Development Bootstrap
 
-This guide starts and governs implementation of the Sderot course catalog. It does not authorize direct feature work on `dev` or `main`.
+This guide starts and governs implementation of the Sderot course catalog. It does not authorize direct feature work on `main`; `dev` is ignored.
 
 ## Starting Codex in this repository
 
 1. Open the repository root: `C:\Users\idobi\projects\SEDEROT\sederot-course-catalog` (WSL: `/mnt/c/Users/idobi/projects/SEDEROT/sederot-course-catalog`).
 2. Start Codex with the repository root as the working directory.
 3. Ask Codex to follow `AGENTS.md`, select one task from `artifacts/DEVELOPMENT_TASKS.md`, and use its linked task file.
-4. Before any change, Codex reads `AGENTS.md` and `README.md`, runs `git status --short --branch`, accounts for uncommitted work, and verifies it is not implementing on `dev` or `main`.
+4. Before any change, Codex reads `AGENTS.md` and `README.md`, runs `git status --short --branch`, accounts for uncommitted work, and verifies it is not implementing on `main`.
 
 ## Required reading order
 
@@ -29,7 +29,7 @@ Read each skill named in the task completely before acting:
 
 - `.codex/skills/development-lifecycle/SKILL.md` for every task.
 - `.codex/skills/git-task-workflow/SKILL.md` for every task.
-- `.codex/skills/deployment/SKILL.md` whenever publishing, merging, promoting `dev` to `main`, or deploying.
+- `.codex/skills/deployment/SKILL.md` whenever publishing, merging to `main`, or deploying.
 - `.codex/skills/brainstorming/SKILL.md` before ambiguous or architecture-changing work.
 - `.codex/skills/content-import/SKILL.md` for DOCX, normalization, diagnostics, content contracts/validation, approved JSON, or editor work.
 
@@ -39,25 +39,33 @@ If a named skill is missing or contradicts authoritative requirements, stop, rec
 
 1. Select the next dependency-ready unchecked task from the master checklist.
 2. Verify dependency task files contain merge and completion evidence.
-3. Update local `dev` safely, confirm a clean/understood worktree, and create the exact task branch from `dev`.
+3. Update local `main` safely, confirm a clean/understood worktree, and create the exact task branch from `main`.
 4. Mark “In progress” in the task file and master backlog; load required sources and skills.
 5. Use brainstorming and record a decision before resolving ambiguity or changing architecture.
 6. Implement only the task scope and keep its checklist current.
 7. Run task tests, relevant regressions, and required build/content gates.
 8. Update authoritative documentation and operational guidance in the same task.
 9. Record exact evidence: branch, commit, PR, commands/results, changed files/docs, risks, and follow-ups.
-10. Commit intentionally, push the task branch, and open one focused pull request targeting `dev`.
-11. After explicit approval, merge into `dev`, then open a separate `dev` → `main` promotion PR. Never merge automatically. Mark the task and master checklist complete only after both PRs are approved and merged.
+10. Commit intentionally, push the task branch, and open one focused pull request targeting `main`.
+11. After explicit approval, merge into `main`. Never merge automatically. Mark the task and master checklist complete only after the PR is approved and merged.
 
 ## Branch, commit, and pull-request rules
 
-- `dev` is the persistent integration branch and `main` is the protected release branch.
-- Application implementation must not begin directly on `dev` or `main`.
-- Use one branch per task with the exact `task/NNN-short-name` name in its task file, created from updated `dev`.
+- `main` is the sole base and pull-request target; ignore `dev`.
+- Application implementation must not begin directly on `main`.
+- Use one branch per task with the exact `task/NNN-short-name` name in its task file, created from updated `main`.
 - Do not mix tasks, unrelated cleanup, existing user changes, generated caches, `.env`, or secrets.
 - Commits identify the task and state an intentional outcome. Before committing, inspect the diff and run `git diff --check` plus task checks.
-- Every task requires an individual PR targeting `dev`. Its description lists scope, dependency evidence, tests, documentation, acceptance evidence, risks, screenshots/artifacts when useful, and rollback considerations.
-- After that PR is approved and merged, open a separate promotion PR from `dev` to `main`. Required checks and human review must pass for both PRs. Merge only after explicit approval; never enable or perform automatic merge.
+- Every task requires one individual PR targeting `main`. Its description lists scope, dependency evidence, tests, documentation, acceptance evidence, risks, screenshots/artifacts when useful, and rollback considerations. Required checks and human review must pass. Merge only after explicit approval; never enable or perform automatic merge.
+
+### Workflow decision: direct task PRs to main
+
+- **Problem:** The temporary `task → dev → main` process added duplicate PRs without a current integration-stage requirement.
+- **Constraints:** Keep one branch per task, preserve review and tests, prohibit direct implementation on `main`, and never auto-merge.
+- **Alternatives:** Keep the two-stage `dev` promotion model, or use one task PR directly to `main`.
+- **Trade-off:** Direct PRs reduce overhead but remove a separate integration buffer that is not currently needed.
+- **Decision:** The owner approved direct `task/*` → `main` PRs. Ignore `dev`; do not delete it without separate authorization.
+- **Impact:** No SDD/product architecture change. Lifecycle, Git/deployment skills, backlog task forms, and bootstrap instructions use the direct-main workflow.
 
 ## Testing and production gates
 
@@ -80,7 +88,7 @@ The exact scripts are established by their backlog tasks. A production artifact 
 - Record conflicts and owner decisions explicitly. Brainstorming is not approval.
 - Update README/operator guidance when setup or commands change.
 - No checkbox is completed on assertion alone. Put exact evidence in the task file, including the commit and PR, tests with results, files and documentation changed, plus risks/follow-ups.
-- The master checkbox links to the task file and is checked only after the task PR is merged into `dev` and its promotion PR is merged from `dev` into `main`. Task and master status must agree.
+- The master checkbox links to the task file and is checked only after the task PR is approved and merged into `main`. Task and master status must agree.
 
 ## Content-source invariant
 
@@ -99,8 +107,8 @@ artifacts/SDD.md, artifacts/DEVELOPMENT_TASKS.md, and the source documents named
 by the selected task. Load every required skill from .codex/skills/<name>/SKILL.md.
 
 Select the first dependency-ready, unmerged task in the master checklist. Verify
-its dependencies and completion evidence. Update dev and create the exact task
-branch from dev. Do not implement directly on dev or main. Mark the task in progress in its
+its dependencies and completion evidence. Update main and create the exact task
+branch from main. Ignore dev and do not implement directly on main. Mark the task in progress in its
 individual checklist and the master backlog.
 
 Implement only that single task. If work is ambiguous or architecture-changing,
@@ -121,8 +129,7 @@ when applicable. Record exact completion evidence in the task file: branch,
 commit, PR, test commands/results, changed files/docs, and risks/follow-ups.
 
 Commit intentionally and push only the task branch, then create one focused pull
-request targeting dev with scope, tests, documentation, acceptance evidence, and
-risks. After explicit approval and merge to dev, open a separate promotion PR
-from dev to main. Do not automatically merge either PR. Update the master checkbox
-only after both PRs are approved and merged.
+request targeting main with scope, tests, documentation, acceptance evidence, and
+risks. Do not automatically merge. Update the master checkbox only after the PR
+is approved and merged.
 ```

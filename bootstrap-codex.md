@@ -165,9 +165,9 @@ Create or update AGENTS.md with these permanent repository rules:
   before changing code.
 - Do not create documentation under ./docs/ unless explicitly requested.
 - Every development task uses its own branch.
-- The persistent integration branch is `dev`; the protected release branch is `main`.
-- Create task branches from updated `dev`; never implement directly on `dev` or `main`.
-- Every task PR targets `dev`; after its approved merge, open a separate promotion PR from `dev` to `main`.
+- `main` is the sole task base and pull-request target; ignore `dev`.
+- Create task branches from updated `main`; never implement directly on `main`.
+- Every task opens one reviewed pull request directly to `main`.
 - Every task requires an individual Markdown checklist.
 - Every completed task requires tests, documentation updates, evidence,
   and a pull request.

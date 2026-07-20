@@ -8,11 +8,8 @@
 - [x] Tests complete
 - [x] Documentation updated
 - [x] Skill completion record updated
-- [x] Task pull request to dev created
-- [x] Task pull request review complete
-- [x] Merged to dev
-- [x] Promotion pull request from dev to main created
-- [x] Promotion pull request review complete
+- [x] Pull request to main created
+- [x] Pull request review complete
 - [x] Merged to main
 
 ## Branch
@@ -76,12 +73,11 @@ Unrelated backlog tasks, unapproved requirement changes, production data collect
 
 - Branch: `task/001-repository-bootstrap`
 - Commit: `fd0de4e08e828408e096fd20cea835ad1b664df3`, `e62aa79d775b0f29ceace7a25719f643a0551ab7`, `41904882456ad88755540642d76caaf02b9b943c`
-- Task pull request (task to dev): [PR #2](https://github.com/idubi/sederot-course-catalog/pull/2), merged as `d1c4cc71ba676982f4900af63b98d39482bc2a30`; evidence update [PR #4](https://github.com/idubi/sederot-course-catalog/pull/4), merged as `843656f3506583b3d783f42ff81bdf09367b1077`
-- Promotion pull request (dev to main): [PR #3](https://github.com/idubi/sederot-course-catalog/pull/3), merged as `bdf0856c8989daf5932cb4d6b76b8fc70f7e8305`
+- Pull request (task to main): [PR #1](https://github.com/idubi/sederot-course-catalog/pull/1), merged as `632929bfd766acdb9fec2afb05728c4486734470`; historical workflow corrections were promoted before `dev` was retired from the process.
 - Tests executed: task/master count comparison; task-link resolution; unique task-ID and branch checks; dependency existence and ordering checks; required-section and status-field counts; canonical `artifacts/SDD.md` path check; staged secret scan; `git diff --cached --check`
 - Test result: Passed. All 32 task files link from the master backlog, all dependencies resolve and precede dependents, required sections are present, no staged secrets were found, and diff hygiene passed.
 - Files changed: `AGENTS.md`, `bootstrap-codex.md`, `.gitattributes`, five project skills, `artifacts/CODEX_BOOTSTRAP.md`, `artifacts/DEVELOPMENT_TASKS.md`, `artifacts/SDD.md`, `artifacts/content-import.md`, 32 task forms, and the approved complete artifact/reference set.
 - Documentation changed: repository rules, Codex bootstrap, development backlog, individual task forms, content-import guidance, and branch/deployment workflow.
 - Risks or follow-up work: PR #1 was merged directly to `main` before the new `dev` workflow was established. PR #2 synchronized TASK-001 into `dev`; PR #3 promoted the workflow corrections to `main`; PR #4 synchronized detailed evidence into `dev`. The unrelated local `.gitignore`, `.vscode/`, and root shortcut remain untracked and excluded.
 
-No task may be marked complete without evidence and approved, reviewed task-to-dev and dev-to-main pull requests. Do not merge automatically.
+No task may be marked complete without evidence and an approved, reviewed task-to-main pull request. Do not merge automatically.

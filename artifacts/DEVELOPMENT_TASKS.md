@@ -4,10 +4,10 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 
 ## Execution constraints
 
-- Start every task from updated `dev`; never implement directly on `dev` or `main`.
+- Start every task from updated `main`; never implement directly on `main`. Ignore `dev`.
 - Verify dependencies are merged before activating a task.
 - Load every required skill and follow the linked task checklist.
-- Each task needs a reviewed `task/*` → `dev` PR followed by a separately reviewed `dev` → `main` promotion PR. Neither merge is automatic.
+- Each task needs one reviewed `task/*` → `main` PR. The merge is never automatic.
 - UI work starts only after contracts; importer work starts only after DOCX investigation; deployment starts only after production gates.
 
 ## Master checklist
@@ -85,7 +85,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Record baseline paths, conflicts, and workflow
 - **Acceptance criteria:** All requested governance files exist and validations pass.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-002 — Authoritative documentation baseline](../tasks/TASK-002-documentation-baseline.md)
 
@@ -101,7 +101,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Update authoritative artifacts only
 - **Acceptance criteria:** A reviewed baseline identifies sources, conflicts, and unresolved owner decisions.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-003 — Astro project foundation](../tasks/TASK-003-astro-foundation.md)
 
@@ -117,7 +117,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Update README setup and migration notes
 - **Acceptance criteria:** A dependency-locked static Astro shell builds locally with no application features.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-004 — TypeScript and quality configuration](../tasks/TASK-004-typescript-quality.md)
 
@@ -133,7 +133,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document commands and conventions
 - **Acceptance criteria:** Strict checks pass and commands are deterministic.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-005 — JSON domain model](../tasks/TASK-005-json-domain-model.md)
 
@@ -149,7 +149,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Update SDD contract details and traceability
 - **Acceptance criteria:** Model supports all approved fields without adding unsupported status or runtime data.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-006 — Zod schemas and referential validation](../tasks/TASK-006-zod-schemas.md)
 
@@ -165,7 +165,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document validation rules and error semantics
 - **Acceptance criteria:** Invalid data fails clearly and valid fixtures parse deterministically.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-007 — Approved-content structure and seed fixture](../tasks/TASK-007-approved-content.md)
 
@@ -181,7 +181,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document source-of-truth workflow
 - **Acceptance criteria:** Build code can load only validated approved JSON.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-008 — DOCX parser investigation](../tasks/TASK-008-docx-investigation.md)
 
@@ -197,7 +197,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Record findings, gaps, and parser strategy
 - **Acceptance criteria:** Investigation proves source unchanged and gives enough evidence to design the parser.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-009 — DOCX reader and structure parser](../tasks/TASK-009-docx-reader-parser.md)
 
@@ -213,7 +213,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document supported structures and limitations
 - **Acceptance criteria:** Every source block is represented or diagnosed; DOCX is never written.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-010 — Importer normalization and deduplication](../tasks/TASK-010-import-normalization.md)
 
@@ -229,7 +229,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document mapping and non-loss rules
 - **Acceptance criteria:** Closest valid draft retains all content and assignments without silent merges.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-011 — Structured import diagnostics](../tasks/TASK-011-import-diagnostics.md)
 
@@ -245,7 +245,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Publish diagnostic code reference
 - **Acceptance criteria:** Ambiguity is actionable and approval-blocking where required, never silently discarded.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-012 — Importer fixtures and regression tests](../tasks/TASK-012-importer-tests.md)
 
@@ -261,7 +261,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document fixture provenance and update process
 - **Acceptance criteria:** Regression suite detects entity loss and nondeterminism.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-013 — Local content-editor foundation](../tasks/TASK-013-editor-foundation.md)
 
@@ -277,7 +277,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document local startup and security boundary
 - **Acceptance criteria:** Editor works locally and cannot become a public route or production artifact.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-014 — Editor JSON import, autosave, and export](../tasks/TASK-014-editor-json-io.md)
 
@@ -293,7 +293,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document backup/recovery and file workflow
 - **Acceptance criteria:** Editor round-trips valid content and never silently loses invalid input.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-015 — Course editing and rich descriptions](../tasks/TASK-015-editor-courses.md)
 
@@ -309,7 +309,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document editor course workflow
 - **Acceptance criteria:** All approved Course fields are editable with clear validation.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-016 — Program, audience-group, and offering editing](../tasks/TASK-016-editor-offerings.md)
 
@@ -325,7 +325,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document assignment workflow
 - **Acceptance criteria:** Users can resolve imported group and offering uncertainty without editing JSON.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-017 — Registration-target editing](../tasks/TASK-017-editor-registration.md)
 
@@ -341,7 +341,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document approval and verification procedure
 - **Acceptance criteria:** Every offering resolves to an approved target before export.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-018 — Image management and overrides](../tasks/TASK-018-editor-images.md)
 
@@ -357,7 +357,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document rights/optimization/operator steps
 - **Acceptance criteria:** Preview and exported references follow override-default-none exactly.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-019 — HTML sanitization and content validation](../tasks/TASK-019-content-validation.md)
 
@@ -373,7 +373,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document allowed HTML, severity, remediation
 - **Acceptance criteria:** The same validator protects editor export and build with no unsafe markup.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-020 — Catalog page and view-model foundation](../tasks/TASK-020-catalog-foundation.md)
 
@@ -389,7 +389,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document page/data boundaries
 - **Acceptance criteria:** Catalog statically builds and represents every approved offering.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-021 — Accessible filter UI](../tasks/TASK-021-filter-ui.md)
 
@@ -405,7 +405,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document query parameters and filter rules
 - **Acceptance criteria:** All approved filter combinations return correct offerings and preserve shareable state.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-022 — Course cards and selection](../tasks/TASK-022-course-cards.md)
 
@@ -421,7 +421,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document component contract
 - **Acceptance criteria:** Each result is a distinct accessible offering card matching approved fields.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-023 — Course detail routes](../tasks/TASK-023-course-details.md)
 
@@ -437,7 +437,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document routing and view model
 - **Acceptance criteria:** Every approved offering has one correct static details page.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-024 — Registration and contact actions](../tasks/TASK-024-registration-contact.md)
 
@@ -453,7 +453,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document external URL verification and no-callback behavior
 - **Acceptance criteria:** Actions lead only to approved targets and collect no data.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-025 — Print and PDF support](../tasks/TASK-025-print-support.md)
 
@@ -469,7 +469,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document browser print workflow
 - **Acceptance criteria:** Printable output is clear, local-only, and excludes interactive chrome.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-026 — Responsive, RTL, and accessibility baseline](../tasks/TASK-026-responsive-accessibility.md)
 
@@ -485,7 +485,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Record accessibility checklist, known limitations, device matrix
 - **Acceptance criteria:** Critical public flows work without clipping and with keyboard/screen-reader fundamentals.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-027 — Comprehensive unit and component tests](../tasks/TASK-027-unit-tests.md)
 
@@ -501,7 +501,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document test organization and command
 - **Acceptance criteria:** Critical algorithms and validation failures have stable automated coverage.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-028 — End-to-end critical-flow tests](../tasks/TASK-028-end-to-end-tests.md)
 
@@ -517,7 +517,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document prerequisites, browser matrix, troubleshooting
 - **Acceptance criteria:** Must use cases and critical alternative flows pass end to end.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-029 — Build gates and production artifact](../tasks/TASK-029-production-gates.md)
 
@@ -533,7 +533,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document release gate and failure recovery
 - **Acceptance criteria:** No deployable artifact is produced when a required gate fails; dist contains public assets only.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-030 — Temporary HTTPS deployment](../tasks/TASK-030-temporary-deployment.md)
 
@@ -549,7 +549,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Document deployment, URL, rollback, ownership without secrets
 - **Acceptance criteria:** Approved build is available at temporary HTTPS URL and passes smoke tests.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-031 — Council subdomain preparation and operations](../tasks/TASK-031-subdomain-operations.md)
 
@@ -565,7 +565,7 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Complete operator and council handoff docs
 - **Acceptance criteria:** Council can attach a subdomain without architectural change; external approval remains explicit.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.
 
 ### [TASK-032 — Final MVP acceptance review](../tasks/TASK-032-mvp-acceptance.md)
 
@@ -581,4 +581,4 @@ This is the ordered master backlog for the Sderot course catalog. The status che
 - **Documentation checklist:** [ ] Finalize acceptance, operations, release notes, and follow-up backlog
 - **Acceptance criteria:** All Must criteria have evidence, owner approval is recorded, and no unresolved release blocker remains.
 - **Completion evidence:** Record branch, commit, PR, exact tests/results, files/docs changed, and risks in the task file.
-- **Pull requests:** Required; task branch to `dev`, then `dev` to `main`; neither is auto-merged.
+- **Pull request:** Required; task branch to `main`; never auto-merged.

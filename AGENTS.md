@@ -10,11 +10,11 @@
 ## Permanent repository rules
 
 - `artifacts/` is the authoritative documentation directory. Do not create documentation under `docs/` unless explicitly requested.
-- `dev` is the persistent integration branch and `main` is the protected release branch.
-- Every development task starts from updated `dev`, uses its own `task/NNN-short-name` branch and individual Markdown checklist, and opens its first pull request back to `dev`. Never implement directly on `dev` or `main`.
+- `main` is the sole base and pull-request target. Ignore `dev` for task work.
+- Every development task starts from updated `main`, uses its own `task/NNN-short-name` branch and individual Markdown checklist, and opens one pull request directly to `main`. Never implement directly on `main`.
 - Verify dependencies before starting. Do not mix unrelated tasks in one branch or pull request.
-- After the reviewed task PR is approved and merged into `dev`, open a separate `dev` → `main` promotion PR. A task is complete only after relevant tests, documentation, evidence, both PRs, and approved merges are recorded.
-- Do not automatically merge pull requests; merge to `dev` or `main` only after human approval.
+- A task is complete only after relevant tests, documentation, evidence, its PR to `main`, review, and approved merge are recorded.
+- Do not automatically merge pull requests; merge to `main` only after human approval.
 - Preserve user changes, unrelated uncommitted files, mobile-first RTL behavior, print behavior, and secrets such as `.env`.
 - Keep the public application free of authentication, databases, analytics, tracking, and runtime APIs unless approved requirements change.
 
