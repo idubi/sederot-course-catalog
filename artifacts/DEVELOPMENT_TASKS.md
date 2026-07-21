@@ -20,8 +20,8 @@ Course cards and course details never initiate registration.
 - [x] [TASK-008: Identify and map the current course-content source](../tasks/TASK-008-source-content-investigation.md)
 - [x] [TASK-009: Implement source-specific document reader](../tasks/TASK-009-docx-reader-parser.md)
 - [x] [TASK-010: Normalize programs, groups, courses, and offerings](../tasks/TASK-010-import-normalization.md)
-- [ ] [TASK-011: Produce draft content and structured diagnostics](../tasks/TASK-011-import-diagnostics.md) — Ready for review
-- [ ] [TASK-012: Add importer fixtures and regression tests](../tasks/TASK-012-importer-tests.md)
+- [x] [TASK-011: Produce draft content and structured diagnostics](../tasks/TASK-011-import-diagnostics.md)
+- [ ] [TASK-012: Add importer fixtures and regression tests](../tasks/TASK-012-importer-tests.md) — In progress
 - [ ] [TASK-013: Create local-only content editor foundation](../tasks/TASK-013-editor-foundation.md)
 - [ ] [TASK-014: Implement editor JSON load, save, and export](../tasks/TASK-014-editor-json-io.md)
 - [ ] [TASK-015: Edit programs and audience groups](../tasks/TASK-015-editor-program-groups.md)

@@ -55,7 +55,9 @@ function classifyLine(
     return { kind: 'heading', text: headingText };
   }
 
-  const listItem = raw.match(/^(?<indent>\s*)[-*+]\s+(?<text>.*?)(?:\r)?$/);
+  const listItem = raw.match(
+    /^(?<indent>\s*)(?:[-*+]|\d+[.)])\s+(?<text>.*?)(?:\r)?$/,
+  );
   if (listItem?.groups) {
     return {
       kind: 'list-item',
