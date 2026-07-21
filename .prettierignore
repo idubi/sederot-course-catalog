@@ -1,0 +1,13 @@
+.astro/
+.codex/
+.vscode/
+dist/
+node_modules/
+tasks/
+
+# Legacy and binary reference artifacts are not maintained by Prettier.
+index.html
+artifacts/
+AGENTS.md
+bootstrap-codex.md
+instractions
