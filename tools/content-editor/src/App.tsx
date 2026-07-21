@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import type { Catalog } from '../../../src/domain/catalog';
+import { formatImportedJson, validateWebCatalogUrl } from '../catalog-import';
 import { CourseOfferingForms } from './CourseOfferingForms';
 import { ProgramGroupForms } from './ProgramGroupForms';
 import { RegistrationForms } from './RegistrationForms';
@@ -25,6 +26,7 @@ export function App() {
   );
   const [message, setMessage] = useState<Message>(null);
   const [acknowledgeWarnings, setAcknowledgeWarnings] = useState(false);
+  const [webCatalogUrl, setWebCatalogUrl] = useState('');
   const parsedCatalog = useMemo(() => {
     try {
       return JSON.parse(text) as Catalog;
@@ -57,6 +59,36 @@ export function App() {
       setMessage({
         kind: 'error',
         text: error instanceof Error ? error.message : 'הטעינה נכשלה',
+      });
+    }
+  }
+
+  async function loadFile(file: File | undefined) {
+    if (!file) return;
+    try {
+      setText(formatImportedJson(await file.text()));
+      setMessage({ kind: 'success', text: `הקובץ ${file.name} נטען מהכונן` });
+    } catch {
+      setMessage({ kind: 'error', text: 'הקובץ שנבחר אינו JSON תקין' });
+    }
+  }
+
+  async function loadFromWeb() {
+    try {
+      const url = validateWebCatalogUrl(webCatalogUrl.trim());
+      const response = await fetch(url, {
+        headers: { Accept: 'application/json' },
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      setText(formatImportedJson(await response.text()));
+      setMessage({ kind: 'success', text: 'קובץ ה-JSON נטען מהאינטרנט' });
+    } catch (error) {
+      setMessage({
+        kind: 'error',
+        text:
+          error instanceof Error
+            ? `טעינה מהאינטרנט נכשלה: ${error.message}`
+            : 'טעינה מהאינטרנט נכשלה',
       });
     }
   }
@@ -134,6 +166,42 @@ export function App() {
           ייצוא מאושר
         </button>
       </div>
+
+      <section className="import-panel" aria-labelledby="import-title">
+        <h2 id="import-title">טעינת קובץ JSON</h2>
+        <label>
+          מהמחשב או מכונן מסונכרן
+          <input
+            type="file"
+            accept="application/json,.json"
+            onChange={(event) => void loadFile(event.target.files?.[0])}
+          />
+        </label>
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            void loadFromWeb();
+          }}
+        >
+          <label>
+            מכתובת אינטרנט מאובטחת
+            <input
+              dir="ltr"
+              type="url"
+              inputMode="url"
+              required
+              placeholder="https://example.org/catalog.json"
+              value={webCatalogUrl}
+              onChange={(event) => setWebCatalogUrl(event.target.value)}
+            />
+          </label>
+          <button type="submit">טעינה מהאינטרנט</button>
+        </form>
+        <p>
+          האתר המארח חייב לאפשר גישת CORS. טעינת הקובץ מחליפה את הטקסט בעורך
+          בלבד; כתיבה לכונן מתבצעת רק בשמירת טיוטה או בייצוא מפורש.
+        </p>
+      </section>
 
       <label className="warning-check">
         <input

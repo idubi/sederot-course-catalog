@@ -3,7 +3,7 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 import { describe, expect, it, vi } from 'vitest';
 
 import { handleLocalApi } from './local-api';
-import { EDITOR_HOST } from './vite.config';
+import { EDITOR_HOST, EDITOR_PORT } from './vite.config';
 
 function responseRecorder() {
   let statusCode: number | undefined;
@@ -33,6 +33,7 @@ function responseRecorder() {
 describe('local content editor boundary', () => {
   it('uses an explicit IPv4 loopback host', () => {
     expect(EDITOR_HOST).toBe('127.0.0.1');
+    expect(EDITOR_PORT).toBe(4333);
   });
 
   it('answers the local health endpoint without caching', async () => {

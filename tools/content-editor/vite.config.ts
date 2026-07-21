@@ -6,6 +6,7 @@ import { defineConfig, type Plugin } from 'vite';
 import { handleLocalApi } from './local-api';
 
 export const EDITOR_HOST = '127.0.0.1' as const;
+export const EDITOR_PORT = 4333 as const;
 
 function localApiPlugin(): Plugin {
   return {
@@ -25,10 +26,12 @@ export default defineConfig({
   plugins: [react(), localApiPlugin()],
   server: {
     host: EDITOR_HOST,
+    port: EDITOR_PORT,
     strictPort: true,
   },
   preview: {
     host: EDITOR_HOST,
+    port: EDITOR_PORT,
     strictPort: true,
   },
   build: {
