@@ -35,7 +35,7 @@ Implement RTL layouts, approved-content loading, static generation, and program/
 - **Security/privacy:** Public view models intentionally omit registration targets from offerings. The shell adds no client persistence, runtime fetch, API, analytics, tracking, authentication, or personal data; approved JSON remains the only input.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; started from merged PR #27 on current `main`, verified dependencies, preserved the unrelated approved-content edit and untracked user files, and kept the PR target as `main` without automatic merge.
 - **Commit:** `7986491` (`TASK-020 add public catalog foundation`)
-- **Pull request:** Pending
+- **Pull request:** [#28](https://github.com/idubi/sederot-course-catalog/pull/28), targeting `main`, awaiting review; no automatic merge requested.
 
 ## Completion record
 
