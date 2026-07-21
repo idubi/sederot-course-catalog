@@ -50,12 +50,17 @@ PUBLIC_BASE_PATH=/sderot-course-catalog/ npm run build
 npm run typecheck     # בדיקת TypeScript ו-Astro במצב strictest
 npm run lint          # ESLint לקובצי TypeScript/Astro + אימות Prettier
 npm run test          # בדיקות Vitest דטרמיניסטיות (גם לפני הוספת קובצי test)
+npm run content:validate # אימות content/approved/catalog.json בלבד
 npm run format:check  # אימות עיצוב קוד ללא שינוי קבצים
 npm run format        # תיקון עיצוב קוד מקומי
 npm run check         # שער מקומי מלא: typecheck, lint, tests ו-build
 ```
 
 `npm run build` מריץ בדיקת טיפוסים לפני יצירת `dist/`, כדי שבנייה לא תצליח כאשר קיימות שגיאות TypeScript. ESLint בודק קובצי JavaScript, TypeScript ו-Astro, ו-Prettier אוכף עיצוב דטרמיניסטי. קובצי build, תלויות, מסמכי מקור וה-HTML הישן מוחרגים במפורש.
+
+## גבולות תוכן
+
+ה-Build קורא קטלוג רק מתוך `content/approved/catalog.json` ומאמת אותו לפני Astro. הקובץ הנוכחי הוא Seed טכני שמסומן במפורש כלא מיועד לפרסום. קובצי עבודה תחת `content/draft/` ודוחות תחת `content/diagnostics/` נשארים מקומיים, אינם נשמרים ב-Git ואסור שייכללו ב-`dist/`.
 
 ## עקרונות קבועים
 

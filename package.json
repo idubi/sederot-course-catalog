@@ -9,13 +9,14 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "build": "npm run content:validate && astro check && astro build",
     "preview": "astro preview",
     "typecheck": "astro check",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint . && npm run format:check",
     "test": "vitest run --passWithNoTests",
+    "content:validate": "node --import tsx src/content/validate-approved.ts",
     "check": "npm run typecheck && npm run lint && npm run test && npm run build"
   },
   "devDependencies": {
@@ -26,6 +27,7 @@
     "eslint-plugin-astro": "1.7.0",
     "prettier": "3.9.6",
     "prettier-plugin-astro": "0.14.1",
+    "tsx": "4.23.1",
     "typescript": "6.0.3",
     "typescript-eslint": "8.65.0",
     "vitest": "4.1.10"
