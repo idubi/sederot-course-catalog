@@ -129,6 +129,8 @@ function resolveRegistration(program, group, targets) {
 
 Only enabled HTTPS targets from approved JSON may be rendered. Missing required group targets fail content validation and never degrade to an offering-level link.
 
+Runtime validation uses strict Zod objects and reports issues at the closest entity/field path. It rejects malformed or duplicate lowercase-kebab IDs, unknown program/course/group/registration-target references, disabled effective targets, groups without either a group target or program fallback, non-HTTPS registration URLs, invalid schedule/dimension/order values, and unknown legacy fields. In particular, `CourseOffering.registrationTargetId` is an unknown field and fails structural validation. Structural parsing and cross-reference checks share one `catalogSchema`; draft tooling may use `safeParse` to retain all reported issues, while approved-content builds must treat any issue as fatal.
+
 ## 7. Main components
 
 1. Selection funnel
