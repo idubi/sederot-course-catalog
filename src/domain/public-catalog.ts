@@ -34,6 +34,42 @@ export interface ProgramSummaryViewModel {
   offeringCount: number;
 }
 
+export interface RegistrationViewModel {
+  groupId: string;
+  gradeLabels: string[];
+  programName: string;
+  targetLabel: string;
+  targetType: string;
+  targetUrl: string;
+}
+
+export function buildRegistrationPages(
+  catalog: Catalog,
+): RegistrationViewModel[] {
+  const programs = new Map(
+    catalog.programs.map((program) => [program.id, program]),
+  );
+  const targets = new Map(
+    catalog.registrationTargets.map((target) => [target.id, target]),
+  );
+
+  return catalog.audienceGroups.map((group) => {
+    const program = programs.get(group.programId)!;
+    const targetId =
+      group.registrationTargetId ?? program.defaultRegistrationTargetId!;
+    const target = targets.get(targetId)!;
+
+    return {
+      groupId: group.id,
+      gradeLabels: group.gradeLabels,
+      programName: program.name,
+      targetLabel: target.label,
+      targetType: target.type,
+      targetUrl: target.url,
+    };
+  });
+}
+
 export function buildProgramGroups(catalog: Catalog): ProgramGroupViewModel[] {
   const programs = new Map(
     catalog.programs.map((program) => [program.id, program]),
