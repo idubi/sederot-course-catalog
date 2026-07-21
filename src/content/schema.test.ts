@@ -147,4 +147,10 @@ describe('catalog schema', () => {
     };
     expect(issuePaths(catalog)).toContain('courses.0.defaultImage.src');
   });
+
+  it('rejects unsanitized course HTML', () => {
+    const catalog = createValidCatalog();
+    catalog.courses[0]!.descriptionHtml = '<p onclick="bad()">תיאור</p>';
+    expect(issuePaths(catalog)).toContain('courses.0.descriptionHtml');
+  });
 });

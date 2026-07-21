@@ -57,4 +57,15 @@ describe('editor catalog file service', () => {
     expect(await readFile(paths.approved, 'utf8')).toBe(first);
     expect(first.endsWith('\n')).toBe(true);
   });
+
+  it('sanitizes course HTML before approved export', async () => {
+    const catalog = structuredClone(approvedCatalog);
+    catalog.courses[0]!.descriptionHtml =
+      '<p onclick="bad()">תיאור<script>bad()</script></p>';
+    const result = await exportApproved(catalog, [], true, paths);
+    expect(result.valid).toBe(true);
+    expect(await readFile(paths.approved, 'utf8')).toContain(
+      '"descriptionHtml": "<p>תיאור</p>"',
+    );
+  });
 });

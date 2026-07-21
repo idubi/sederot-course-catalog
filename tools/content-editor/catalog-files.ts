@@ -3,6 +3,8 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { validateCatalog } from '../../src/content/schema';
+import { sanitizeCatalogHtml } from '../../src/content/sanitize-html';
+import type { Catalog } from '../../src/domain/catalog';
 
 export interface EditorPaths {
   approved: string;
@@ -33,7 +35,10 @@ export function validateEditorCatalog(
   catalog: unknown,
   warnings: string[] = [],
 ): ValidationResult {
-  const result = validateCatalog(catalog);
+  const candidate = Array.isArray((catalog as Catalog | undefined)?.courses)
+    ? sanitizeCatalogHtml(catalog as Catalog)
+    : catalog;
+  const result = validateCatalog(candidate);
   return {
     valid: result.success,
     errors: result.success
@@ -47,7 +52,8 @@ export function validateEditorCatalog(
 }
 
 export function serializeCatalog(catalog: unknown): string {
-  const parsed = validateCatalog(catalog);
+  const sanitized = sanitizeCatalogHtml(catalog as Catalog);
+  const parsed = validateCatalog(sanitized);
   if (!parsed.success) {
     throw new Error('Catalog validation failed');
   }

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { sanitizeDescriptionHtml } from './sanitize-html';
 
 const idPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const timePattern = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
@@ -65,7 +66,10 @@ export const courseSchema = z
     id: entityIdSchema,
     name: nonBlankString,
     shortName: nonBlankString,
-    descriptionHtml: nonBlankString,
+    descriptionHtml: nonBlankString.refine(
+      (value) => sanitizeDescriptionHtml(value) === value,
+      'Contains unsafe or unsupported HTML',
+    ),
     instructors: z.array(nonBlankString).min(1),
     defaultImage: imageAssetSchema.optional(),
   })

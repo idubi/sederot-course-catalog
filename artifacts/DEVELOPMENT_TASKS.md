@@ -27,8 +27,8 @@ Course cards and course details never initiate registration.
 - [x] [TASK-015: Edit programs and audience groups](../tasks/TASK-015-editor-program-groups.md)
 - [x] [TASK-016: Edit courses and contextual offerings](../tasks/TASK-016-editor-courses-offerings.md)
 - [x] [TASK-017: Edit program-level registration information](../tasks/TASK-017-editor-registration.md)
-- [ ] [TASK-018: Manage general and offering-specific images](../tasks/TASK-018-editor-images.md) — Ready for review
-- [ ] [TASK-019: Finalize sanitation and production content validation](../tasks/TASK-019-content-validation.md)
+- [x] [TASK-018: Manage general and offering-specific images](../tasks/TASK-018-editor-images.md)
+- [ ] [TASK-019: Finalize sanitation and production content validation](../tasks/TASK-019-content-validation.md) — Ready for review
 - [ ] [TASK-020: Build the public application shell and view models](../tasks/TASK-020-catalog-foundation.md)
 - [ ] [TASK-021: Implement program, grade, and audience selection](../tasks/TASK-021-selection-funnel.md)
 - [ ] [TASK-022: Implement program group and course-cluster page](../tasks/TASK-022-program-group-page.md)
