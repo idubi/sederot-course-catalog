@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import type { Catalog } from '../../../src/domain/catalog';
+import { CourseOfferingForms } from './CourseOfferingForms';
 import { ProgramGroupForms } from './ProgramGroupForms';
 
 const STORAGE_KEY = 'sderot-content-editor.catalog';
@@ -149,10 +150,16 @@ export function App() {
       )}
 
       {parsedCatalog && (
-        <ProgramGroupForms
-          catalog={parsedCatalog}
-          onChange={(value) => setText(`${JSON.stringify(value, null, 2)}\n`)}
-        />
+        <>
+          <ProgramGroupForms
+            catalog={parsedCatalog}
+            onChange={(value) => setText(`${JSON.stringify(value, null, 2)}\n`)}
+          />
+          <CourseOfferingForms
+            catalog={parsedCatalog}
+            onChange={(value) => setText(`${JSON.stringify(value, null, 2)}\n`)}
+          />
+        </>
       )}
 
       <label className="json-editor">

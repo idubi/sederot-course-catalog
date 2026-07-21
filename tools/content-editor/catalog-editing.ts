@@ -1,4 +1,10 @@
-import type { AudienceGroup, Catalog, Program } from '../../src/domain/catalog';
+import type {
+  AudienceGroup,
+  Catalog,
+  Course,
+  CourseOffering,
+  Program,
+} from '../../src/domain/catalog';
 
 export function updateProgram(
   catalog: Catalog,
@@ -47,4 +53,63 @@ export function moveAudienceGroup(
   if (index < 0 || target < 0 || target >= groups.length) return catalog;
   [groups[index], groups[target]] = [groups[target]!, groups[index]!];
   return { ...catalog, audienceGroups: groups };
+}
+
+export function updateCourse(
+  catalog: Catalog,
+  courseId: string,
+  update: Course,
+): Catalog {
+  return {
+    ...catalog,
+    courses: catalog.courses.map((course) =>
+      course.id === courseId ? update : course,
+    ),
+    offerings: catalog.offerings.map((offering) =>
+      offering.courseId === courseId
+        ? { ...offering, courseId: update.id }
+        : offering,
+    ),
+  };
+}
+
+export function updateOffering(
+  catalog: Catalog,
+  offeringId: string,
+  update: CourseOffering,
+): Catalog {
+  return {
+    ...catalog,
+    offerings: catalog.offerings.map((offering) =>
+      offering.id === offeringId ? update : offering,
+    ),
+  };
+}
+
+export function reorderOffering(
+  catalog: Catalog,
+  offeringId: string,
+  direction: -1 | 1,
+): Catalog {
+  const current = catalog.offerings.find(({ id }) => id === offeringId);
+  if (!current) return catalog;
+  const peers = catalog.offerings
+    .filter(
+      ({ audienceGroupId }) => audienceGroupId === current.audienceGroupId,
+    )
+    .sort((a, b) => a.displayOrder - b.displayOrder);
+  const index = peers.findIndex(({ id }) => id === offeringId);
+  const target = index + direction;
+  if (target < 0 || target >= peers.length) return catalog;
+  const other = peers[target]!;
+  return {
+    ...catalog,
+    offerings: catalog.offerings.map((offering) => {
+      if (offering.id === current.id)
+        return { ...offering, displayOrder: other.displayOrder };
+      if (offering.id === other.id)
+        return { ...offering, displayOrder: current.displayOrder };
+      return offering;
+    }),
+  };
 }
