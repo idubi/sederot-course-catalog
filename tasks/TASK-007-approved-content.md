@@ -1,6 +1,6 @@
 # TASK-007: Create approved content structure and seed fixture
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Content
 - **Branch:** `task/007-approved-content`
 - **Depends on:** `TASK-006`
@@ -35,10 +35,10 @@ Create approved/draft/diagnostic directories and a minimal program-first fixture
 - **Security/privacy:** The seed uses reserved `.invalid` destinations and zero-value contact placeholders, contains no real registration/contact data, and has no offering registration field. Drafts and diagnostics (which may contain source excerpts) are ignored and excluded from the public artifact.
 - **Skill compliance:** Followed development-lifecycle, git-task-workflow, deployment, and content-import instructions; verified TASK-006 merge commit `148a913`, branched from updated `main`, preserved the source-document boundary and untracked `.vscode/`/`instractions`, and did not merge or deploy.
 - **Commit:** `3a62569` (`TASK-007 establish approved content boundary`)
-- **Pull request:** [#14](https://github.com/idubi/sederot-course-catalog/pull/14), targeting `main`, awaiting review; no automatic merge requested.
+- **Pull request:** [#14](https://github.com/idubi/sederot-course-catalog/pull/14), approved and merged to `main` as `ac232fb`.
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Codex after explicit owner approval
+- **Completed at:** 2026-07-21
+- **Notes:** The approved-content boundary is merged and available to the local editor foundation.

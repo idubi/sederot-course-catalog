@@ -15,14 +15,14 @@ Course cards and course details never initiate registration.
 - [ ] [TASK-003: Create Astro static-site foundation](../tasks/TASK-003-astro-foundation.md) — Ready for review
 - [ ] [TASK-004: Establish TypeScript and quality gates](../tasks/TASK-004-typescript-quality.md)
 - [ ] [TASK-005: Define program-first catalog domain model](../tasks/TASK-005-json-domain-model.md)
-- [ ] [TASK-006: Implement schemas and reference validation](../tasks/TASK-006-zod-schemas.md)
-- [ ] [TASK-007: Create approved content structure and seed fixture](../tasks/TASK-007-approved-content.md)
+- [x] [TASK-006: Implement schemas and reference validation](../tasks/TASK-006-zod-schemas.md)
+- [x] [TASK-007: Create approved content structure and seed fixture](../tasks/TASK-007-approved-content.md)
 - [x] [TASK-008: Identify and map the current course-content source](../tasks/TASK-008-source-content-investigation.md)
 - [x] [TASK-009: Implement source-specific document reader](../tasks/TASK-009-docx-reader-parser.md)
 - [x] [TASK-010: Normalize programs, groups, courses, and offerings](../tasks/TASK-010-import-normalization.md)
 - [x] [TASK-011: Produce draft content and structured diagnostics](../tasks/TASK-011-import-diagnostics.md)
-- [ ] [TASK-012: Add importer fixtures and regression tests](../tasks/TASK-012-importer-tests.md) — Ready for review
-- [ ] [TASK-013: Create local-only content editor foundation](../tasks/TASK-013-editor-foundation.md)
+- [x] [TASK-012: Add importer fixtures and regression tests](../tasks/TASK-012-importer-tests.md)
+- [ ] [TASK-013: Create local-only content editor foundation](../tasks/TASK-013-editor-foundation.md) — In progress
 - [ ] [TASK-014: Implement editor JSON load, save, and export](../tasks/TASK-014-editor-json-io.md)
 - [ ] [TASK-015: Edit programs and audience groups](../tasks/TASK-015-editor-program-groups.md)
 - [ ] [TASK-016: Edit courses and contextual offerings](../tasks/TASK-016-editor-courses-offerings.md)
