@@ -1,10 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import type { Catalog } from '../../../src/domain/catalog';
+import { formatImportedJson, validateWebCatalogUrl } from '../catalog-import';
+import {
+  loadEditorText,
+  persistEditorText,
+  resetEditorState,
+} from '../editor-state';
 import { CourseOfferingForms } from './CourseOfferingForms';
 import { ProgramGroupForms } from './ProgramGroupForms';
-
-const STORAGE_KEY = 'sderot-content-editor.catalog';
+import { RegistrationForms } from './RegistrationForms';
 
 type Message = { kind: 'error' | 'success'; text: string } | null;
 
@@ -19,11 +24,10 @@ async function requestJson(path: string, init?: RequestInit) {
 }
 
 export function App() {
-  const [text, setText] = useState(
-    () => localStorage.getItem(STORAGE_KEY) ?? '',
-  );
+  const [text, setText] = useState(() => loadEditorText(localStorage));
   const [message, setMessage] = useState<Message>(null);
   const [acknowledgeWarnings, setAcknowledgeWarnings] = useState(false);
+  const [webCatalogUrl, setWebCatalogUrl] = useState('');
   const parsedCatalog = useMemo(() => {
     try {
       return JSON.parse(text) as Catalog;
@@ -34,7 +38,7 @@ export function App() {
 
   useEffect(() => {
     const timer = window.setTimeout(
-      () => localStorage.setItem(STORAGE_KEY, text),
+      () => persistEditorText(localStorage, text),
       300,
     );
     return () => window.clearTimeout(timer);
@@ -56,6 +60,36 @@ export function App() {
       setMessage({
         kind: 'error',
         text: error instanceof Error ? error.message : 'הטעינה נכשלה',
+      });
+    }
+  }
+
+  async function loadFile(file: File | undefined) {
+    if (!file) return;
+    try {
+      setText(formatImportedJson(await file.text()));
+      setMessage({ kind: 'success', text: `הקובץ ${file.name} נטען מהכונן` });
+    } catch {
+      setMessage({ kind: 'error', text: 'הקובץ שנבחר אינו JSON תקין' });
+    }
+  }
+
+  async function loadFromWeb() {
+    try {
+      const url = validateWebCatalogUrl(webCatalogUrl.trim());
+      const response = await fetch(url, {
+        headers: { Accept: 'application/json' },
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      setText(formatImportedJson(await response.text()));
+      setMessage({ kind: 'success', text: 'קובץ ה-JSON נטען מהאינטרנט' });
+    } catch (error) {
+      setMessage({
+        kind: 'error',
+        text:
+          error instanceof Error
+            ? `טעינה מהאינטרנט נכשלה: ${error.message}`
+            : 'טעינה מהאינטרנט נכשלה',
       });
     }
   }
@@ -91,6 +125,24 @@ export function App() {
         text: error instanceof Error ? error.message : 'הפעולה נכשלה',
       });
     }
+  }
+
+  function reset() {
+    if (
+      !window.confirm(
+        'לאפס את תוכן העורך והשמירה האוטומטית בדפדפן? קבצים בכונן לא יימחקו.',
+      )
+    )
+      return;
+
+    resetEditorState(localStorage);
+    setText('');
+    setWebCatalogUrl('');
+    setAcknowledgeWarnings(false);
+    setMessage({
+      kind: 'success',
+      text: 'העורך אופס. קובצי הטיוטה והתוכן המאושר בכונן לא שונו.',
+    });
   }
 
   return (
@@ -132,7 +184,46 @@ export function App() {
         >
           ייצוא מאושר
         </button>
+        <button className="danger" type="button" onClick={reset}>
+          איפוס העורך
+        </button>
       </div>
+
+      <section className="import-panel" aria-labelledby="import-title">
+        <h2 id="import-title">טעינת קובץ JSON</h2>
+        <label>
+          מהמחשב או מכונן מסונכרן
+          <input
+            type="file"
+            accept="application/json,.json"
+            onChange={(event) => void loadFile(event.target.files?.[0])}
+          />
+        </label>
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            void loadFromWeb();
+          }}
+        >
+          <label>
+            מכתובת אינטרנט מאובטחת
+            <input
+              dir="ltr"
+              type="url"
+              inputMode="url"
+              required
+              placeholder="https://example.org/catalog.json"
+              value={webCatalogUrl}
+              onChange={(event) => setWebCatalogUrl(event.target.value)}
+            />
+          </label>
+          <button type="submit">טעינה מהאינטרנט</button>
+        </form>
+        <p>
+          האתר המארח חייב לאפשר גישת CORS. טעינת הקובץ מחליפה את הטקסט בעורך
+          בלבד; כתיבה לכונן מתבצעת רק בשמירת טיוטה או בייצוא מפורש.
+        </p>
+      </section>
 
       <label className="warning-check">
         <input
@@ -156,6 +247,10 @@ export function App() {
             onChange={(value) => setText(`${JSON.stringify(value, null, 2)}\n`)}
           />
           <CourseOfferingForms
+            catalog={parsedCatalog}
+            onChange={(value) => setText(`${JSON.stringify(value, null, 2)}\n`)}
+          />
+          <RegistrationForms
             catalog={parsedCatalog}
             onChange={(value) => setText(`${JSON.stringify(value, null, 2)}\n`)}
           />

@@ -4,6 +4,7 @@ import type {
   Course,
   CourseOffering,
   Program,
+  RegistrationTarget,
 } from '../../src/domain/catalog';
 
 export function updateProgram(
@@ -112,4 +113,35 @@ export function reorderOffering(
       return offering;
     }),
   };
+}
+
+export function updateRegistrationTarget(
+  catalog: Catalog,
+  targetId: string,
+  update: RegistrationTarget,
+): Catalog {
+  return {
+    ...catalog,
+    registrationTargets: catalog.registrationTargets.map((target) =>
+      target.id === targetId ? update : target,
+    ),
+    programs: catalog.programs.map((program) =>
+      program.defaultRegistrationTargetId === targetId
+        ? { ...program, defaultRegistrationTargetId: update.id }
+        : program,
+    ),
+    audienceGroups: catalog.audienceGroups.map((group) =>
+      group.registrationTargetId === targetId
+        ? { ...group, registrationTargetId: update.id }
+        : group,
+    ),
+  };
+}
+
+export function resolveRegistrationTarget(catalog: Catalog, groupId: string) {
+  const group = catalog.audienceGroups.find(({ id }) => id === groupId);
+  const program = catalog.programs.find(({ id }) => id === group?.programId);
+  const targetId =
+    group?.registrationTargetId ?? program?.defaultRegistrationTargetId;
+  return catalog.registrationTargets.find(({ id }) => id === targetId);
 }

@@ -9,6 +9,8 @@ import {
   updateCourse,
   updateOffering,
   updateProgram,
+  resolveRegistrationTarget,
+  updateRegistrationTarget,
 } from './catalog-editing';
 
 const catalog = catalogFixture as Catalog;
@@ -59,5 +61,41 @@ describe('program and audience-group editing', () => {
 
   it('keeps a lone offering in place', () => {
     expect(reorderOffering(catalog, catalog.offerings[0]!.id, 1)).toBe(catalog);
+  });
+
+  it('resolves a group target before the program default', () => {
+    const defaultTarget = catalog.registrationTargets[0]!;
+    const groupTarget = { ...defaultTarget, id: 'group-registration' };
+    const withOverride: Catalog = {
+      ...catalog,
+      registrationTargets: [defaultTarget, groupTarget],
+      audienceGroups: [
+        { ...catalog.audienceGroups[0]!, registrationTargetId: groupTarget.id },
+      ],
+    };
+    expect(
+      resolveRegistrationTarget(
+        withOverride,
+        withOverride.audienceGroups[0]!.id,
+      )?.id,
+    ).toBe(groupTarget.id);
+  });
+
+  it('falls back to the program registration target', () => {
+    expect(
+      resolveRegistrationTarget(catalog, catalog.audienceGroups[0]!.id)?.id,
+    ).toBe(catalog.programs[0]!.defaultRegistrationTargetId);
+  });
+
+  it('cascades a registration target ID without touching offerings', () => {
+    const current = catalog.registrationTargets[0]!;
+    const updated = updateRegistrationTarget(catalog, current.id, {
+      ...current,
+      id: 'registration-updated',
+    });
+    expect(updated.programs[0]?.defaultRegistrationTargetId).toBe(
+      'registration-updated',
+    );
+    expect(JSON.stringify(updated.offerings)).not.toContain('registration');
   });
 });
