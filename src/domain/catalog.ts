@@ -19,16 +19,16 @@ export interface AcademicYear {
 export interface ImageAsset {
   src: string;
   alt: string;
-  width?: number;
-  height?: number;
-  sourceNote?: string;
+  width?: number | undefined;
+  height?: number | undefined;
+  sourceNote?: string | undefined;
 }
 
 export interface Program {
   id: ProgramId;
   name: string;
   category: ProgramCategory;
-  defaultRegistrationTargetId?: RegistrationTargetId;
+  defaultRegistrationTargetId?: RegistrationTargetId | undefined;
 }
 
 export interface AudienceGroup {
@@ -41,7 +41,7 @@ export interface AudienceGroup {
   day: string;
   startTime: string;
   endTime: string;
-  registrationTargetId?: RegistrationTargetId;
+  registrationTargetId?: RegistrationTargetId | undefined;
 }
 
 export interface Course {
@@ -50,7 +50,7 @@ export interface Course {
   shortName: string;
   descriptionHtml: string;
   instructors: string[];
-  defaultImage?: ImageAsset;
+  defaultImage?: ImageAsset | undefined;
 }
 
 export interface CourseOffering {
@@ -59,7 +59,7 @@ export interface CourseOffering {
   audienceGroupId: AudienceGroupId;
   semester: Semester;
   displayOrder: number;
-  imageOverride?: ImageAsset;
+  imageOverride?: ImageAsset | undefined;
 }
 
 export interface RegistrationTarget {
