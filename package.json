@@ -17,6 +17,7 @@
     "lint": "eslint . && npm run format:check",
     "test": "vitest run --passWithNoTests",
     "content:read-source": "node --import tsx tools/source-reader/write-blueprint-snapshot.ts",
+    "content:normalize-source": "node --import tsx tools/source-normalizer/write-normalized-draft.ts",
     "content:validate": "node --import tsx src/content/validate-approved.ts",
     "check": "npm run typecheck && npm run lint && npm run test && npm run build"
   },

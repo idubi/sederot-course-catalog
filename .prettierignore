@@ -1,6 +1,8 @@
 .astro/
 .codex/
 .vscode/
+content/diagnostics/
+content/draft/
 dist/
 node_modules/
 tasks/
