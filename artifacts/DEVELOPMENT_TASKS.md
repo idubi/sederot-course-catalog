@@ -12,7 +12,7 @@ Course cards and course details never initiate registration.
 
 - [x] [TASK-001: Repository bootstrap](../tasks/TASK-001-repository-bootstrap.md)
 - [ ] [TASK-002: Reconcile authoritative documentation and registration flow](../tasks/TASK-002-documentation-baseline.md)
-- [ ] [TASK-003: Create Astro static-site foundation](../tasks/TASK-003-astro-foundation.md)
+- [ ] [TASK-003: Create Astro static-site foundation](../tasks/TASK-003-astro-foundation.md) — Ready for review
 - [ ] [TASK-004: Establish TypeScript and quality gates](../tasks/TASK-004-typescript-quality.md)
 - [ ] [TASK-005: Define program-first catalog domain model](../tasks/TASK-005-json-domain-model.md)
 - [ ] [TASK-006: Implement schemas and reference validation](../tasks/TASK-006-zod-schemas.md)

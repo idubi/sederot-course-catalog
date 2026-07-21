@@ -1,6 +1,6 @@
 # TASK-003: Create Astro static-site foundation
 
-- **Status:** Not started
+- **Status:** Ready for review
 - **Phase:** Foundation
 - **Branch:** `task/003-astro-foundation`
 - **Depends on:** `TASK-002`
@@ -13,27 +13,27 @@ Create the dependency-light Astro project, RTL shell, static output configuratio
 
 ## Implementation checklist
 
-- [ ] Re-read the task sources and record conflicts or missing inputs.
-- [ ] Implement only this task's focused scope on its task branch.
-- [ ] Preserve RTL, mobile-first, static-output, approved-JSON, privacy, and program-level registration constraints.
-- [ ] Add or update tests and documentation proportional to the change.
-- [ ] Run relevant validation and record exact evidence below.
-- [ ] Review the diff for unrelated files and secrets.
+- [x] Re-read the task sources and record conflicts or missing inputs.
+- [x] Implement only this task's focused scope on its task branch.
+- [x] Preserve RTL, mobile-first, static-output, approved-JSON, privacy, and program-level registration constraints.
+- [x] Add or update tests and documentation proportional to the change.
+- [x] Run relevant validation and record exact evidence below.
+- [x] Review the diff for unrelated files and secrets.
 - [ ] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
-- [ ] The static shell builds, renders Hebrew RTL, and has no runtime backend.
-- [ ] No individual course or offering gains a registration action or target.
-- [ ] Referenced files and task dependencies exist and use canonical Markdown paths.
+- [x] The static shell builds, renders Hebrew RTL, and has no runtime backend.
+- [x] No individual course or offering gains a registration action or target.
+- [x] Referenced files and task dependencies exist and use canonical Markdown paths.
 
 ## Completion evidence
 
-- **Implementation:** Pending
-- **Tests:** Pending
-- **Documentation:** Pending
-- **Security/privacy:** Pending
-- **Skill compliance:** Pending
+- **Implementation:** Added pinned Astro 7.1.3 static configuration, strict TypeScript baseline, accessible Hebrew RTL layout, mobile-first/print-safe landing shell, and robots policy. Preserved the legacy root questionnaire while establishing `src/` -> `dist/` as the catalog build path.
+- **Tests:** Root build and `PUBLIC_BASE_PATH=/sderot-course-catalog/` build passed. Generated `dist/index.html` assertions confirmed Hebrew RTL, main landmark, no scripts, and no absolute asset references. `npm audit --omit=dev --audit-level=high` found 0 vulnerabilities; `git diff --check` passed.
+- **Documentation:** Rewrote `README.md` for Astro development/build commands, legacy questionnaire status, direct-file shell limits, GitHub Pages base-path configuration, and fixed architecture constraints.
+- **Security/privacy:** Static output contains no runtime backend, client script, analytics, authentication, personal-data collection, or registration behavior. Development server binds to `127.0.0.1`.
+- **Skill compliance:** Development-lifecycle and git-task-workflow instructions followed; dependency TASK-002 merge commit `5c1fcd1` was verified before branching.
 - **Commit:** Pending
 - **Pull request:** Pending
 
@@ -41,4 +41,4 @@ Create the dependency-light Astro project, RTL shell, static output configuratio
 
 - **Completed by:** Pending
 - **Completed at:** Pending
-- **Notes:** Pending
+- **Notes:** Opening `dist/index.html` directly is supported for the current self-contained shell. Future nested routes require static HTTP hosting for reliable browser navigation; this limitation and the GitHub Pages subpath strategy are documented in `README.md`.
