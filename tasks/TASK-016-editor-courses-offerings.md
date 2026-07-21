@@ -1,6 +1,6 @@
 # TASK-016: Edit courses and contextual offerings
 
-- **Status:** In progress
+- **Status:** Ready for review
 - **Phase:** Editor
 - **Branch:** `task/016-editor-courses-offerings`
 - **Depends on:** `TASK-014`, `TASK-015`
@@ -19,7 +19,7 @@ Edit reusable course content and group-specific offerings, order, semester, and 
 - [x] Add or update tests and documentation proportional to the change.
 - [x] Run relevant validation and record exact evidence below.
 - [x] Review the diff for unrelated files and secrets.
-- [ ] Commit, push, and open one reviewed pull request directly to `main`.
+- [x] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
@@ -34,8 +34,8 @@ Edit reusable course content and group-specific offerings, order, semester, and 
 - **Documentation:** Updated `README.md` with the structured program/group/course/offering editing contract, reference cascading, contextual fields, image metadata, and TASK-018 upload boundary; synchronized TASK-015 merge evidence and master checklist.
 - **Security/privacy:** Course and offering forms expose no registration field or action. Group selection is constrained to existing catalog groups, output remains schema-validated, and editor code remains excluded from production.
 - **Skill compliance:** Followed development-lifecycle, content-import, and git-task-workflow; verified TASK-014 and TASK-015 merged; preserved shared-course assignments and unrelated `.vscode/`/`instractions`.
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Commit:** `9e1d5c4` (`TASK-016 add course offering editor`)
+- **Pull request:** [#24](https://github.com/idubi/sederot-course-catalog/pull/24), targeting `main`, awaiting review; no automatic merge requested.
 
 ## Completion record
 
