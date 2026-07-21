@@ -34,7 +34,7 @@ Implement Program → Grade → boys/girls/mixed selection with accessible incom
 - **Documentation:** Updated `README.md` with the dependent selection, exact group match, self-declaration, non-verification, and no-persistence contract; synchronized TASK-020 merge evidence.
 - **Security/privacy:** The funnel collects no name, identity, contact, eligibility, or other personal data; selection remains in transient form controls only and no analytics, tracking, cookies, storage, or runtime API is used. No course/offering registration action was added.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; started from merged PR #28 on current `main`, verified TASK-020 dependency, preserved unrelated local files, and kept the PR target as `main` without automatic merge.
-- **Commit:** Pending
+- **Commit:** `38a9752` (`TASK-021 add selection funnel`)
 - **Pull request:** Pending
 
 ## Completion record
