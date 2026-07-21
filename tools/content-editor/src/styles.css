@@ -43,6 +43,71 @@ select {
   margin: 0;
 }
 
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-block: 1rem;
+}
+
+.toolbar button {
+  padding: 0.7rem 1rem;
+  border: 1px solid #8d99af;
+  border-radius: 0.65rem;
+  background: #fff;
+  cursor: pointer;
+}
+
+.toolbar .primary {
+  border-color: #234d9b;
+  color: #fff;
+  background: #315dba;
+}
+
+.warning-check {
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+  margin-block: 1rem;
+}
+
+.message {
+  overflow-wrap: anywhere;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.message--success {
+  color: #17613a;
+  background: #eaf8ef;
+}
+
+.message--error {
+  color: #8c2323;
+  background: #fff0f0;
+}
+
+.json-editor,
+.json-editor span {
+  display: block;
+}
+
+.json-editor span {
+  margin-block-end: 0.5rem;
+  font-weight: 700;
+}
+
+.json-editor textarea {
+  width: 100%;
+  min-height: 32rem;
+  padding: 1rem;
+  border: 1px solid #8d99af;
+  border-radius: 0.75rem;
+  font-family: monospace;
+  line-height: 1.5;
+  resize: vertical;
+}
+
 .editor-header h1 {
   margin-block: 0.2rem;
   font-size: clamp(2rem, 8vw, 3.5rem);

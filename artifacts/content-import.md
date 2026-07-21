@@ -50,6 +50,8 @@ The local HTML editor is used to:
 - add images
 - add registration targets
 
+The editor autosaves the current JSON text in browser Local Storage and exposes explicit repository writes through its loopback-only API. Draft save is confined to `content/draft/editor/catalog.json`; approved export is confined to `content/approved/catalog.json`. Both writes are atomic. Approved export uses the shared catalog schema, blocks all errors, requires explicit acknowledgement when warnings are supplied, and serializes identical input byte-for-byte identically.
+
 The approved JSON, not the DOCX, is the direct input to the Astro build.
 
 ## Repository content boundaries
