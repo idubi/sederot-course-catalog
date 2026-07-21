@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import ContactActions from '../../../../components/ContactActions.astro';
 import { loadApprovedCatalog } from '../../../../content/catalog-loader';
 import {
   buildProgramGroups,
@@ -25,6 +26,7 @@ export function getStaticPaths() {
 }
 
 const { group, offering } = Astro.props as CourseDetailProps;
+const catalog = loadApprovedCatalog();
 const base = import.meta.env.BASE_URL;
 const semesterLabels = {
   annual: 'שנתי',
@@ -75,6 +77,12 @@ const semesterLabels = {
       >
     </div>
   </article>
+  <ContactActions
+    contacts={catalog.contacts}
+    programName={group.programName}
+    gradeLabels={group.gradeLabels}
+    courseName={offering.courseName}
+  />
 </BaseLayout>
 
 <style>

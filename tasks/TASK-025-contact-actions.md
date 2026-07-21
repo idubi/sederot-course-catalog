@@ -1,6 +1,6 @@
 # TASK-025: Implement contextual contact actions
 
-- **Status:** Not started
+- **Status:** Ready for review
 - **Phase:** Public UI
 - **Branch:** `task/025-contact-actions`
 - **Depends on:** `TASK-022`, `TASK-023`
@@ -13,27 +13,27 @@ Add accessible phone, WhatsApp, and email links with approved non-sensitive cont
 
 ## Implementation checklist
 
-- [ ] Re-read the task sources and record conflicts or missing inputs.
-- [ ] Implement only this task's focused scope on its task branch.
-- [ ] Preserve RTL, mobile-first, static-output, approved-JSON, privacy, and program-level registration constraints.
-- [ ] Add or update tests and documentation proportional to the change.
-- [ ] Run relevant validation and record exact evidence below.
-- [ ] Review the diff for unrelated files and secrets.
-- [ ] Commit, push, and open one reviewed pull request directly to `main`.
+- [x] Re-read the task sources and record conflicts or missing inputs.
+- [x] Implement only this task's focused scope on its task branch.
+- [x] Preserve RTL, mobile-first, static-output, approved-JSON, privacy, and program-level registration constraints.
+- [x] Add or update tests and documentation proportional to the change.
+- [x] Run relevant validation and record exact evidence below.
+- [x] Review the diff for unrelated files and secrets.
+- [x] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
-- [ ] Links are valid and no user data is stored.
-- [ ] No individual course or offering gains a registration action or target.
-- [ ] Referenced files and task dependencies exist and use canonical Markdown paths.
+- [x] Links are valid and no user data is stored.
+- [x] No individual course or offering gains a registration action or target.
+- [x] Referenced files and task dependencies exist and use canonical Markdown paths.
 
 ## Completion evidence
 
-- **Implementation:** Pending
-- **Tests:** Pending
-- **Documentation:** Pending
-- **Security/privacy:** Pending
-- **Skill compliance:** Pending
+- **Implementation:** Added a reusable accessible ContactActions component and pure URL builder for phone, WhatsApp, and email. Group pages prefill approved program/grade context; course pages additionally include the contextual course name. Visible contact values remain copyable, and external WhatsApp navigation uses safe link attributes.
+- **Tests:** Type checking passed for 59 files with 0 diagnostics; ESLint and focused Prettier checks passed; Vitest passed 70/70 tests across 18 files, including phone normalization, WhatsApp URL/context, and email subject/body coverage; approved-content validation and the four-page static build passed. Output assertions confirmed tel/WhatsApp/mailto links, safe external-link attributes, course context, absence of forms and course registration targets, and `git diff --check`.
+- **Documentation:** Updated `README.md` with contact surfaces, approved non-sensitive context, direct device-app behavior, and the no-storage boundary; synchronized TASK-024 approved merge evidence.
+- **Security/privacy:** Only approved catalog contact data and public program/course labels are encoded in links. The static site does not accept, transmit through a server, log, or store user-entered data; no form, runtime API, tracking, authentication, or registration behavior was introduced.
+- **Skill compliance:** Followed development-lifecycle and git-task-workflow; verified PR #32 merged, branched from updated `main`, verified TASK-022/TASK-023 dependencies, preserved unrelated local files, and kept the PR target as `main` without automatic merge.
 - **Commit:** Pending
 - **Pull request:** Pending
 

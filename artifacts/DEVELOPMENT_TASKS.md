@@ -33,8 +33,8 @@ Course cards and course details never initiate registration.
 - [x] [TASK-021: Implement program, grade, and audience selection](../tasks/TASK-021-selection-funnel.md)
 - [x] [TASK-022: Implement program group and course-cluster page](../tasks/TASK-022-program-group-page.md) — Complete
 - [x] [TASK-023: Implement contextual course cards and details](../tasks/TASK-023-course-details.md) — Complete
-- [ ] [TASK-024: Implement registration-information and external-link flow](../tasks/TASK-024-registration-information.md) — Ready for review
-- [ ] [TASK-025: Implement contextual contact actions](../tasks/TASK-025-contact-actions.md)
+- [x] [TASK-024: Implement registration-information and external-link flow](../tasks/TASK-024-registration-information.md) — Complete
+- [ ] [TASK-025: Implement contextual contact actions](../tasks/TASK-025-contact-actions.md) — Ready for review
 - [ ] [TASK-026: Implement RTL print and PDF support](../tasks/TASK-026-print-support.md)
 - [ ] [TASK-027: Complete responsive RTL and accessibility behavior](../tasks/TASK-027-responsive-accessibility.md)
 - [ ] [TASK-028: Add unit and component coverage](../tasks/TASK-028-unit-component-tests.md)

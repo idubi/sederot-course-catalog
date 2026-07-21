@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import CourseCard from '../../../components/CourseCard.astro';
+import ContactActions from '../../../components/ContactActions.astro';
 import { loadApprovedCatalog } from '../../../content/catalog-loader';
 import {
   buildProgramGroups,
@@ -54,15 +55,11 @@ const genderLabels = { boys: 'בנים', girls: 'בנות', mixed: 'מעורב' 
       }
     </div>
   </section>
-  <aside class="contacts" aria-label="יצירת קשר">
-    <h2>צריכים עזרה?</h2>
-    <a href={`tel:${catalog.contacts.phone}`}>טלפון</a>
-    <a
-      href={`https://wa.me/${catalog.contacts.whatsapp}`}
-      rel="noopener noreferrer">WhatsApp</a
-    >
-    <a href={`mailto:${catalog.contacts.email}`}>דוא״ל</a>
-  </aside>
+  <ContactActions
+    contacts={catalog.contacts}
+    programName={group.programName}
+    gradeLabels={group.gradeLabels}
+  />
 </BaseLayout>
 <style>
   nav {
@@ -94,15 +91,13 @@ const genderLabels = { boys: 'בנים', girls: 'בנות', mixed: 'מעורב' 
   dd {
     margin: 0;
   }
-  .group-actions,
-  .contacts {
+  .group-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.7rem;
     margin-block-start: 1.2rem;
   }
-  .group-actions a,
-  .contacts a {
+  .group-actions a {
     padding: 0.7rem 1rem;
     border: 1px solid #315c9c;
     border-radius: 0.6rem;
@@ -119,14 +114,6 @@ const genderLabels = { boys: 'בנים', girls: 'בנות', mixed: 'מעורב' 
   .course-grid {
     display: grid;
     gap: 1rem;
-  }
-  .contacts {
-    align-items: center;
-    padding-block: 1rem 3rem;
-  }
-  .contacts h2 {
-    flex-basis: 100%;
-    margin: 0;
   }
   @media (min-width: 48rem) {
     .course-grid {
