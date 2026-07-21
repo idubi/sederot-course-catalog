@@ -1,6 +1,6 @@
 # TASK-011: Produce draft content and structured diagnostics
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Import
 - **Branch:** `task/011-import-diagnostics`
 - **Depends on:** `TASK-010`
@@ -35,10 +35,10 @@ Emit draft JSON plus actionable warnings/errors with source locations and retain
 - **Security/privacy:** Drafts, source excerpts, and diagnostics remain in ignored local-only directories and were confirmed absent from `dist`; no personal data, runtime API, registration behavior, or registration field on a course/offering was introduced. Approved JSON remains the sole production input.
 - **Skill compliance:** Followed development-lifecycle, content-import, and git-task-workflow instructions; verified and synchronized TASK-010 merge `64167d6`; preserved every uncertain/unmatched source fragment in the closest draft; and left user-owned `.vscode/` and `instractions` unchanged.
 - **Commit:** `8e1d331` (`TASK-011 emit draft import diagnostics`)
-- **Pull request:** [#19](https://github.com/idubi/sederot-course-catalog/pull/19), targeting `main`, awaiting review; no automatic merge requested.
+- **Pull request:** [#19](https://github.com/idubi/sederot-course-catalog/pull/19), approved and merged to `main` as `19b5109`.
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Codex after explicit owner approval
+- **Completed at:** 2026-07-21
+- **Notes:** Draft and structured-diagnostic generation is merged and available to importer regression fixtures.
