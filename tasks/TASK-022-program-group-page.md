@@ -34,7 +34,7 @@ Render the selected program, group details, cluster of contextual course cards, 
 - **Documentation:** Updated `README.md` with static group routes, approved ordering, contacts/print surface, and the registration-versus-course-card boundary; synchronized TASK-021 merge evidence.
 - **Security/privacy:** All page content is build-time approved JSON. Contact links leave the static site directly without forms or storage; no analytics, tracking, runtime API, identity data, or course/offering registration target was added.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; started from merged PR #29 on current `main`, verified TASK-021 dependency, preserved unrelated local files, and kept the PR target as `main` without automatic merge.
-- **Commit:** Pending
+- **Commit:** `29b4ed3` (`TASK-022 add program group course cluster`)
 - **Pull request:** Pending
 
 ## Completion record
