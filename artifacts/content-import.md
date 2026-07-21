@@ -2,11 +2,19 @@
 
 ## Source document
 
-The source Word document is:
+The missing Word document was originally expected at:
 
 `content-source/תשפז - חוברת קורסים פתיחת שנה(2).docx`
 
-The source document must not be reformatted to satisfy the importer.
+On 2026-07-21, the business owner explicitly approved this committed replacement input:
+
+`artifacts/2027 cources details - blueprint.md`
+
+Approved SHA-256: `27fbfdee80ea72b02968e8ed68ee5aef04a994b97379fe6b04956e9d85850606`
+
+The replacement is the canonical current import input unless superseded by another explicit owner decision. It must remain unchanged during import. The reader preserves its Markdown lines and stable source locations; it does not pretend that Markdown has Word paragraph/style structure.
+
+Run `npm run content:read-source` after an approved source addition or change. It atomically reconstructs the deterministic reader snapshot at `content/draft/source-reader/blueprint-document.json`. That generated location is ignored by Git and excluded from production; deleting it is safe because the approved source recreates it.
 
 ## Importer responsibility
 

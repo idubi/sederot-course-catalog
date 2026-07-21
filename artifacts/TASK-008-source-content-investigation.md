@@ -1,7 +1,7 @@
 # TASK-008 Course-Source Investigation
 
 **Investigated:** 2026-07-21  
-**Decision:** No-go for TASK-009 until the current source DOCX is supplied or the business owner explicitly approves a replacement input contract.
+**Decision:** Go for TASK-009 using the explicitly approved replacement contract below.
 
 ## Expected source
 
@@ -56,23 +56,22 @@ The following cannot be established without the actual DOCX:
 
 If the DOCX is supplied, preserve it byte-for-byte, record its hash and provenance, and inspect it read-only. Do not commit it unless the owner separately approves repository storage.
 
-## Replacement input contract
+## Approved replacement input contract
 
-No replacement contract is approved by the available repository evidence. If the business owner chooses a replacement instead of supplying the named DOCX, the approval must identify:
+The business owner explicitly approved `artifacts/2027 cources details - blueprint.md` in the project conversation on 2026-07-21. It permanently replaces the missing DOCX for the current תשפ״ז import pipeline unless the owner records a later decision.
 
-1. the exact input artifact, version/date, owner, canonical location, and hash;
-2. whether it replaces the DOCX once or permanently;
-3. its structural primitives and a stable source-location scheme;
-4. how programs, groups, schedules, course order, descriptions, instructors, repeated assignments, temporary names, unmatched text, and registration clues are represented;
-5. the preservation, diagnostic, privacy, and deterministic-output rules;
-6. representative fixtures and acceptance criteria for TASK-009 through TASK-012.
-
-Approval must be explicit. The existing blueprint, PDF, shortcuts, design Markdown, and approved seed JSON do not constitute approval.
+- **Canonical path:** `artifacts/2027 cources details - blueprint.md`
+- **SHA-256 at approval:** `27fbfdee80ea72b02968e8ed68ee5aef04a994b97379fe6b04956e9d85850606`
+- **Format:** UTF-8, line-oriented Markdown with bold headings, list items, paragraphs, tables, and embedded Markdown images.
+- **Locations:** one-based line and column plus zero-based UTF-16 string offsets; every extracted node retains its exact raw source line.
+- **Semantics:** program/group schedule sentences introduce ordered course lists; later bold headings introduce course summaries; `מורה`, `המורה`, and `בהנחיית` are instructor clues; tables describe repeated group assignments; temporary names and unmatched text remain present for diagnostics.
+- **Preservation:** the source is read-only, every line is retained, and the reader must reconstruct the original text exactly. Normalization and entity mapping happen only in later tasks.
+- **Registration:** registration clues may only become program/group candidates; never course/offering targets.
+- **Determinism/privacy:** identical bytes produce identical reader output; embedded content and unmatched text remain local and must never enter the production artifact automatically.
+- **Fixtures/acceptance:** TASK-009 tests the approved source hash, byte-for-byte reconstruction, stable locations, all 26 group headings, lists, course headings, instructor labels, tables, and the embedded image. TASK-010 through TASK-012 must retain raw evidence and diagnose ambiguity rather than discard it.
 
 ## Go/no-go decision
 
-**No-go:** TASK-009 must not implement a source-specific reader against an absent format or infer Word structure from Markdown/PDF references.
-
-**Unblock condition:** provide the named current-format DOCX for read-only inspection, or record an explicit business-owner-approved replacement contract satisfying the requirements above.
+**Go:** TASK-009 may implement a source-specific, read-only Markdown reader against the approved path and hash. It must not infer or emulate absent Word structure.
 
 This decision does not block independent tasks whose dependency graph does not require TASK-008 or the importer sequence.

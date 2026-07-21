@@ -62,6 +62,14 @@ npm run check         # שער מקומי מלא: typecheck, lint, tests ו-buil
 
 ה-Build קורא קטלוג רק מתוך `content/approved/catalog.json` ומאמת אותו לפני Astro. הקובץ הנוכחי הוא Seed טכני שמסומן במפורש כלא מיועד לפרסום. קובצי עבודה תחת `content/draft/` ודוחות תחת `content/diagnostics/` נשארים מקומיים, אינם נשמרים ב-Git ואסור שייכללו ב-`dist/`.
 
+מקור הייבוא המאושר הוא `artifacts/2027 cources details - blueprint.md`. לאחר כל תוספת או שינוי מאושר במקור, מפיקים מחדש snapshot דטרמיניסטי ושומר-מיקום באמצעות:
+
+```bash
+npm run content:read-source
+```
+
+הפלט נכתב תמיד אל `content/draft/source-reader/blueprint-document.json`. התיקייה כולה מקומית ומוחרגת מ-Git; הקובץ ניתן לבנייה מחדש בכל עת מן המקור הקנוני ואינו קלט ל-Build הציבורי.
+
 ## עקרונות קבועים
 
 - עברית, RTL ו-Mobile First
