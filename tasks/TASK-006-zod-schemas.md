@@ -34,8 +34,8 @@ Create schemas and referential validators for approved/draft JSON, safe URLs, gr
 - **Documentation:** Updated `artifacts/SDD.md` with strict schema behavior, actionable issue paths, structural/cross-reference validation rules, draft `safeParse` behavior, and approved-build failure semantics.
 - **Security/privacy:** Registration destinations are HTTPS-only and must be enabled; unknown fields fail closed; offerings cannot carry registration targets. No user data, authentication, tracking, runtime API, or unsafe URL fallback was introduced.
 - **Skill compliance:** Followed development-lifecycle, git-task-workflow, and deployment instructions; verified TASK-005 merge commit `93c14f0`, branched from updated `main`, preserved untracked `.vscode/` and `instractions`, and did not merge or deploy.
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Commit:** `aab84fb` (`TASK-006 validate catalog content contract`)
+- **Pull request:** [#13](https://github.com/idubi/sederot-course-catalog/pull/13), targeting `main`, awaiting review; no automatic merge requested.
 
 ## Completion record
 
