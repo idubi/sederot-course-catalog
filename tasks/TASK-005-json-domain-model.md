@@ -45,8 +45,8 @@ Model Program, AudienceGroup, Course, CourseOffering, group/program Registration
 - **Documentation:** Added the required domain-contract decision record to this task and canonical v1 TypeScript/JSON field names plus legacy-normalization guidance to `artifacts/SDD.md`.
 - **Security/privacy:** The model contains catalog content and public contact channels only; it introduces no personal-user data, authentication, tracking, runtime API, registration callback, or offering-level registration target.
 - **Skill compliance:** Followed development-lifecycle, git-task-workflow, deployment, and brainstorming instructions; verified TASK-002 and TASK-004 merge dependencies, branched from updated `main`, recorded alternatives/trade-offs, preserved untracked `.vscode/` and `instractions`, and did not merge or deploy.
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Commit:** `aaba770` (`TASK-005 define catalog domain model`)
+- **Pull request:** [#12](https://github.com/idubi/sederot-course-catalog/pull/12), targeting `main`, awaiting review; no automatic merge requested.
 
 ## Completion record
 
