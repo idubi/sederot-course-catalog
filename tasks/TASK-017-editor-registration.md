@@ -35,7 +35,7 @@ Manage group targets, program defaults, registration-information copy, safe URLs
 - **Security/privacy:** URL inputs use the existing strict HTTPS schema and approved export validation; disabled or missing effective targets are visibly flagged and fail schema validation. No registration target or action was added to courses/offerings, and no user data, runtime API, tracking, or production editor code was introduced.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; started from merged TASK-016 on current `main`, used the specified task branch, preserved unrelated `.vscode/`/`instractions`, and kept the PR target as `main` without automatic merge.
 - **Commit:** `2f27aed` (`TASK-017 add registration editor`)
-- **Pull request:** Pending
+- **Pull request:** [#25](https://github.com/idubi/sederot-course-catalog/pull/25), targeting `main`, awaiting review; no automatic merge requested.
 
 ## Completion record
 
