@@ -1,6 +1,6 @@
 # TASK-014: Implement editor JSON load, save, and export
 
-- **Status:** In progress
+- **Status:** Ready for review
 - **Phase:** Editor
 - **Branch:** `task/014-editor-json-io`
 - **Depends on:** `TASK-011`, `TASK-013`
@@ -19,7 +19,7 @@ Load draft/approved JSON, autosave locally, validate, and export approved JSON.
 - [x] Add or update tests and documentation proportional to the change.
 - [x] Run relevant validation and record exact evidence below.
 - [x] Review the diff for unrelated files and secrets.
-- [ ] Commit, push, and open one reviewed pull request directly to `main`.
+- [x] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
@@ -34,8 +34,8 @@ Load draft/approved JSON, autosave locally, validate, and export approved JSON.
 - **Documentation:** Updated `README.md` and `artifacts/content-import.md` with editor autosave, endpoints, explicit-write behavior, fixed paths, atomicity, validation, warning acknowledgement, deterministic output, and production exclusion. Synchronized TASK-013 merge evidence and the master checklist.
 - **Security/privacy:** File paths are server-owned constants and cannot be supplied by API clients; draft and approved writes remain inside the repository. Invalid content never changes approved JSON, requests are size-limited, responses are no-cache, and the API remains loopback-only. No authentication, telemetry, personal-data storage, runtime production API, or course/offering registration target was introduced.
 - **Skill compliance:** Followed development-lifecycle, content-import, and git-task-workflow instructions; verified TASK-011 and TASK-013 dependencies merged, preserved approved JSON as the sole Astro input, kept drafts local-only, and left `.vscode/` and `instractions` untouched.
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Commit:** `3a72700` (`TASK-014 add editor JSON persistence`)
+- **Pull request:** [#22](https://github.com/idubi/sederot-course-catalog/pull/22), targeting `main`, awaiting review; no automatic merge requested.
 
 ## Completion record
 
