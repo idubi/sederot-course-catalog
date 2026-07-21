@@ -19,3 +19,9 @@ export type {
   RegistrationTargetId,
   Semester,
 } from './catalog';
+export { buildProgramGroups, buildProgramSummaries } from './public-catalog';
+export type {
+  OfferingViewModel,
+  ProgramGroupViewModel,
+  ProgramSummaryViewModel,
+} from './public-catalog';

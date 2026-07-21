@@ -1,6 +1,6 @@
 # TASK-019: Finalize sanitation and production content validation
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Content
 - **Branch:** `task/019-content-validation`
 - **Depends on:** `TASK-014`, `TASK-017`, `TASK-018`
@@ -35,10 +35,10 @@ Sanitize rich text and enforce all schema, URL, asset, registration, and publica
 - **Security/privacy:** Sanitization uses an HTML parser rather than regular expressions. Scripts, iframes, forms, styles, event attributes, unsafe schemes, unknown tags/attributes, and missing asset references cannot enter a production build. No runtime API, tracking, user data, or offering-level registration was introduced.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; started from merged PR #26 on current `main`, verified all dependencies, preserved the unrelated approved-content edit and untracked user files, and kept the PR target as `main` without automatic merge.
 - **Commit:** `51c93a4` (`TASK-019 enforce approved content safety`)
-- **Pull request:** [#27](https://github.com/idubi/sederot-course-catalog/pull/27), targeting `main`, awaiting review; no automatic merge requested.
+- **Pull request:** [#27](https://github.com/idubi/sederot-course-catalog/pull/27), approved and merged to `main` as `b21f147`.
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Codex after explicit owner approval
+- **Completed at:** 2026-07-22
+- **Notes:** Approved-content sanitation and production validation are merged and available to TASK-020.
