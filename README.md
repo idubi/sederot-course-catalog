@@ -51,6 +51,7 @@ npm run typecheck     # בדיקת TypeScript ו-Astro במצב strictest
 npm run lint          # ESLint לקובצי TypeScript/Astro + אימות Prettier
 npm run test          # בדיקות Vitest דטרמיניסטיות (גם לפני הוספת קובצי test)
 npm run content:validate # אימות content/approved/catalog.json בלבד
+npm run content:normalize-source # יצירת טיוטת תוכניות/קבוצות/קורסים/מופעים מקומית
 npm run format:check  # אימות עיצוב קוד ללא שינוי קבצים
 npm run format        # תיקון עיצוב קוד מקומי
 npm run check         # שער מקומי מלא: typecheck, lint, tests ו-build

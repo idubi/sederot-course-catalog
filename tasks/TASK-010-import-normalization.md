@@ -1,6 +1,6 @@
 # TASK-010: Normalize programs, groups, courses, and offerings
 
-- **Status:** Not started
+- **Status:** Ready for review
 - **Phase:** Import
 - **Branch:** `task/010-import-normalization`
 - **Depends on:** `TASK-005`, `TASK-009`
@@ -13,29 +13,29 @@ Map source content into stable program-first entities and contextual offerings w
 
 ## Implementation checklist
 
-- [ ] Re-read the task sources and record conflicts or missing inputs.
-- [ ] Implement only this task's focused scope on its task branch.
-- [ ] Preserve RTL, mobile-first, static-output, approved-JSON, privacy, and program-level registration constraints.
-- [ ] Add or update tests and documentation proportional to the change.
-- [ ] Run relevant validation and record exact evidence below.
-- [ ] Review the diff for unrelated files and secrets.
-- [ ] Commit, push, and open one reviewed pull request directly to `main`.
+- [x] Re-read the task sources and record conflicts or missing inputs.
+- [x] Implement only this task's focused scope on its task branch.
+- [x] Preserve RTL, mobile-first, static-output, approved-JSON, privacy, and program-level registration constraints.
+- [x] Add or update tests and documentation proportional to the change.
+- [x] Run relevant validation and record exact evidence below.
+- [x] Review the diff for unrelated files and secrets.
+- [x] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
-- [ ] Shared courses deduplicate safely and group assignments remain traceable.
-- [ ] No individual course or offering gains a registration action or target.
-- [ ] Referenced files and task dependencies exist and use canonical Markdown paths.
+- [x] Shared courses deduplicate safely and group assignments remain traceable.
+- [x] No individual course or offering gains a registration action or target.
+- [x] Referenced files and task dependencies exist and use canonical Markdown paths.
 
 ## Completion evidence
 
-- **Implementation:** Pending
-- **Tests:** Pending
-- **Documentation:** Pending
-- **Security/privacy:** Pending
-- **Skill compliance:** Pending
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Implementation:** Added deterministic blueprint normalization into program-first draft entities: 2 programs, 26 source-derived audience groups, 34 exact-name courses, and 151 contextual offerings. Stable IDs are derived without transliterating or discarding Hebrew; grades and ranges, schedules, explicit audiences, temporary-name markers, display order, and every source assignment retain raw line/location evidence. Only exact whitespace-normalized names deduplicate; possible variants remain separate for TASK-011 diagnostics. Unconsumed source nodes are retained rather than discarded. Added `npm run content:normalize-source` to atomically write the ignored draft at `content/draft/import/normalized-catalog.json`.
+- **Tests:** `npm run check` passed: Astro checked 21 files twice with 0 errors, warnings, or hints; ESLint and Prettier passed; Vitest passed 22/22 tests across 5 files; approved-content validation passed; and the static build produced one page. Normalizer tests verified 2 programs, 26 unique groups, 34 courses, 151 traceable offerings, exact-only deduplication, 24 retained social-course assignments, preserved near-duplicate museum titles, grade ranges, combined audiences, unmatched nodes, and absence of registration fields on courses/offerings. Two normalization runs produced identical SHA-256 `5cdce39d9593ccc951ceef641c6c72e7a1bcf56814cffd52a85da8f98b65d5f9`; Git-ignore and production-artifact exclusion assertions passed; `git diff --check` passed.
+- **Documentation:** Updated `README.md` and `artifacts/content-import.md` with the normalization command, fixed draft location, exact-deduplication boundary, traceability behavior, and production exclusion; synchronized TASK-009 closure and the master checklist. Updated Prettier exclusions to respect the existing local-only draft/diagnostic content boundary.
+- **Security/privacy:** The draft and retained raw evidence stay under ignored `content/draft/` and were confirmed absent from `dist`; no personal data, runtime API, registration behavior, or registration field on a course/offering was introduced. Approved JSON remains the sole production input.
+- **Skill compliance:** Followed development-lifecycle, content-import, and git-task-workflow instructions; verified TASK-005 and merged TASK-009 dependencies; branched from synchronized `main` at `94323f0`; preserved uncertain and unmatched text, avoided speculative near-duplicate merges, and left user-owned `.vscode/` and `instractions` unchanged.
+- **Commit:** `c4b1382` (`TASK-010 normalize blueprint catalog entities`)
+- **Pull request:** [#18](https://github.com/idubi/sederot-course-catalog/pull/18), targeting `main`, awaiting review; no automatic merge requested.
 
 ## Completion record
 

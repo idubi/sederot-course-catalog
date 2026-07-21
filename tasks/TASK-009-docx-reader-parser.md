@@ -1,6 +1,6 @@
 # TASK-009: Implement source-specific document reader
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Import
 - **Branch:** `task/009-docx-reader-parser`
 - **Depends on:** `TASK-006`, `TASK-008`
@@ -35,10 +35,10 @@ Read the approved current course source and preserve paragraphs, tables, heading
 - **Security/privacy:** Generated source snapshots remain under ignored `content/draft/`, are never production inputs, and were confirmed absent from `dist`; no personal data, runtime API, registration behavior, or course/offering registration target was added.
 - **Skill compliance:** Followed development-lifecycle, content-import, and git-task-workflow instructions; started from synchronized `main` at TASK-008 merge commit `4faee55`; preserved raw/unmatched source text and user-owned `.vscode/` and `instractions`; added exact-pinned Node types; and kept approved JSON as the only production input.
 - **Commits:** `d2245a4` (`TASK-009 add approved blueprint reader`); `8b6fafe` (`docs: add reusable course blueprint template`).
-- **Pull requests:** [#16](https://github.com/idubi/sederot-course-catalog/pull/16), approved and merged to `main` as `0af3d5f`; follow-up [#17](https://github.com/idubi/sederot-course-catalog/pull/17), targeting `main`, awaiting review; no automatic merge requested.
+- **Pull requests:** [#16](https://github.com/idubi/sederot-course-catalog/pull/16), approved and merged to `main` as `0af3d5f`; follow-up [#17](https://github.com/idubi/sederot-course-catalog/pull/17), approved and merged to `main` as `94323f0`.
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** PR #16 merged before the requested reusable template commit was ready. PR #17 carries only that template and its related documentation.
+- **Completed by:** Codex after explicit owner approval
+- **Completed at:** 2026-07-21
+- **Notes:** PR #16 merged before the requested reusable template commit was ready. PR #17 carried only that template and its related documentation; both changes are present on `main`.
