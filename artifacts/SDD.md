@@ -108,6 +108,16 @@ Key relations:
 
 An offering does not own a registration target.
 
+Canonical TypeScript/JSON field names for the v1 contract are:
+
+- `Catalog`: `schemaVersion`, structured `academicYear`, `programs`, `audienceGroups`, `courses`, `offerings`, `registrationTargets`, and `contacts`.
+- `AudienceGroup`: `programId`, stable `gradeGroupId`, `gradeLabels`, `gradeValues`, `gender`, schedule fields, and optional `registrationTargetId`.
+- `Course`: shared content and optional `defaultImage`; `CourseOffering`: `courseId`, `audienceGroupId`, semester/order, and optional `imageOverride`.
+- `ImageAsset` uses `src` and `alt`, with optional dimensions and source note.
+- `RegistrationTarget.type` is an opaque classification string until an approved value set exists; validation must not invent an enum.
+
+Older examples using `groups`, scalar `academicYear`, `groupId`, `image.path`, or `siteConfig` are normalized at import boundaries and are not aliases in approved JSON. This single shape avoids ambiguous downstream contracts.
+
 ```ts
 function resolveRegistration(program, group, targets) {
   const id = group.registrationTargetId
