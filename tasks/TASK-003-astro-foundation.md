@@ -19,7 +19,7 @@ Create the dependency-light Astro project, RTL shell, static output configuratio
 - [x] Add or update tests and documentation proportional to the change.
 - [x] Run relevant validation and record exact evidence below.
 - [x] Review the diff for unrelated files and secrets.
-- [ ] Commit, push, and open one reviewed pull request directly to `main`.
+- [x] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
@@ -34,8 +34,8 @@ Create the dependency-light Astro project, RTL shell, static output configuratio
 - **Documentation:** Rewrote `README.md` for Astro development/build commands, legacy questionnaire status, direct-file shell limits, GitHub Pages base-path configuration, and fixed architecture constraints.
 - **Security/privacy:** Static output contains no runtime backend, client script, analytics, authentication, personal-data collection, or registration behavior. Development server binds to `127.0.0.1`.
 - **Skill compliance:** Development-lifecycle and git-task-workflow instructions followed; dependency TASK-002 merge commit `5c1fcd1` was verified before branching.
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Commit:** `b0af852` (`feat: establish TASK-003 Astro foundation`)
+- **Pull request:** [#10](https://github.com/idubi/sederot-course-catalog/pull/10), targeting `main`, awaiting review; no automatic merge requested.
 
 ## Completion record
 
