@@ -4,7 +4,10 @@ import catalogFixture from '../../content/approved/catalog.json';
 import type { Catalog } from '../../src/domain/catalog';
 import {
   moveAudienceGroup,
+  reorderOffering,
   updateAudienceGroup,
+  updateCourse,
+  updateOffering,
   updateProgram,
 } from './catalog-editing';
 
@@ -33,5 +36,28 @@ describe('program and audience-group editing', () => {
     expect(moveAudienceGroup(catalog, catalog.audienceGroups[0]!.id, -1)).toBe(
       catalog,
     );
+  });
+
+  it('cascades a course ID change to contextual offerings', () => {
+    const course = catalog.courses[0]!;
+    const updated = updateCourse(catalog, course.id, {
+      ...course,
+      id: 'course-updated',
+    });
+    expect(updated.offerings[0]?.courseId).toBe('course-updated');
+  });
+
+  it('updates an offering without registration data', () => {
+    const offering = catalog.offerings[0]!;
+    const updated = updateOffering(catalog, offering.id, {
+      ...offering,
+      semester: 'first',
+    });
+    expect(updated.offerings[0]?.semester).toBe('first');
+    expect(JSON.stringify(updated.offerings)).not.toContain('registration');
+  });
+
+  it('keeps a lone offering in place', () => {
+    expect(reorderOffering(catalog, catalog.offerings[0]!.id, 1)).toBe(catalog);
   });
 });
