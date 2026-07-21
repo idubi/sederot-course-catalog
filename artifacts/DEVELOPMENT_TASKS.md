@@ -17,7 +17,7 @@ Course cards and course details never initiate registration.
 - [ ] [TASK-005: Define program-first catalog domain model](../tasks/TASK-005-json-domain-model.md)
 - [ ] [TASK-006: Implement schemas and reference validation](../tasks/TASK-006-zod-schemas.md)
 - [ ] [TASK-007: Create approved content structure and seed fixture](../tasks/TASK-007-approved-content.md)
-- [ ] [TASK-008: Identify and map the current course-content source](../tasks/TASK-008-source-content-investigation.md) — In progress
+- [ ] [TASK-008: Identify and map the current course-content source](../tasks/TASK-008-source-content-investigation.md) — Ready for review
 - [ ] [TASK-009: Implement source-specific document reader](../tasks/TASK-009-docx-reader-parser.md)
 - [ ] [TASK-010: Normalize programs, groups, courses, and offerings](../tasks/TASK-010-import-normalization.md)
 - [ ] [TASK-011: Produce draft content and structured diagnostics](../tasks/TASK-011-import-diagnostics.md)
