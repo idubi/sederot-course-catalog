@@ -35,7 +35,7 @@ Create course cards and /programs/[groupId]/courses/[offeringId] with image reso
 - **Security/privacy:** The page is generated only from validated approved JSON, renders only build-time-sanitized description HTML, and has no registration target, runtime input, storage, tracking, authentication, or API behavior.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; verified PR #30 merged, branched from updated `main`, preserved unrelated local files, and kept the PR target as `main` without automatic merge.
 - **Commit:** `ddfd42d` (`TASK-023 add contextual course details`)
-- **Pull request:** Pending
+- **Pull request:** [#31](https://github.com/idubi/sederot-course-catalog/pull/31)
 
 ## Completion record
 
