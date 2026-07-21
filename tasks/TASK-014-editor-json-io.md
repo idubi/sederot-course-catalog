@@ -1,6 +1,6 @@
 # TASK-014: Implement editor JSON load, save, and export
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Editor
 - **Branch:** `task/014-editor-json-io`
 - **Depends on:** `TASK-011`, `TASK-013`
@@ -35,10 +35,10 @@ Load draft/approved JSON, autosave locally, validate, and export approved JSON.
 - **Security/privacy:** File paths are server-owned constants and cannot be supplied by API clients; draft and approved writes remain inside the repository. Invalid content never changes approved JSON, requests are size-limited, responses are no-cache, and the API remains loopback-only. No authentication, telemetry, personal-data storage, runtime production API, or course/offering registration target was introduced.
 - **Skill compliance:** Followed development-lifecycle, content-import, and git-task-workflow instructions; verified TASK-011 and TASK-013 dependencies merged, preserved approved JSON as the sole Astro input, kept drafts local-only, and left `.vscode/` and `instractions` untouched.
 - **Commit:** `3a72700` (`TASK-014 add editor JSON persistence`)
-- **Pull request:** [#22](https://github.com/idubi/sederot-course-catalog/pull/22), targeting `main`, awaiting review; no automatic merge requested.
+- **Pull request:** [#22](https://github.com/idubi/sederot-course-catalog/pull/22), approved and merged to `main` as `46aebba`.
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Codex after explicit owner approval
+- **Completed at:** 2026-07-21
+- **Notes:** Editor JSON load, save, validation, and export are merged and available to TASK-015.
