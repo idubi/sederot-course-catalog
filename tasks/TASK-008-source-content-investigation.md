@@ -1,6 +1,6 @@
 # TASK-008: Identify and map the current course-content source
 
-- **Status:** Not started
+- **Status:** Ready for review
 - **Phase:** Import
 - **Branch:** `task/008-source-content-investigation`
 - **Depends on:** `TASK-002`
@@ -13,29 +13,29 @@ Locate the actual current-format course-source DOCX or record an explicitly appr
 
 ## Implementation checklist
 
-- [ ] Re-read the task sources and record conflicts or missing inputs.
-- [ ] Implement only this task's focused scope on its task branch.
-- [ ] Preserve RTL, mobile-first, static-output, approved-JSON, privacy, and program-level registration constraints.
-- [ ] Add or update tests and documentation proportional to the change.
-- [ ] Run relevant validation and record exact evidence below.
-- [ ] Review the diff for unrelated files and secrets.
-- [ ] Commit, push, and open one reviewed pull request directly to `main`.
+- [x] Re-read the task sources and record conflicts or missing inputs.
+- [x] Implement only this task's focused scope on its task branch.
+- [x] Preserve RTL, mobile-first, static-output, approved-JSON, privacy, and program-level registration constraints.
+- [x] Add or update tests and documentation proportional to the change.
+- [x] Run relevant validation and record exact evidence below.
+- [x] Review the diff for unrelated files and secrets.
+- [x] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
-- [ ] A source inventory, structural map, gaps, and go/no-go decision are recorded without changing the source.
-- [ ] No individual course or offering gains a registration action or target.
-- [ ] Referenced files and task dependencies exist and use canonical Markdown paths.
+- [x] A source inventory, structural map, gaps, and go/no-go decision are recorded without changing the source.
+- [x] No individual course or offering gains a registration action or target.
+- [x] Referenced files and task dependencies exist and use canonical Markdown paths.
 
 ## Completion evidence
 
-- **Implementation:** Pending
-- **Tests:** Pending
-- **Documentation:** Pending
-- **Security/privacy:** Pending
-- **Skill compliance:** Pending
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Implementation:** Inventoried every repository source candidate; verified that the named `content-source/תשפז - חוברת קורסים פתיחת שנה(2).docx` and all other DOC/DOCX files are absent; classified the blueprint, prior-year PDF, design Markdown, and two external-directory shortcuts; mapped expected source semantics; and recorded a no-go decision plus explicit unblock conditions without modifying or substituting a source.
+- **Tests:** `npm run check` passed: Astro checked 15 files twice with 0 errors, warnings, or hints; ESLint and Prettier passed; Vitest passed 14/14 tests across 3 files; approved seed validation passed; and the static build produced one page. Shell assertions confirmed the canonical DOCX path is absent, the repository contains zero DOC/DOCX files outside excluded dependency/Git trees, the report contains the no-go decision and 14/12 group-page comparison, and no course/offering registration target was introduced. `git diff --check` passed.
+- **Documentation:** Added `artifacts/TASK-008-source-content-investigation.md` with the expected source, inventory and hashes, expected semantic map, unavailable structural evidence, replacement-contract requirements, and go/no-go decision; synchronized the master checklist state.
+- **Security/privacy:** Read-only metadata and hash inspection only; no source content was copied into production, no personal data or secret was added, registration remains program/group-level, and untracked `.vscode/`, `instractions`, and the root shortcut were preserved unchanged.
+- **Skill compliance:** Followed development-lifecycle, content-import, and git-task-workflow instructions; verified TASK-002 merge commit `5c1fcd1` and current `main` at `ac232fb`; branched from synchronized `main`; treated design Markdown only as requirements; and did not infer an unapproved replacement contract.
+- **Commit:** `782460a` (`TASK-008 record course source investigation`)
+- **Pull request:** [#15](https://github.com/idubi/sederot-course-catalog/pull/15), targeting `main`, awaiting review; no automatic merge requested.
 
 ## Completion record
 
