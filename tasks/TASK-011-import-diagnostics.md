@@ -1,6 +1,6 @@
 # TASK-011: Produce draft content and structured diagnostics
 
-- **Status:** In progress
+- **Status:** Ready for review
 - **Phase:** Import
 - **Branch:** `task/011-import-diagnostics`
 - **Depends on:** `TASK-010`
@@ -19,7 +19,7 @@ Emit draft JSON plus actionable warnings/errors with source locations and retain
 - [x] Add or update tests and documentation proportional to the change.
 - [x] Run relevant validation and record exact evidence below.
 - [x] Review the diff for unrelated files and secrets.
-- [ ] Commit, push, and open one reviewed pull request directly to `main`.
+- [x] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
@@ -34,8 +34,8 @@ Emit draft JSON plus actionable warnings/errors with source locations and retain
 - **Documentation:** Updated `README.md` and `artifacts/content-import.md` with the import command, fixed local output locations, diagnostic contract, excerpt/full-text behavior, and production boundary; synchronized TASK-010 closure and the master checklist.
 - **Security/privacy:** Drafts, source excerpts, and diagnostics remain in ignored local-only directories and were confirmed absent from `dist`; no personal data, runtime API, registration behavior, or registration field on a course/offering was introduced. Approved JSON remains the sole production input.
 - **Skill compliance:** Followed development-lifecycle, content-import, and git-task-workflow instructions; verified and synchronized TASK-010 merge `64167d6`; preserved every uncertain/unmatched source fragment in the closest draft; and left user-owned `.vscode/` and `instractions` unchanged.
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Commit:** `8e1d331` (`TASK-011 emit draft import diagnostics`)
+- **Pull request:** [#19](https://github.com/idubi/sederot-course-catalog/pull/19), targeting `main`, awaiting review; no automatic merge requested.
 
 ## Completion record
 
