@@ -1,6 +1,6 @@
 # TASK-023: Implement contextual course cards and details
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Public UI
 - **Branch:** `task/023-course-details`
 - **Depends on:** `TASK-022`
@@ -39,6 +39,6 @@ Create course cards and /programs/[groupId]/courses/[offeringId] with image reso
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Codex after owner approval
+- **Completed at:** 2026-07-22
+- **Notes:** PR #31 was approved and merged to `main` as `d58f88e`.

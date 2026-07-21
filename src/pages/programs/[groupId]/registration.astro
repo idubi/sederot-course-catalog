@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { loadApprovedCatalog } from '../../../content/catalog-loader';
+import {
+  buildRegistrationPages,
+  type RegistrationViewModel,
+} from '../../../domain/public-catalog';
+
+export function getStaticPaths() {
+  return buildRegistrationPages(loadApprovedCatalog()).map((registration) => ({
+    params: { groupId: registration.groupId },
+    props: { registration },
+  }));
+}
+
+const { registration } = Astro.props as {
+  registration: RegistrationViewModel;
+};
+const base = import.meta.env.BASE_URL;
+const groupUrl = `${base}programs/${registration.groupId}/`;
+---
+
+<BaseLayout
+  title={`מידע לפני הרשמה | ${registration.programName}`}
+  description={`מידע חשוב לפני מעבר לרישום החיצוני עבור ${registration.programName}`}
+>
+  <nav aria-label="פירורי לחם">
+    <a href={groupUrl}>חזרה אל {registration.programName}</a>
+  </nav>
+  <main class="registration-card">
+    <p class="eyebrow">לפני שממשיכים לאתר החיצוני</p>
+    <h1>מידע לפני הרשמה</h1>
+    <p class="context">
+      ההרשמה היא לתוכנית <strong>{registration.programName}</strong> עבור
+      {registration.gradeLabels.join(', ')}, ולא לקורס מסוים.
+    </p>
+    <section aria-labelledby="important-title">
+      <h2 id="important-title">חשוב לדעת</h2>
+      <ul>
+        <li>המשך ההרשמה והתשלום מתבצע באתר חיצוני.</li>
+        <li>האתר הנוכחי אינו אוסף או שומר פרטי רישום ותשלום.</li>
+        <li>אפשר לחזור כעת לאשכול הקורסים בלי לעבור לאתר החיצוני.</li>
+      </ul>
+    </section>
+    <p class="destination">
+      היעד המאושר: <strong>{registration.targetLabel}</strong>
+    </p>
+    <div class="actions">
+      <a class="close" href={groupUrl}>סגירה וחזרה לתוכנית</a>
+      <a
+        class="external"
+        href={registration.targetUrl}
+        target="_blank"
+        rel="noopener noreferrer">המשך לאתר הרישום החיצוני</a
+      >
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  nav {
+    padding-block: 1rem;
+  }
+  .registration-card {
+    max-width: 50rem;
+    margin: 1rem auto 3rem;
+    padding: clamp(1.5rem, 6vw, 3rem);
+    border: 1px solid #cbd6e8;
+    border-radius: 1.2rem;
+    background: #fff;
+    box-shadow: 0 1rem 2.5rem rgb(33 54 85 / 10%);
+  }
+  .eyebrow {
+    margin-block: 0 0.5rem;
+    color: #315c9c;
+    font-weight: 800;
+  }
+  h1 {
+    margin-block: 0 1rem;
+    font-size: clamp(2rem, 8vw, 3.5rem);
+  }
+  .context {
+    font-size: 1.15rem;
+  }
+  section {
+    margin-block: 2rem;
+    padding: 1rem 1.25rem;
+    border-radius: 0.8rem;
+    background: #f4f7fc;
+  }
+  section h2 {
+    margin-block-start: 0;
+  }
+  li + li {
+    margin-block-start: 0.6rem;
+  }
+  .destination {
+    margin-block: 1.5rem;
+  }
+  .actions {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+  }
+  .actions a {
+    padding: 0.8rem 1rem;
+    border: 1px solid #315c9c;
+    border-radius: 0.6rem;
+    text-align: center;
+    font-weight: 800;
+    text-decoration: none;
+  }
+  .external {
+    color: #fff;
+    background: #315c9c;
+  }
+  @media (min-width: 40rem) {
+    .actions {
+      flex-direction: row;
+      justify-content: flex-end;
+    }
+  }
+</style>
