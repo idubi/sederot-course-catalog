@@ -1,6 +1,6 @@
 # TASK-010: Normalize programs, groups, courses, and offerings
 
-- **Status:** In progress
+- **Status:** Ready for review
 - **Phase:** Import
 - **Branch:** `task/010-import-normalization`
 - **Depends on:** `TASK-005`, `TASK-009`
@@ -19,7 +19,7 @@ Map source content into stable program-first entities and contextual offerings w
 - [x] Add or update tests and documentation proportional to the change.
 - [x] Run relevant validation and record exact evidence below.
 - [x] Review the diff for unrelated files and secrets.
-- [ ] Commit, push, and open one reviewed pull request directly to `main`.
+- [x] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
@@ -34,8 +34,8 @@ Map source content into stable program-first entities and contextual offerings w
 - **Documentation:** Updated `README.md` and `artifacts/content-import.md` with the normalization command, fixed draft location, exact-deduplication boundary, traceability behavior, and production exclusion; synchronized TASK-009 closure and the master checklist. Updated Prettier exclusions to respect the existing local-only draft/diagnostic content boundary.
 - **Security/privacy:** The draft and retained raw evidence stay under ignored `content/draft/` and were confirmed absent from `dist`; no personal data, runtime API, registration behavior, or registration field on a course/offering was introduced. Approved JSON remains the sole production input.
 - **Skill compliance:** Followed development-lifecycle, content-import, and git-task-workflow instructions; verified TASK-005 and merged TASK-009 dependencies; branched from synchronized `main` at `94323f0`; preserved uncertain and unmatched text, avoided speculative near-duplicate merges, and left user-owned `.vscode/` and `instractions` unchanged.
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Commit:** `c4b1382` (`TASK-010 normalize blueprint catalog entities`)
+- **Pull request:** [#18](https://github.com/idubi/sederot-course-catalog/pull/18), targeting `main`, awaiting review; no automatic merge requested.
 
 ## Completion record
 

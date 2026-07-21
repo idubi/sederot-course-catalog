@@ -19,7 +19,7 @@ Course cards and course details never initiate registration.
 - [ ] [TASK-007: Create approved content structure and seed fixture](../tasks/TASK-007-approved-content.md)
 - [x] [TASK-008: Identify and map the current course-content source](../tasks/TASK-008-source-content-investigation.md)
 - [x] [TASK-009: Implement source-specific document reader](../tasks/TASK-009-docx-reader-parser.md)
-- [ ] [TASK-010: Normalize programs, groups, courses, and offerings](../tasks/TASK-010-import-normalization.md) — In progress
+- [ ] [TASK-010: Normalize programs, groups, courses, and offerings](../tasks/TASK-010-import-normalization.md) — Ready for review
 - [ ] [TASK-011: Produce draft content and structured diagnostics](../tasks/TASK-011-import-diagnostics.md)
 - [ ] [TASK-012: Add importer fixtures and regression tests](../tasks/TASK-012-importer-tests.md)
 - [ ] [TASK-013: Create local-only content editor foundation](../tasks/TASK-013-editor-foundation.md)
