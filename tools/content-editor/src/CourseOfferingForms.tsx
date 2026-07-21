@@ -3,6 +3,7 @@ import type {
   Course,
   CourseOffering,
 } from '../../../src/domain/catalog';
+import { sanitizeDescriptionHtml } from '../../../src/content/sanitize-html';
 import {
   reorderOffering,
   resolveOfferingImage,
@@ -110,6 +111,11 @@ export function CourseOfferingForms({
               value={value.descriptionHtml}
               onChange={(e) =>
                 course(value.id, { descriptionHtml: e.target.value })
+              }
+              onBlur={(e) =>
+                course(value.id, {
+                  descriptionHtml: sanitizeDescriptionHtml(e.target.value),
+                })
               }
             />
           </label>

@@ -1,6 +1,6 @@
 # TASK-018: Manage general and offering-specific images
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Editor
 - **Branch:** `task/018-editor-images`
 - **Depends on:** `TASK-016`
@@ -35,10 +35,10 @@ Upload/validate images, alt text, stable paths, and offering override precedence
 - **Security/privacy:** Uploads are loopback-only, capped at 5 MiB, restricted to JPEG/PNG/WebP, checked by MIME signature, and named only from validated kebab-case entity IDs under `public/content/images`. SVG and user-controlled paths are rejected; no registration or user data was added.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; started from merged PR #25 on current `main`, verified TASK-016 dependency merge, preserved the unrelated approved-content edit and untracked user files, and kept the PR target as `main` without automatic merge.
 - **Commit:** `fdd2ce1` (`TASK-018 add managed image uploads`)
-- **Pull request:** [#26](https://github.com/idubi/sederot-course-catalog/pull/26), targeting `main`, awaiting review; no automatic merge requested.
+- **Pull request:** [#26](https://github.com/idubi/sederot-course-catalog/pull/26), approved and merged to `main` as `a3f0487`.
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Codex after explicit owner approval
+- **Completed at:** 2026-07-22
+- **Notes:** Managed image uploads and override preview are merged and available to TASK-019.
