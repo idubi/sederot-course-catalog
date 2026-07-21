@@ -1,6 +1,6 @@
 # TASK-009: Implement source-specific document reader
 
-- **Status:** In progress
+- **Status:** Ready for review
 - **Phase:** Import
 - **Branch:** `task/009-docx-reader-parser`
 - **Depends on:** `TASK-006`, `TASK-008`
@@ -19,7 +19,7 @@ Read the approved current course source and preserve paragraphs, tables, heading
 - [x] Add or update tests and documentation proportional to the change.
 - [x] Run relevant validation and record exact evidence below.
 - [x] Review the diff for unrelated files and secrets.
-- [ ] Commit, push, and open one reviewed pull request directly to `main`.
+- [x] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
@@ -34,8 +34,8 @@ Read the approved current course source and preserve paragraphs, tables, heading
 - **Documentation:** Updated `README.md`, `artifacts/content-import.md`, and the TASK-008 investigation with the approved canonical source, immutable hash, reconstruction command/location, structural contract, preservation rules, and go decision; closed TASK-008 and synchronized the master checklist.
 - **Security/privacy:** Generated source snapshots remain under ignored `content/draft/`, are never production inputs, and were confirmed absent from `dist`; no personal data, runtime API, registration behavior, or course/offering registration target was added.
 - **Skill compliance:** Followed development-lifecycle, content-import, and git-task-workflow instructions; started from synchronized `main` at TASK-008 merge commit `4faee55`; preserved raw/unmatched source text and user-owned `.vscode/` and `instractions`; added exact-pinned Node types; and kept approved JSON as the only production input.
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Commit:** `d2245a4` (`TASK-009 add approved blueprint reader`)
+- **Pull request:** [#16](https://github.com/idubi/sederot-course-catalog/pull/16), targeting `main`, awaiting review; no automatic merge requested.
 
 ## Completion record
 
