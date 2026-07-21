@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "1.0",
+  "academicYear": {
+    "id": "seed-2026-2027",
+    "label": "תוכן הדגמה בלבד — לא לפרסום"
+  },
+  "programs": [
+    {
+      "id": "gifted",
+      "name": "מחוננים — הדגמה",
+      "category": "gifted",
+      "defaultRegistrationTargetId": "seed-registration"
+    }
+  ],
+  "audienceGroups": [
+    {
+      "id": "gifted-grade-5-mixed",
+      "programId": "gifted",
+      "gradeGroupId": "grade-5",
+      "gradeLabels": ["כיתה ה׳"],
+      "gradeValues": ["5"],
+      "gender": "mixed",
+      "day": "sunday",
+      "startTime": "08:15",
+      "endTime": "13:15"
+    }
+  ],
+  "courses": [
+    {
+      "id": "seed-course",
+      "name": "קורס הדגמה",
+      "shortName": "הדגמה",
+      "descriptionHtml": "<p>רשומת בדיקה טכנית בלבד. אין לפרסם כתוכן אמיתי.</p>",
+      "instructors": ["מנחה לדוגמה"]
+    }
+  ],
+  "offerings": [
+    {
+      "id": "seed-course-gifted-grade-5-mixed",
+      "courseId": "seed-course",
+      "audienceGroupId": "gifted-grade-5-mixed",
+      "semester": "annual",
+      "displayOrder": 0
+    }
+  ],
+  "registrationTargets": [
+    {
+      "id": "seed-registration",
+      "type": "registration",
+      "label": "קישור הדגמה — אינו פעיל",
+      "url": "https://registration.example.invalid/seed",
+      "enabled": true
+    }
+  ],
+  "contacts": {
+    "phone": "0000000000",
+    "whatsapp": "0000000000",
+    "email": "catalog@example.invalid"
+  }
+}

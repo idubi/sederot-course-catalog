@@ -36,6 +36,16 @@ The local HTML editor is used to:
 
 The approved JSON, not the DOCX, is the direct input to the Astro build.
 
+## Repository content boundaries
+
+- `content/approved/catalog.json` is committed and is the only catalog input imported by production code.
+- `content/draft/` contains local importer/editor working files. Its directory policy ignores every payload.
+- `content/diagnostics/` contains local structured diagnostics and source excerpts. Its directory policy ignores every payload.
+- `src/content/catalog-loader.ts` has no configurable path and statically imports only the approved catalog.
+- `npm run content:validate` parses the approved catalog with the shared schema and is invoked before every Astro build.
+
+The committed catalog is a technical seed marked “not for publication.” Reserved `.invalid` contact and registration destinations prevent accidental live use. It must be replaced by business-approved content before deployment.
+
 
 
 
