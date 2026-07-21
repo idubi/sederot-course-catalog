@@ -1,0 +1,146 @@
+---
+import type { Catalog } from '../domain/catalog';
+const { catalog } = Astro.props as { catalog: Catalog };
+const groups = catalog.audienceGroups.map(
+  ({ id, programId, gradeGroupId, gradeLabels, gender }) => ({
+    id,
+    programId,
+    gradeGroupId,
+    gradeLabel: gradeLabels.join(', '),
+    gender,
+  }),
+);
+---
+
+<form
+  class="selection"
+  data-groups={JSON.stringify(groups)}
+  data-base={import.meta.env.BASE_URL}
+>
+  <fieldset>
+    <legend>מציאת קבוצת התוכנית</legend>
+    <p>
+      הבחירה בקהל היא הצהרה לצורכי ניווט בלבד. לא מתבצע אימות והיא אינה נשמרת.
+    </p>
+    <label
+      >תוכנית<select name="program" required
+        ><option value="">בחירת תוכנית</option>{
+          catalog.programs.map((p) => <option value={p.id}>{p.name}</option>)
+        }</select
+      ></label
+    >
+    <label
+      >שכבה<select name="grade" required disabled
+        ><option value="">בחירת שכבה</option></select
+      ></label
+    >
+    <label
+      >קהל<select name="gender" required disabled
+        ><option value="">בחירת קהל</option><option value="boys">בנים</option
+        ><option value="girls">בנות</option><option value="mixed">מעורב</option
+        ></select
+      ></label
+    >
+    <button type="submit" disabled>הצגת אשכול הקורסים</button>
+    <p class="selection-status" role="status" aria-live="polite">
+      יש להשלים תוכנית, שכבה וקהל.
+    </p>
+  </fieldset>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('.selection').forEach((form) => {
+    const groups = JSON.parse(form.dataset.groups ?? '[]') as Array<{
+      id: string;
+      programId: string;
+      gradeGroupId: string;
+      gradeLabel: string;
+      gender: string;
+    }>;
+    const program = form.elements.namedItem('program') as HTMLSelectElement;
+    const grade = form.elements.namedItem('grade') as HTMLSelectElement;
+    const gender = form.elements.namedItem('gender') as HTMLSelectElement;
+    const button = form.querySelector('button')!;
+    const status = form.querySelector('.selection-status')!;
+    const update = () => {
+      const available = groups.filter((g) => g.programId === program.value);
+      const grades = [
+        ...new Map(
+          available.map((g) => [g.gradeGroupId, g.gradeLabel]),
+        ).entries(),
+      ];
+      if (grade.dataset.program !== program.value) {
+        grade.innerHTML =
+          '<option value="">בחירת שכבה</option>' +
+          grades
+            .map(([id, label]) => `<option value="${id}">${label}</option>`)
+            .join('');
+        grade.dataset.program = program.value;
+        gender.value = '';
+      }
+      grade.disabled = !program.value;
+      gender.disabled = !grade.value;
+      const match = available.find(
+        (g) => g.gradeGroupId === grade.value && g.gender === gender.value,
+      );
+      button.disabled = !match;
+      status.textContent = match
+        ? 'הקבוצה נמצאה. אפשר להמשיך.'
+        : 'יש להשלים בחירה זמינה של תוכנית, שכבה וקהל.';
+    };
+    form.addEventListener('change', update);
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const match = groups.find(
+        (g) =>
+          g.programId === program.value &&
+          g.gradeGroupId === grade.value &&
+          g.gender === gender.value,
+      );
+      if (match)
+        window.location.assign(`${form.dataset.base}programs/${match.id}/`);
+    });
+  });
+</script>
+
+<style>
+  .selection fieldset {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 1.25rem;
+    border: 1px solid #cbd6e8;
+    border-radius: 1rem;
+    background: #fff;
+  }
+  .selection legend {
+    padding-inline: 0.4rem;
+    font-size: 1.3rem;
+    font-weight: 800;
+  }
+  .selection label {
+    display: grid;
+    gap: 0.35rem;
+    font-weight: 700;
+  }
+  .selection select,
+  .selection button {
+    min-height: 3rem;
+    padding: 0.6rem;
+    border: 1px solid #8292aa;
+    border-radius: 0.6rem;
+    font: inherit;
+  }
+  .selection button {
+    color: #fff;
+    background: #315c9c;
+    font-weight: 800;
+  }
+  .selection button:disabled {
+    opacity: 0.5;
+  }
+  .selection-status {
+    margin: 0;
+    color: #52617a;
+  }
+</style>

@@ -1,6 +1,6 @@
 # TASK-020: Build the public application shell and view models
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Public UI
 - **Branch:** `task/020-catalog-foundation`
 - **Depends on:** `TASK-007`, `TASK-019`
@@ -35,10 +35,10 @@ Implement RTL layouts, approved-content loading, static generation, and program/
 - **Security/privacy:** Public view models intentionally omit registration targets from offerings. The shell adds no client persistence, runtime fetch, API, analytics, tracking, authentication, or personal data; approved JSON remains the only input.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; started from merged PR #27 on current `main`, verified dependencies, preserved the unrelated approved-content edit and untracked user files, and kept the PR target as `main` without automatic merge.
 - **Commit:** `7986491` (`TASK-020 add public catalog foundation`)
-- **Pull request:** [#28](https://github.com/idubi/sederot-course-catalog/pull/28), targeting `main`, awaiting review; no automatic merge requested.
+- **Pull request:** [#28](https://github.com/idubi/sederot-course-catalog/pull/28), approved and merged to `main` as `962aec6`.
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Codex after explicit owner approval
+- **Completed at:** 2026-07-22
+- **Notes:** Public shell and approved-content view models are merged and available to TASK-021.
