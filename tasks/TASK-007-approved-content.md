@@ -34,8 +34,8 @@ Create approved/draft/diagnostic directories and a minimal program-first fixture
 - **Documentation:** Updated `README.md` with the approved validation command and content boundaries; updated `artifacts/content-import.md` with canonical repository paths, static loader behavior, build validation, local-only policies, and seed replacement requirement.
 - **Security/privacy:** The seed uses reserved `.invalid` destinations and zero-value contact placeholders, contains no real registration/contact data, and has no offering registration field. Drafts and diagnostics (which may contain source excerpts) are ignored and excluded from the public artifact.
 - **Skill compliance:** Followed development-lifecycle, git-task-workflow, deployment, and content-import instructions; verified TASK-006 merge commit `148a913`, branched from updated `main`, preserved the source-document boundary and untracked `.vscode/`/`instractions`, and did not merge or deploy.
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Commit:** `3a62569` (`TASK-007 establish approved content boundary`)
+- **Pull request:** [#14](https://github.com/idubi/sederot-course-catalog/pull/14), targeting `main`, awaiting review; no automatic merge requested.
 
 ## Completion record
 
