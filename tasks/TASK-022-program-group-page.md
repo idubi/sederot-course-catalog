@@ -1,6 +1,6 @@
 # TASK-022: Implement program group and course-cluster page
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Public UI
 - **Branch:** `task/022-program-group-page`
 - **Depends on:** `TASK-021`
@@ -39,6 +39,6 @@ Render the selected program, group details, cluster of contextual course cards, 
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Codex after owner approval
+- **Completed at:** 2026-07-22
+- **Notes:** PR #30 was approved and merged to `main` as `ed6727f`.

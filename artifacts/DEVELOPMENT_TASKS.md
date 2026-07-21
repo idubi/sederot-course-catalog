@@ -31,8 +31,8 @@ Course cards and course details never initiate registration.
 - [x] [TASK-019: Finalize sanitation and production content validation](../tasks/TASK-019-content-validation.md)
 - [x] [TASK-020: Build the public application shell and view models](../tasks/TASK-020-catalog-foundation.md)
 - [x] [TASK-021: Implement program, grade, and audience selection](../tasks/TASK-021-selection-funnel.md)
-- [ ] [TASK-022: Implement program group and course-cluster page](../tasks/TASK-022-program-group-page.md) — Ready for review
-- [ ] [TASK-023: Implement contextual course cards and details](../tasks/TASK-023-course-details.md)
+- [x] [TASK-022: Implement program group and course-cluster page](../tasks/TASK-022-program-group-page.md) — Complete
+- [ ] [TASK-023: Implement contextual course cards and details](../tasks/TASK-023-course-details.md) — Ready for review
 - [ ] [TASK-024: Implement registration-information and external-link flow](../tasks/TASK-024-registration-information.md)
 - [ ] [TASK-025: Implement contextual contact actions](../tasks/TASK-025-contact-actions.md)
 - [ ] [TASK-026: Implement RTL print and PDF support](../tasks/TASK-026-print-support.md)
