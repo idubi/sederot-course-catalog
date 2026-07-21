@@ -34,7 +34,7 @@ Add accessible phone, WhatsApp, and email links with approved non-sensitive cont
 - **Documentation:** Updated `README.md` with contact surfaces, approved non-sensitive context, direct device-app behavior, and the no-storage boundary; synchronized TASK-024 approved merge evidence.
 - **Security/privacy:** Only approved catalog contact data and public program/course labels are encoded in links. The static site does not accept, transmit through a server, log, or store user-entered data; no form, runtime API, tracking, authentication, or registration behavior was introduced.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; verified PR #32 merged, branched from updated `main`, verified TASK-022/TASK-023 dependencies, preserved unrelated local files, and kept the PR target as `main` without automatic merge.
-- **Commit:** Pending
+- **Commit:** `b44091a` (`TASK-025 add contextual contact actions`)
 - **Pull request:** Pending
 
 ## Completion record
