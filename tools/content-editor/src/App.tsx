@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+
+import type { Catalog } from '../../../src/domain/catalog';
+import { ProgramGroupForms } from './ProgramGroupForms';
 
 const STORAGE_KEY = 'sderot-content-editor.catalog';
 
@@ -20,6 +23,13 @@ export function App() {
   );
   const [message, setMessage] = useState<Message>(null);
   const [acknowledgeWarnings, setAcknowledgeWarnings] = useState(false);
+  const parsedCatalog = useMemo(() => {
+    try {
+      return JSON.parse(text) as Catalog;
+    } catch {
+      return null;
+    }
+  }, [text]);
 
   useEffect(() => {
     const timer = window.setTimeout(
@@ -136,6 +146,13 @@ export function App() {
         <p className={`message message--${message.kind}`} role="status">
           {message.text}
         </p>
+      )}
+
+      {parsedCatalog && (
+        <ProgramGroupForms
+          catalog={parsedCatalog}
+          onChange={(value) => setText(`${JSON.stringify(value, null, 2)}\n`)}
+        />
       )}
 
       <label className="json-editor">
