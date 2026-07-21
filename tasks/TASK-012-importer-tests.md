@@ -1,6 +1,6 @@
 # TASK-012: Add importer fixtures and regression tests
 
-- **Status:** In progress
+- **Status:** Ready for review
 - **Phase:** Import
 - **Branch:** `task/012-importer-tests`
 - **Depends on:** `TASK-009`, `TASK-010`, `TASK-011`
@@ -19,7 +19,7 @@ Cover known headings, numbered lists, shared courses, instructors, missing value
 - [x] Add or update tests and documentation proportional to the change.
 - [x] Run relevant validation and record exact evidence below.
 - [x] Review the diff for unrelated files and secrets.
-- [ ] Commit, push, and open one reviewed pull request directly to `main`.
+- [x] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
@@ -34,8 +34,8 @@ Cover known headings, numbered lists, shared courses, instructors, missing value
 - **Documentation:** Updated `artifacts/content-import.md` with the fixture location, synthetic-data boundary, and protected edge cases; synchronized TASK-011 closure and the master checklist.
 - **Security/privacy:** The committed fixture is synthetic and contains no real registration destination or personal data; generated draft/diagnostic files remain ignored and absent from `dist`; no registration field or target was introduced on a course/offering.
 - **Skill compliance:** Followed development-lifecycle, content-import, and git-task-workflow instructions; verified TASK-009, TASK-010, and merged TASK-011 dependencies; preserved ambiguous/missing text and all assignments; and left user-owned `.vscode/` and `instractions` unchanged.
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Commit:** `4aa92c4` (`TASK-012 add importer regression fixtures`)
+- **Pull request:** [#20](https://github.com/idubi/sederot-course-catalog/pull/20), targeting `main`, awaiting review; no automatic merge requested.
 
 ## Completion record
 
