@@ -34,7 +34,7 @@ Create course cards and /programs/[groupId]/courses/[offeringId] with image reso
 - **Documentation:** Updated `README.md` with the contextual course-detail route, image precedence, displayed content, return behavior, and no-registration boundary; synchronized TASK-022 approved merge evidence.
 - **Security/privacy:** The page is generated only from validated approved JSON, renders only build-time-sanitized description HTML, and has no registration target, runtime input, storage, tracking, authentication, or API behavior.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; verified PR #30 merged, branched from updated `main`, preserved unrelated local files, and kept the PR target as `main` without automatic merge.
-- **Commit:** Pending
+- **Commit:** `ddfd42d` (`TASK-023 add contextual course details`)
 - **Pull request:** Pending
 
 ## Completion record
