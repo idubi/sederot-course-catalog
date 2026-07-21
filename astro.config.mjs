@@ -1,7 +1,9 @@
 import { defineConfig } from 'astro/config';
 
 const configuredBase = process.env.PUBLIC_BASE_PATH || '/';
-const base = configuredBase.endsWith('/') ? configuredBase : `${configuredBase}/`;
+const base = configuredBase.endsWith('/')
+  ? configuredBase
+  : `${configuredBase}/`;
 
 export default defineConfig({
   output: 'static',
