@@ -35,7 +35,7 @@ Add accessible phone, WhatsApp, and email links with approved non-sensitive cont
 - **Security/privacy:** Only approved catalog contact data and public program/course labels are encoded in links. The static site does not accept, transmit through a server, log, or store user-entered data; no form, runtime API, tracking, authentication, or registration behavior was introduced.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; verified PR #32 merged, branched from updated `main`, verified TASK-022/TASK-023 dependencies, preserved unrelated local files, and kept the PR target as `main` without automatic merge.
 - **Commit:** `b44091a` (`TASK-025 add contextual contact actions`)
-- **Pull request:** Pending
+- **Pull request:** [#33](https://github.com/idubi/sederot-course-catalog/pull/33)
 
 ## Completion record
 
