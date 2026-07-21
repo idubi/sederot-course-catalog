@@ -35,9 +35,9 @@ describe('local content editor boundary', () => {
     expect(EDITOR_HOST).toBe('127.0.0.1');
   });
 
-  it('answers the local health endpoint without caching', () => {
+  it('answers the local health endpoint without caching', async () => {
     const recorder = responseRecorder();
-    const handled = handleLocalApi(
+    const handled = await handleLocalApi(
       { method: 'GET', url: '/api/health' } as IncomingMessage,
       recorder.response,
     );
@@ -57,11 +57,11 @@ describe('local content editor boundary', () => {
     });
   });
 
-  it('does not intercept public non-API paths', () => {
+  it('does not intercept public non-API paths', async () => {
     const recorder = responseRecorder();
 
     expect(
-      handleLocalApi(
+      await handleLocalApi(
         { method: 'GET', url: '/programs/example' } as IncomingMessage,
         recorder.response,
       ),

@@ -12,9 +12,9 @@ function localApiPlugin(): Plugin {
     name: 'sderot-loopback-editor-api',
     configureServer(server) {
       server.middlewares.use((request, response, next) => {
-        if (!handleLocalApi(request, response)) {
-          next();
-        }
+        void handleLocalApi(request, response).then((handled) => {
+          if (!handled) next();
+        });
       });
     },
   };

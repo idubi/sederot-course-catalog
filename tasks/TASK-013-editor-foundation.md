@@ -1,6 +1,6 @@
 # TASK-013: Create local-only content editor foundation
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Editor
 - **Branch:** `task/013-editor-foundation`
 - **Depends on:** `TASK-006`, `TASK-007`
@@ -35,10 +35,10 @@ Create the loopback-only editor/API boundary and local application shell.
 - **Security/privacy:** The editor and API bind to `127.0.0.1`, emit no telemetry, store no personal data, and are not Astro routes. The API returns no catalog data in this foundation task and sends no-cache JSON responses. No course/offering registration field or target was introduced, and the public artifact contains no editor, API, draft, or diagnostic content.
 - **Skill compliance:** Followed development-lifecycle, content-import, and git-task-workflow instructions; confirmed dependencies in `main` at TASK-006 merge `148a913` and TASK-007 merge `ac232fb`; preserved approved JSON as the sole production input; and left user-owned `.vscode/` and `instractions` unchanged. No design conflict blocks the task: the current consolidated SDD supersedes older offering-registration wording and the implementation follows its program/group boundary.
 - **Commit:** `59a6d70` (`TASK-013 establish local content editor`)
-- **Pull request:** [#21](https://github.com/idubi/sederot-course-catalog/pull/21), targeting `main`, awaiting review; no automatic merge requested.
+- **Pull request:** [#21](https://github.com/idubi/sederot-course-catalog/pull/21), approved and merged to `main` as `ecd00e6`.
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Codex after explicit owner approval
+- **Completed at:** 2026-07-21
+- **Notes:** The loopback-only editor foundation is merged and available to TASK-014.

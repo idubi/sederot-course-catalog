@@ -12,6 +12,7 @@ export default [
       'dist/',
       'node_modules/',
       'tasks/',
+      'tools/content-editor/.local-dist/',
       'index.html',
       'instractions',
     ],

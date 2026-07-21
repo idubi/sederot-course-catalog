@@ -22,8 +22,8 @@ Course cards and course details never initiate registration.
 - [x] [TASK-010: Normalize programs, groups, courses, and offerings](../tasks/TASK-010-import-normalization.md)
 - [x] [TASK-011: Produce draft content and structured diagnostics](../tasks/TASK-011-import-diagnostics.md)
 - [x] [TASK-012: Add importer fixtures and regression tests](../tasks/TASK-012-importer-tests.md)
-- [ ] [TASK-013: Create local-only content editor foundation](../tasks/TASK-013-editor-foundation.md) — Ready for review
-- [ ] [TASK-014: Implement editor JSON load, save, and export](../tasks/TASK-014-editor-json-io.md)
+- [x] [TASK-013: Create local-only content editor foundation](../tasks/TASK-013-editor-foundation.md)
+- [ ] [TASK-014: Implement editor JSON load, save, and export](../tasks/TASK-014-editor-json-io.md) — In progress
 - [ ] [TASK-015: Edit programs and audience groups](../tasks/TASK-015-editor-program-groups.md)
 - [ ] [TASK-016: Edit courses and contextual offerings](../tasks/TASK-016-editor-courses-offerings.md)
 - [ ] [TASK-017: Edit program-level registration information](../tasks/TASK-017-editor-registration.md)
