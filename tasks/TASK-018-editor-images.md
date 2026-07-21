@@ -34,7 +34,7 @@ Upload/validate images, alt text, stable paths, and offering override precedence
 - **Documentation:** Updated `README.md` with accepted formats, size limit, stable paths, update-on-success behavior, precedence, and optional no-image behavior; synchronized TASK-016/TASK-017 merge evidence.
 - **Security/privacy:** Uploads are loopback-only, capped at 5 MiB, restricted to JPEG/PNG/WebP, checked by MIME signature, and named only from validated kebab-case entity IDs under `public/content/images`. SVG and user-controlled paths are rejected; no registration or user data was added.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; started from merged PR #25 on current `main`, verified TASK-016 dependency merge, preserved the unrelated approved-content edit and untracked user files, and kept the PR target as `main` without automatic merge.
-- **Commit:** Pending
+- **Commit:** `fdd2ce1` (`TASK-018 add managed image uploads`)
 - **Pull request:** Pending
 
 ## Completion record
