@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="קטלוג תוכניות וקורסים | מרכז המצוינות שדרות"
+  description="קטלוג התוכניות והקורסים של מרכז המצוינות שדרות"
+>
+  <section class="hero" aria-labelledby="page-title">
+    <div>
+      <p class="kicker">שנת הלימודים תשפ״ז</p>
+      <h1 id="page-title">בוחרים תוכנית ומגלים את אשכול הקורסים המתאים</h1>
+      <p class="intro">
+        מעטפת האתר הסטטית מוכנה. בחירת תוכנית, שכבה וקבוצה תתווסף במשימות הממשק הייעודיות.
+      </p>
+    </div>
+    <aside class="status-card" aria-label="מצב הקטלוג">
+      <strong>הקטלוג בהקמה</strong>
+      <span>תוכן מאושר יוצג כאן לאחר השלמת תהליך הייבוא והאישור.</span>
+    </aside>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    display: grid;
+    gap: 1.5rem;
+    padding: clamp(1.5rem, 7vw, 4rem) 0;
+  }
+
+  .kicker {
+    margin: 0 0 0.5rem;
+    color: #315c9c;
+    font-weight: 700;
+  }
+
+  h1 {
+    max-width: 18ch;
+    margin: 0;
+    font-size: clamp(2rem, 9vw, 4.5rem);
+    line-height: 1.08;
+  }
+
+  .intro {
+    max-width: 46rem;
+    margin: 1.25rem 0 0;
+    color: #52617a;
+    font-size: clamp(1rem, 3vw, 1.25rem);
+  }
+
+  .status-card {
+    display: grid;
+    gap: 0.4rem;
+    align-self: end;
+    padding: 1.25rem;
+    border: 1px solid #cbd6e8;
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: 0 1rem 2.5rem rgb(35 62 105 / 8%);
+  }
+
+  .status-card strong {
+    color: #315c9c;
+  }
+
+  @media (min-width: 48rem) {
+    .hero {
+      grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
+      min-height: 65vh;
+    }
+  }
+</style>

@@ -1,0 +1,5 @@
+.env
+פרוייקט רישום לקורסים.lnk
+node_modules/
+dist/
+.astro/
