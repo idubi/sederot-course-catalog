@@ -2,11 +2,14 @@ import { useEffect, useMemo, useState } from 'react';
 
 import type { Catalog } from '../../../src/domain/catalog';
 import { formatImportedJson, validateWebCatalogUrl } from '../catalog-import';
+import {
+  loadEditorText,
+  persistEditorText,
+  resetEditorState,
+} from '../editor-state';
 import { CourseOfferingForms } from './CourseOfferingForms';
 import { ProgramGroupForms } from './ProgramGroupForms';
 import { RegistrationForms } from './RegistrationForms';
-
-const STORAGE_KEY = 'sderot-content-editor.catalog';
 
 type Message = { kind: 'error' | 'success'; text: string } | null;
 
@@ -21,9 +24,7 @@ async function requestJson(path: string, init?: RequestInit) {
 }
 
 export function App() {
-  const [text, setText] = useState(
-    () => localStorage.getItem(STORAGE_KEY) ?? '',
-  );
+  const [text, setText] = useState(() => loadEditorText(localStorage));
   const [message, setMessage] = useState<Message>(null);
   const [acknowledgeWarnings, setAcknowledgeWarnings] = useState(false);
   const [webCatalogUrl, setWebCatalogUrl] = useState('');
@@ -37,7 +38,7 @@ export function App() {
 
   useEffect(() => {
     const timer = window.setTimeout(
-      () => localStorage.setItem(STORAGE_KEY, text),
+      () => persistEditorText(localStorage, text),
       300,
     );
     return () => window.clearTimeout(timer);
@@ -126,6 +127,24 @@ export function App() {
     }
   }
 
+  function reset() {
+    if (
+      !window.confirm(
+        'לאפס את תוכן העורך והשמירה האוטומטית בדפדפן? קבצים בכונן לא יימחקו.',
+      )
+    )
+      return;
+
+    resetEditorState(localStorage);
+    setText('');
+    setWebCatalogUrl('');
+    setAcknowledgeWarnings(false);
+    setMessage({
+      kind: 'success',
+      text: 'העורך אופס. קובצי הטיוטה והתוכן המאושר בכונן לא שונו.',
+    });
+  }
+
   return (
     <main className="editor-shell">
       <header className="editor-header">
@@ -164,6 +183,9 @@ export function App() {
           onClick={() => void submit('export')}
         >
           ייצוא מאושר
+        </button>
+        <button className="danger" type="button" onClick={reset}>
+          איפוס העורך
         </button>
       </div>
 

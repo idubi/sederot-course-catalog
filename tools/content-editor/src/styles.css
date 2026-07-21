@@ -64,6 +64,12 @@ select {
   background: #315dba;
 }
 
+.toolbar .danger {
+  border-color: #b65050;
+  color: #8c2323;
+  background: #fff0f0;
+}
+
 .warning-check {
   display: flex;
   gap: 0.55rem;
