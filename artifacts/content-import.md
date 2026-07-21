@@ -16,6 +16,8 @@ The replacement is the canonical current import input unless superseded by anoth
 
 Run `npm run content:read-source` after an approved source addition or change. It atomically reconstructs the deterministic reader snapshot at `content/draft/source-reader/blueprint-document.json`. That generated location is ignored by Git and excluded from production; deleting it is safe because the approved source recreates it.
 
+For a future academic year, copy `artifacts/course-blueprint-template.md` to a new, year-specific source file and fill the copy. Never place real yearly data in the template or overwrite an earlier approved source. The new source path, owner, date, and SHA-256 must receive explicit approval before the reader contract is changed.
+
 ## Importer responsibility
 
 The importer must recognize the existing document structure, including:
