@@ -1,6 +1,6 @@
 # TASK-021: Implement program, grade, and audience selection
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Public UI
 - **Branch:** `task/021-selection-funnel`
 - **Depends on:** `TASK-020`
@@ -35,10 +35,10 @@ Implement Program → Grade → boys/girls/mixed selection with accessible incom
 - **Security/privacy:** The funnel collects no name, identity, contact, eligibility, or other personal data; selection remains in transient form controls only and no analytics, tracking, cookies, storage, or runtime API is used. No course/offering registration action was added.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; started from merged PR #28 on current `main`, verified TASK-020 dependency, preserved unrelated local files, and kept the PR target as `main` without automatic merge.
 - **Commit:** `38a9752` (`TASK-021 add selection funnel`)
-- **Pull request:** [#29](https://github.com/idubi/sederot-course-catalog/pull/29), targeting `main`, awaiting review; no automatic merge requested.
+- **Pull request:** [#29](https://github.com/idubi/sederot-course-catalog/pull/29), approved and merged to `main` as `f7743fd`.
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Codex after explicit owner approval
+- **Completed at:** 2026-07-22
+- **Notes:** Accessible program, grade, and audience selection is merged and available to TASK-022.

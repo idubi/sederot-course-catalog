@@ -1,6 +1,6 @@
 # TASK-022: Implement program group and course-cluster page
 
-- **Status:** Not started
+- **Status:** Ready for review
 - **Phase:** Public UI
 - **Branch:** `task/022-program-group-page`
 - **Depends on:** `TASK-021`
@@ -13,29 +13,29 @@ Render the selected program, group details, cluster of contextual course cards, 
 
 ## Implementation checklist
 
-- [ ] Re-read the task sources and record conflicts or missing inputs.
-- [ ] Implement only this task's focused scope on its task branch.
-- [ ] Preserve RTL, mobile-first, static-output, approved-JSON, privacy, and program-level registration constraints.
-- [ ] Add or update tests and documentation proportional to the change.
-- [ ] Run relevant validation and record exact evidence below.
-- [ ] Review the diff for unrelated files and secrets.
-- [ ] Commit, push, and open one reviewed pull request directly to `main`.
+- [x] Re-read the task sources and record conflicts or missing inputs.
+- [x] Implement only this task's focused scope on its task branch.
+- [x] Preserve RTL, mobile-first, static-output, approved-JSON, privacy, and program-level registration constraints.
+- [x] Add or update tests and documentation proportional to the change.
+- [x] Run relevant validation and record exact evidence below.
+- [x] Review the diff for unrelated files and secrets.
+- [x] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
-- [ ] Cluster matches approved group data and registration starts only here.
-- [ ] No individual course or offering gains a registration action or target.
-- [ ] Referenced files and task dependencies exist and use canonical Markdown paths.
+- [x] Cluster matches approved group data and registration starts only here.
+- [x] No individual course or offering gains a registration action or target.
+- [x] Referenced files and task dependencies exist and use canonical Markdown paths.
 
 ## Completion evidence
 
-- **Implementation:** Pending
-- **Tests:** Pending
-- **Documentation:** Pending
-- **Security/privacy:** Pending
-- **Skill compliance:** Pending
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Implementation:** Added one statically generated RTL page per approved audience group with program/group schedule metadata, ordered contextual course cards, optional resolved images, generic contact actions, print navigation, and the sole group-level registration-start link to the internal information route. Course cards link only to contextual details.
+- **Tests:** Type checking passed for 54 files with 0 diagnostics; Vitest passed 66/66 tests across 17 files; approved content validation and static build passed with two pages. Output assertions confirmed the group page exists and contains the group registration-information action; `git diff --check` passed.
+- **Documentation:** Updated `README.md` with static group routes, approved ordering, contacts/print surface, and the registration-versus-course-card boundary; synchronized TASK-021 merge evidence.
+- **Security/privacy:** All page content is build-time approved JSON. Contact links leave the static site directly without forms or storage; no analytics, tracking, runtime API, identity data, or course/offering registration target was added.
+- **Skill compliance:** Followed development-lifecycle and git-task-workflow; started from merged PR #29 on current `main`, verified TASK-021 dependency, preserved unrelated local files, and kept the PR target as `main` without automatic merge.
+- **Commit:** `29b4ed3` (`TASK-022 add program group course cluster`)
+- **Pull request:** [#30](https://github.com/idubi/sederot-course-catalog/pull/30)
 
 ## Completion record
 

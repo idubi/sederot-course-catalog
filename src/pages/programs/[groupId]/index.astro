@@ -1,0 +1,139 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CourseCard from '../../../components/CourseCard.astro';
+import { loadApprovedCatalog } from '../../../content/catalog-loader';
+import {
+  buildProgramGroups,
+  type ProgramGroupViewModel,
+} from '../../../domain/public-catalog';
+
+export function getStaticPaths() {
+  return buildProgramGroups(loadApprovedCatalog()).map((group) => ({
+    params: { groupId: group.groupId },
+    props: { group },
+  }));
+}
+
+const { group } = Astro.props as { group: ProgramGroupViewModel };
+const catalog = loadApprovedCatalog();
+const base = import.meta.env.BASE_URL;
+const genderLabels = { boys: 'בנים', girls: 'בנות', mixed: 'מעורב' };
+---
+
+<BaseLayout
+  title={`${group.programName} | קטלוג מרכז המצוינות שדרות`}
+  description={`אשכול הקורסים של ${group.programName}`}
+>
+  <nav aria-label="פירורי לחם"><a href={base}>חזרה לבחירת תוכנית</a></nav>
+  <header class="group-header">
+    <p>{catalog.academicYear.label}</p>
+    <h1>{group.programName}</h1>
+    <dl>
+      <div><dt>שכבה</dt><dd>{group.gradeLabels.join(', ')}</dd></div>
+      <div><dt>קהל</dt><dd>{genderLabels[group.gender]}</dd></div>
+      <div>
+        <dt>מועד</dt><dd>{group.day}, {group.startTime}–{group.endTime}</dd>
+      </div>
+    </dl>
+    <div class="group-actions">
+      <a
+        class="registration"
+        href={`${base}programs/${group.groupId}/registration/`}
+        >מידע והרשמה לתוכנית</a
+      >
+      <a href={`${base}print/?group=${group.groupId}`}>תצוגה להדפסה</a>
+    </div>
+  </header>
+  <section aria-labelledby="courses-title">
+    <h2 id="courses-title">אשכול הקורסים</h2>
+    <div class="course-grid">
+      {
+        group.offerings.map((offering) => (
+          <CourseCard offering={offering} groupId={group.groupId} base={base} />
+        ))
+      }
+    </div>
+  </section>
+  <aside class="contacts" aria-label="יצירת קשר">
+    <h2>צריכים עזרה?</h2>
+    <a href={`tel:${catalog.contacts.phone}`}>טלפון</a>
+    <a
+      href={`https://wa.me/${catalog.contacts.whatsapp}`}
+      rel="noopener noreferrer">WhatsApp</a
+    >
+    <a href={`mailto:${catalog.contacts.email}`}>דוא״ל</a>
+  </aside>
+</BaseLayout>
+<style>
+  nav {
+    padding-block: 1rem;
+  }
+  .group-header {
+    padding: clamp(1.5rem, 6vw, 3rem);
+    border-radius: 1.2rem;
+    background: #eaf0fb;
+  }
+  .group-header > p,
+  h1 {
+    margin-block: 0 0.5rem;
+  }
+  h1 {
+    font-size: clamp(2rem, 8vw, 4rem);
+  }
+  dl {
+    display: grid;
+    gap: 0.6rem;
+  }
+  dl div {
+    display: flex;
+    gap: 0.5rem;
+  }
+  dt {
+    font-weight: 800;
+  }
+  dd {
+    margin: 0;
+  }
+  .group-actions,
+  .contacts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-block-start: 1.2rem;
+  }
+  .group-actions a,
+  .contacts a {
+    padding: 0.7rem 1rem;
+    border: 1px solid #315c9c;
+    border-radius: 0.6rem;
+    text-decoration: none;
+  }
+  .registration {
+    color: #fff;
+    background: #315c9c;
+    font-weight: 800;
+  }
+  section {
+    padding-block: 2rem;
+  }
+  .course-grid {
+    display: grid;
+    gap: 1rem;
+  }
+  .contacts {
+    align-items: center;
+    padding-block: 1rem 3rem;
+  }
+  .contacts h2 {
+    flex-basis: 100%;
+    margin: 0;
+  }
+  @media (min-width: 48rem) {
+    .course-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    dl {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

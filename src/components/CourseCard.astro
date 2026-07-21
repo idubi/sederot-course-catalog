@@ -1,0 +1,63 @@
+---
+import type { OfferingViewModel } from '../domain/public-catalog';
+const { offering, groupId, base } = Astro.props as {
+  offering: OfferingViewModel;
+  groupId: string;
+  base: string;
+};
+---
+
+<article class="course-card">
+  {
+    offering.image && (
+      <img
+        src={`${base}${offering.image.src.slice(1)}`}
+        alt={offering.image.alt}
+        loading="lazy"
+      />
+    )
+  }
+  <div class="course-content">
+    <p class="short-name">{offering.shortName}</p>
+    <h3>{offering.courseName}</h3>
+    <p>{offering.instructors.join(', ')}</p>
+    <a href={`${base}programs/${groupId}/courses/${offering.offeringId}/`}
+      >פרטי הקורס</a
+    >
+  </div>
+</article>
+<style>
+  .course-card {
+    overflow: hidden;
+    border: 1px solid #cbd6e8;
+    border-radius: 1rem;
+    background: #fff;
+  }
+  img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+  .course-content {
+    padding: 1rem;
+  }
+  .short-name,
+  h3,
+  .course-content p {
+    margin-block: 0 0.4rem;
+  }
+  .short-name {
+    color: #315c9c;
+    font-weight: 700;
+  }
+  a {
+    display: inline-block;
+    margin-block-start: 0.7rem;
+    padding: 0.6rem 0.9rem;
+    border-radius: 0.55rem;
+    color: #fff;
+    background: #315c9c;
+    font-weight: 700;
+    text-decoration: none;
+  }
+</style>
