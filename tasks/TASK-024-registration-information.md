@@ -34,7 +34,7 @@ Create /programs/[groupId]/registration, group/program target resolution, close/
 - **Documentation:** Updated `README.md` with the mandatory internal information route, resolution precedence, external-link boundary, same-group return behavior, and no-data-collection statement; synchronized TASK-023 approved merge evidence.
 - **Security/privacy:** Only an enabled HTTPS URL already accepted by the approved-content schema reaches the static information page. The external link uses `noopener noreferrer`; no personal data, callback, tracking, storage, authentication, payment handling, or runtime API was added.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; verified PR #31 merged, branched from updated `main`, verified TASK-017 and TASK-022 dependencies, preserved unrelated local files, and kept the PR target as `main` without automatic merge.
-- **Commit:** Pending
+- **Commit:** `4eedcde` (`TASK-024 add registration information flow`)
 - **Pull request:** Pending
 
 ## Completion record
