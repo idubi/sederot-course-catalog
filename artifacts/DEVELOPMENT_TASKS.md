@@ -26,7 +26,7 @@ Course cards and course details never initiate registration.
 - [x] [TASK-014: Implement editor JSON load, save, and export](../tasks/TASK-014-editor-json-io.md)
 - [x] [TASK-015: Edit programs and audience groups](../tasks/TASK-015-editor-program-groups.md)
 - [ ] [TASK-016: Edit courses and contextual offerings](../tasks/TASK-016-editor-courses-offerings.md) — Ready for review
-- [ ] [TASK-017: Edit program-level registration information](../tasks/TASK-017-editor-registration.md)
+- [ ] [TASK-017: Edit program-level registration information](../tasks/TASK-017-editor-registration.md) — Ready for review
 - [ ] [TASK-018: Manage general and offering-specific images](../tasks/TASK-018-editor-images.md)
 - [ ] [TASK-019: Finalize sanitation and production content validation](../tasks/TASK-019-content-validation.md)
 - [ ] [TASK-020: Build the public application shell and view models](../tasks/TASK-020-catalog-foundation.md)

@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { Catalog } from '../../../src/domain/catalog';
 import { CourseOfferingForms } from './CourseOfferingForms';
 import { ProgramGroupForms } from './ProgramGroupForms';
+import { RegistrationForms } from './RegistrationForms';
 
 const STORAGE_KEY = 'sderot-content-editor.catalog';
 
@@ -156,6 +157,10 @@ export function App() {
             onChange={(value) => setText(`${JSON.stringify(value, null, 2)}\n`)}
           />
           <CourseOfferingForms
+            catalog={parsedCatalog}
+            onChange={(value) => setText(`${JSON.stringify(value, null, 2)}\n`)}
+          />
+          <RegistrationForms
             catalog={parsedCatalog}
             onChange={(value) => setText(`${JSON.stringify(value, null, 2)}\n`)}
           />
