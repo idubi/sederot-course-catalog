@@ -34,8 +34,8 @@ Enable strict TypeScript, formatting, linting, test commands, and build scripts.
 - **Documentation:** Updated `README.md` with supported runtime versions, quality commands, gate behavior, and exclusions; added formatter/linter policy files.
 - **Security/privacy:** No runtime dependencies, client scripts, APIs, data collection, registration behavior, or production content were added. Generated output, dependencies, local editor settings, source artifacts, and legacy files are excluded from quality-tool traversal as appropriate.
 - **Skill compliance:** Followed development-lifecycle, git-task-workflow, and deployment instructions; verified TASK-003 merge commit `679de21`, branched from updated `main`, preserved untracked `.vscode/` and `instractions`, and did not merge or deploy.
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Commit:** `5519c83` (`TASK-004 establish TypeScript quality gates`)
+- **Pull request:** [#11](https://github.com/idubi/sederot-course-catalog/pull/11), targeting `main`, awaiting review; no automatic merge requested.
 
 ## Completion record
 
