@@ -34,7 +34,7 @@ Implement RTL layouts, approved-content loading, static generation, and program/
 - **Documentation:** Updated `README.md` with the build-time-only approved JSON and public view-model contract, current no-client-JavaScript shell, and TASK-021–TASK-024 boundaries; synchronized TASK-019 merge evidence.
 - **Security/privacy:** Public view models intentionally omit registration targets from offerings. The shell adds no client persistence, runtime fetch, API, analytics, tracking, authentication, or personal data; approved JSON remains the only input.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; started from merged PR #27 on current `main`, verified dependencies, preserved the unrelated approved-content edit and untracked user files, and kept the PR target as `main` without automatic merge.
-- **Commit:** Pending
+- **Commit:** `7986491` (`TASK-020 add public catalog foundation`)
 - **Pull request:** Pending
 
 ## Completion record
