@@ -1,6 +1,6 @@
 # TASK-008: Identify and map the current course-content source
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Import
 - **Branch:** `task/008-source-content-investigation`
 - **Depends on:** `TASK-002`
@@ -35,10 +35,10 @@ Locate the actual current-format course-source DOCX or record an explicitly appr
 - **Security/privacy:** Read-only metadata and hash inspection only; no source content was copied into production, no personal data or secret was added, registration remains program/group-level, and untracked `.vscode/`, `instractions`, and the root shortcut were preserved unchanged.
 - **Skill compliance:** Followed development-lifecycle, content-import, and git-task-workflow instructions; verified TASK-002 merge commit `5c1fcd1` and current `main` at `ac232fb`; branched from synchronized `main`; treated design Markdown only as requirements; and did not infer an unapproved replacement contract.
 - **Commit:** `782460a` (`TASK-008 record course source investigation`)
-- **Pull request:** [#15](https://github.com/idubi/sederot-course-catalog/pull/15), targeting `main`, awaiting review; no automatic merge requested.
+- **Pull request:** [#15](https://github.com/idubi/sederot-course-catalog/pull/15), approved and merged to `main` as `4faee55`.
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Codex after explicit owner approval
+- **Completed at:** 2026-07-21
+- **Notes:** The owner approved `artifacts/2027 cources details - blueprint.md` as the replacement importer input. The contract and go decision are recorded in `artifacts/TASK-008-source-content-investigation.md`.
