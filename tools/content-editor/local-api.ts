@@ -6,6 +6,7 @@ import {
   saveDraft,
   validateEditorCatalog,
 } from './catalog-files';
+import { saveImageUpload, type ImageUpload } from './image-files';
 
 export const EDITOR_API_PREFIX = '/api/';
 const MAX_BODY_BYTES = 5 * 1024 * 1024;
@@ -16,6 +17,8 @@ interface CatalogRequest {
   warnings?: string[];
 }
 
+type EditorRequest = CatalogRequest & Partial<ImageUpload>;
+
 function writeJson(response: ServerResponse, status: number, body: unknown) {
   response.writeHead(status, {
     'Cache-Control': 'no-store',
@@ -24,7 +27,7 @@ function writeJson(response: ServerResponse, status: number, body: unknown) {
   response.end(JSON.stringify(body));
 }
 
-async function readJson(request: IncomingMessage): Promise<CatalogRequest> {
+async function readJson(request: IncomingMessage): Promise<EditorRequest> {
   const chunks: Buffer[] = [];
   let size = 0;
   for await (const chunk of request) {
@@ -67,6 +70,14 @@ export async function handleLocalApi(
         200,
         validateEditorCatalog(body.catalog, body.warnings),
       );
+      return true;
+    }
+
+    if (request.method === 'POST' && url.pathname === '/api/images') {
+      const body = await readJson(request);
+      if (!body.dataBase64 || !body.entityId || !body.kind || !body.mimeType)
+        throw new Error('Missing image upload fields');
+      writeJson(response, 201, await saveImageUpload(body as ImageUpload));
       return true;
     }
 

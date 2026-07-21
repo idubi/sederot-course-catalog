@@ -138,4 +138,13 @@ describe('catalog schema', () => {
 
     expect(issuePaths(catalog)).toContain('offerings.0');
   });
+
+  it('rejects images outside the approved public asset path', () => {
+    const catalog = createValidCatalog();
+    catalog.courses[0]!.defaultImage = {
+      src: 'https://example.test/image.webp',
+      alt: 'תמונה',
+    };
+    expect(issuePaths(catalog)).toContain('courses.0.defaultImage.src');
+  });
 });

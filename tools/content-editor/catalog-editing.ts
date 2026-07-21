@@ -5,7 +5,15 @@ import type {
   CourseOffering,
   Program,
   RegistrationTarget,
+  ImageAsset,
 } from '../../src/domain/catalog';
+
+export function resolveOfferingImage(
+  course: Course,
+  offering: CourseOffering,
+): ImageAsset | undefined {
+  return offering.imageOverride ?? course.defaultImage;
+}
 
 export function updateProgram(
   catalog: Catalog,
