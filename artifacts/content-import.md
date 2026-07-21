@@ -18,6 +18,8 @@ Run `npm run content:read-source` after an approved source addition or change. I
 
 Run `npm run content:normalize-source` to create the deterministic program-first draft at `content/draft/import/normalized-catalog.json`. Normalization deduplicates only exact whitespace-normalized course names, retains every group assignment as a separate offering with raw source evidence, and leaves unconsumed nodes available for later diagnostics. The draft contains no registration field on courses or offerings and is not a production input.
 
+Run `npm run content:import-draft` to write the closest normalized draft to `content/draft/import/draft-catalog.json` and actionable diagnostics to `content/diagnostics/import-diagnostics.json`. Every diagnostic contains severity, code, message, capped source excerpt, full source location, confidence, and an entity reference when known. Full unmatched raw text remains in the draft even when its diagnostic excerpt is capped.
+
 For a future academic year, copy `artifacts/course-blueprint-template.md` to a new, year-specific source file and fill the copy. Never place real yearly data in the template or overwrite an earlier approved source. The new source path, owner, date, and SHA-256 must receive explicit approval before the reader contract is changed.
 
 ## Importer responsibility

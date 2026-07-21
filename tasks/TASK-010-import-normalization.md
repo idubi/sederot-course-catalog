@@ -1,6 +1,6 @@
 # TASK-010: Normalize programs, groups, courses, and offerings
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Import
 - **Branch:** `task/010-import-normalization`
 - **Depends on:** `TASK-005`, `TASK-009`
@@ -35,10 +35,10 @@ Map source content into stable program-first entities and contextual offerings w
 - **Security/privacy:** The draft and retained raw evidence stay under ignored `content/draft/` and were confirmed absent from `dist`; no personal data, runtime API, registration behavior, or registration field on a course/offering was introduced. Approved JSON remains the sole production input.
 - **Skill compliance:** Followed development-lifecycle, content-import, and git-task-workflow instructions; verified TASK-005 and merged TASK-009 dependencies; branched from synchronized `main` at `94323f0`; preserved uncertain and unmatched text, avoided speculative near-duplicate merges, and left user-owned `.vscode/` and `instractions` unchanged.
 - **Commit:** `c4b1382` (`TASK-010 normalize blueprint catalog entities`)
-- **Pull request:** [#18](https://github.com/idubi/sederot-course-catalog/pull/18), targeting `main`, awaiting review; no automatic merge requested.
+- **Pull request:** [#18](https://github.com/idubi/sederot-course-catalog/pull/18), approved and merged to `main` as `64167d6`.
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Codex after explicit owner approval
+- **Completed at:** 2026-07-21
+- **Notes:** Normalization is merged and available to the dependent diagnostics pipeline.
