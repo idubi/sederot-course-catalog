@@ -5,6 +5,7 @@ import type {
 } from '../../../src/domain/catalog';
 import {
   reorderOffering,
+  resolveOfferingImage,
   updateCourse,
   updateOffering,
 } from '../catalog-editing';
@@ -16,6 +17,28 @@ export function CourseOfferingForms({
   catalog: Catalog;
   onChange: (value: Catalog) => void;
 }) {
+  const uploadImage = async (
+    file: File | undefined,
+    entityId: string,
+    kind: 'course' | 'offering',
+  ) => {
+    if (!file) return;
+    const dataBase64 = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = () => reject(new Error('Image read failed'));
+      reader.onload = () => resolve(String(reader.result).split(',')[1] ?? '');
+      reader.readAsDataURL(file);
+    });
+    const response = await fetch('/api/images', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ dataBase64, entityId, kind, mimeType: file.type }),
+    });
+    const result = (await response.json()) as { error?: string; src?: string };
+    if (!response.ok || !result.src)
+      throw new Error(result.error ?? 'Upload failed');
+    return result.src;
+  };
   const courseImage = (value: Course, src: string, alt: string): Course => {
     const rest = { ...value };
     delete rest.defaultImage;
@@ -107,6 +130,31 @@ export function CourseOfferingForms({
                     ),
                   ),
                 )
+              }
+            />
+          </label>
+          <label>
+            העלאת תמונה כללית
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              onChange={(event) =>
+                void uploadImage(event.target.files?.[0], value.id, 'course')
+                  .then((src) => {
+                    if (src)
+                      onChange(
+                        updateCourse(
+                          catalog,
+                          value.id,
+                          courseImage(
+                            value,
+                            src,
+                            value.defaultImage?.alt ?? '',
+                          ),
+                        ),
+                      );
+                  })
+                  .catch((error: Error) => window.alert(error.message))
               }
             />
           </label>
@@ -221,6 +269,31 @@ export function CourseOfferingForms({
             />
           </label>
           <label>
+            העלאת תמונה חלופית לשיוך
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              onChange={(event) =>
+                void uploadImage(event.target.files?.[0], value.id, 'offering')
+                  .then((src) => {
+                    if (src)
+                      onChange(
+                        updateOffering(
+                          catalog,
+                          value.id,
+                          offeringImage(
+                            value,
+                            src,
+                            value.imageOverride?.alt ?? '',
+                          ),
+                        ),
+                      );
+                  })
+                  .catch((error: Error) => window.alert(error.message))
+              }
+            />
+          </label>
+          <label>
             טקסט חלופי לתמונה החלופית
             <input
               value={value.imageOverride?.alt ?? ''}
@@ -239,6 +312,26 @@ export function CourseOfferingForms({
               }
             />
           </label>
+          {(() => {
+            const course = catalog.courses.find(
+              ({ id }) => id === value.courseId,
+            );
+            const image = course
+              ? resolveOfferingImage(course, value)
+              : undefined;
+            return image ? (
+              <figure className="image-preview">
+                <img src={image.src} alt={image.alt} />
+                <figcaption>
+                  {value.imageOverride
+                    ? 'תמונה ייעודית לשיוך'
+                    : 'תמונת ברירת המחדל של הקורס'}
+                </figcaption>
+              </figure>
+            ) : (
+              <p>אין תמונה — זהו מצב תקין.</p>
+            );
+          })()}
           <div>
             <button
               type="button"

@@ -16,7 +16,12 @@ const entityIdSchema = catalogIdSchema;
 
 export const imageAssetSchema = z
   .object({
-    src: nonBlankString,
+    src: z
+      .string()
+      .regex(
+        /^\/content\/images\/[a-z0-9][a-z0-9.-]*$/,
+        'Must use an approved /content/images/ asset path',
+      ),
     alt: z.string(),
     width: z.number().int().positive().optional(),
     height: z.number().int().positive().optional(),

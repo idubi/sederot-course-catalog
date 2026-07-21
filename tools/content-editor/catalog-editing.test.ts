@@ -11,6 +11,7 @@ import {
   updateProgram,
   resolveRegistrationTarget,
   updateRegistrationTarget,
+  resolveOfferingImage,
 } from './catalog-editing';
 
 const catalog = catalogFixture as Catalog;
@@ -97,5 +98,28 @@ describe('program and audience-group editing', () => {
       'registration-updated',
     );
     expect(JSON.stringify(updated.offerings)).not.toContain('registration');
+  });
+
+  it('resolves an offering image before the course default', () => {
+    const course = {
+      ...catalog.courses[0]!,
+      defaultImage: { src: '/content/images/default.webp', alt: 'default' },
+    };
+    const offering = {
+      ...catalog.offerings[0]!,
+      imageOverride: { src: '/content/images/override.webp', alt: 'override' },
+    };
+    expect(resolveOfferingImage(course, offering)).toEqual(
+      offering.imageOverride,
+    );
+    expect(
+      resolveOfferingImage(course, { ...offering, imageOverride: undefined }),
+    ).toEqual(course.defaultImage);
+    expect(
+      resolveOfferingImage(
+        { ...course, defaultImage: undefined },
+        { ...offering, imageOverride: undefined },
+      ),
+    ).toBeUndefined();
   });
 });
