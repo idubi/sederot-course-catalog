@@ -34,7 +34,7 @@ Verify mobile-first layout, keyboard flow, focus, semantics, contrast, long Hebr
 - **Documentation:** Updated `README.md` with the 320px, RTL, keyboard, focus, touch-target, wrapping, new-window, reduced-motion, forced-colors, and non-certification accessibility contract; synchronized TASK-026 approved merge evidence.
 - **Security/privacy:** Accessibility behavior is static CSS/semantic HTML except for the existing local selection and print interactions. Safe DOM APIs now create dynamic options; no personal data, registration target, storage, tracking, authentication, or runtime API was introduced.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; reverified PR #34 after merge propagation, branched from updated `main`, verified TASK-021 through TASK-026 dependencies, preserved unrelated local files, and kept the PR target as `main` without automatic merge.
-- **Commit:** Pending
+- **Commit:** `30d918d` (`TASK-027 improve responsive accessibility`)
 - **Pull request:** Pending
 
 ## Completion record
