@@ -5,3 +5,4 @@
 *.lnk binary
 
 *.md text eol=lf
+content/baseline/*.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

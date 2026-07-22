@@ -4,6 +4,7 @@ import {
   catalogShapeMessage,
   formatImportedJson,
   isEditableCatalog,
+  isLegacyCatalog,
   validateWebCatalogUrl,
 } from './catalog-import';
 
@@ -40,6 +41,7 @@ describe('catalog JSON import', () => {
     };
 
     expect(isEditableCatalog(legacy)).toBe(false);
+    expect(isLegacyCatalog(legacy)).toBe(true);
     expect(catalogShapeMessage(legacy)).toContain('groups');
   });
 

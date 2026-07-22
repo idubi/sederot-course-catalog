@@ -56,6 +56,8 @@ The approved JSON, not the DOCX, is the direct input to the Astro build.
 
 ## Repository content boundaries
 
+- `content/baseline/catalog_2026-2027.json` is the owner-designated immutable JSON baseline for academic year 2026–2027. Its approved filename and SHA-256 `cc7440cc19542e8a1aca012c1cba9ca79edbf437f26facc4138f10409755a5ca` are enforced by `npm run content:migrate-baseline`; it is never a production build input.
+- Baseline migration writes only to ignored `content/draft/baseline/catalog.json` and `content/diagnostics/baseline-migration.json`. It maps legacy structural fields deterministically, preserves every course and offering, and reports missing or unsafe values instead of inventing production content.
 - `content/approved/catalog.json` is committed and is the only catalog input imported by production code.
 - `content/draft/` contains local importer/editor working files. Its directory policy ignores every payload.
 - `content/diagnostics/` contains local structured diagnostics and source excerpts. Its directory policy ignores every payload.

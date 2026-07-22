@@ -5,6 +5,7 @@ import {
   catalogShapeMessage,
   formatImportedJson,
   isEditableCatalog,
+  isLegacyCatalog,
   validateWebCatalogUrl,
 } from '../catalog-import';
 import {
@@ -17,6 +18,12 @@ import { ProgramGroupForms } from './ProgramGroupForms';
 import { RegistrationForms } from './RegistrationForms';
 
 type Message = { kind: 'error' | 'success'; text: string } | null;
+type ImportDiagnostic = {
+  code: string;
+  message: string;
+  path: PropertyKey[];
+  severity: 'error' | 'warning';
+};
 
 async function requestJson(path: string, init?: RequestInit) {
   const response = await fetch(path, {
@@ -33,6 +40,9 @@ export function App() {
   const [message, setMessage] = useState<Message>(null);
   const [acknowledgeWarnings, setAcknowledgeWarnings] = useState(false);
   const [webCatalogUrl, setWebCatalogUrl] = useState('');
+  const [importDiagnostics, setImportDiagnostics] = useState<
+    ImportDiagnostic[]
+  >([]);
   const parsedJson = useMemo(() => {
     try {
       return JSON.parse(text) as unknown;
@@ -76,8 +86,30 @@ export function App() {
   async function loadFile(file: File | undefined) {
     if (!file) return;
     try {
-      setText(formatImportedJson(await file.text()));
-      setMessage({ kind: 'success', text: `הקובץ ${file.name} נטען מהכונן` });
+      const source = await file.text();
+      const parsed = JSON.parse(source) as unknown;
+      if (isLegacyCatalog(parsed)) {
+        const result = await requestJson('/api/migrate-baseline', {
+          method: 'POST',
+          body: JSON.stringify({ catalog: parsed }),
+        });
+        const diagnostics = Array.isArray(result.diagnostics)
+          ? (result.diagnostics as ImportDiagnostic[])
+          : [];
+        setText(`${JSON.stringify(result.catalog, null, 2)}\n`);
+        setImportDiagnostics(diagnostics);
+        setMessage({
+          kind: 'success',
+          text: `הקובץ ${file.name} הומר לטיוטת הסכמה עם ${diagnostics.length} אבחונים`,
+        });
+      } else {
+        setText(formatImportedJson(source));
+        setImportDiagnostics([]);
+        setMessage({
+          kind: 'success',
+          text: `הקובץ ${file.name} נטען מהכונן`,
+        });
+      }
     } catch {
       setMessage({ kind: 'error', text: 'הקובץ שנבחר אינו JSON תקין' });
     }
@@ -148,6 +180,7 @@ export function App() {
     setText('');
     setWebCatalogUrl('');
     setAcknowledgeWarnings(false);
+    setImportDiagnostics([]);
     setMessage({
       kind: 'success',
       text: 'העורך אופס. קובצי הטיוטה והתוכן המאושר בכונן לא שונו.',
@@ -253,6 +286,23 @@ export function App() {
         <p className="message message--error" role="alert">
           {shapeMessage}
         </p>
+      )}
+
+      {importDiagnostics.length > 0 && (
+        <details className="diagnostics-panel" open>
+          <summary>אבחוני המרה ({importDiagnostics.length})</summary>
+          <p>יש לפתור את כל השגיאות לפני ייצוא תוכן מאושר.</p>
+          <ul>
+            {importDiagnostics.map((diagnostic, index) => (
+              <li key={`${diagnostic.code}-${index}`}>
+                <strong>
+                  {diagnostic.severity === 'error' ? 'שגיאה' : 'אזהרה'}:
+                </strong>{' '}
+                {diagnostic.message} <code>{diagnostic.path.join('.')}</code>
+              </li>
+            ))}
+          </ul>
+        </details>
       )}
 
       {parsedCatalog && (

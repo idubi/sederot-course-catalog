@@ -24,13 +24,20 @@ export function isEditableCatalog(value: unknown): value is Catalog {
   );
 }
 
+export function isLegacyCatalog(
+  value: unknown,
+): value is Record<string, unknown> {
+  return (
+    !!value &&
+    typeof value === 'object' &&
+    Array.isArray((value as Record<string, unknown>).groups) &&
+    !Array.isArray((value as Record<string, unknown>).audienceGroups)
+  );
+}
+
 export function catalogShapeMessage(value: unknown): string | null {
   if (isEditableCatalog(value)) return null;
-  if (
-    value &&
-    typeof value === 'object' &&
-    Array.isArray((value as Record<string, unknown>).groups)
-  ) {
+  if (value && typeof value === 'object' && isLegacyCatalog(value)) {
     return 'הקובץ נטען כטקסט, אך הוא משתמש במבנה הישן groups. יש להמיר אותו ל־audienceGroups ולסכמת הקטלוג הנוכחית לפני עריכה מובנית.';
   }
   return 'הקובץ נטען כטקסט, אך אינו תואם למבנה הבסיסי של סכמת הקטלוג הנוכחית. אפשר להפעיל אימות לקבלת פרטים.';

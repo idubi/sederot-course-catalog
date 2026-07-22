@@ -13,6 +13,7 @@ const base = configuredBase.endsWith('/')
 
 const forbiddenPathSegments = new Set([
   'artifacts',
+  'baseline',
   'content-source',
   'diagnostics',
   'draft',
@@ -29,6 +30,7 @@ const forbiddenExtensions = new Set([
   '.tsx',
 ]);
 const forbiddenMarkers = [
+  'content/baseline',
   'content/diagnostics',
   'content/draft',
   'tools/content-editor',

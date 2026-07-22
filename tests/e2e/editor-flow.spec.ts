@@ -22,7 +22,7 @@ test('editor loads approved JSON and validates without writing files', async ({
   await expect(page.getByRole('status')).toContainText('התוכן תקין');
 });
 
-test('editor keeps a legacy groups catalog editable without crashing structured forms', async ({
+test('editor migrates a legacy groups catalog without crashing structured forms', async ({
   page,
 }) => {
   const pageErrors: Error[] = [];
@@ -48,11 +48,12 @@ test('editor keeps a legacy groups catalog editable without crashing structured 
     ),
   });
 
-  await expect(page.getByRole('status')).toContainText('legacy-catalog.json');
-  await expect(page.getByRole('alert')).toContainText('groups');
-  await expect(page.getByLabel('קטלוג JSON')).toContainText('"groups"');
+  await expect(page.getByRole('status')).toContainText('הומר לטיוטת הסכמה');
+  await expect(page.getByText(/אבחוני המרה/)).toBeVisible();
+  await expect(page.getByLabel('קטלוג JSON')).toContainText('"audienceGroups"');
+  await expect(page.getByLabel('קטלוג JSON')).not.toContainText('"groups"');
   await expect(
     page.getByRole('heading', { name: 'תוכניות וקבוצות קהל' }),
-  ).toHaveCount(0);
+  ).toBeVisible();
   expect(pageErrors).toEqual([]);
 });

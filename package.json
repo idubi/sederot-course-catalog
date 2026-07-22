@@ -23,6 +23,7 @@
     "content:read-source": "node --import tsx tools/source-reader/write-blueprint-snapshot.ts",
     "content:normalize-source": "node --import tsx tools/source-normalizer/write-normalized-draft.ts",
     "content:import-draft": "node --import tsx tools/source-diagnostics/write-import-artifacts.ts",
+    "content:migrate-baseline": "node --import tsx tools/baseline-migrator/write-baseline-draft.ts",
     "content:validate": "node --import tsx src/content/validate-approved.ts",
     "production:verify": "node scripts/verify-production.mjs",
     "deployment:smoke": "node scripts/smoke-deployment.mjs",

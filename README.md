@@ -150,6 +150,7 @@ npm run deployment:smoke -- https://host/base/ # בדיקת עשן מרוחקת 
 npm run content:validate # אימות content/approved/catalog.json בלבד
 npm run content:normalize-source # יצירת טיוטת תוכניות/קבוצות/קורסים/מופעים מקומית
 npm run content:import-draft # יצירת טיוטה ואבחונים מובנים מקומיים
+npm run content:migrate-baseline # המרת baseline תשפ״ז לטיוטת Schema ואבחונים מקומיים
 npm run format:check  # אימות עיצוב קוד ללא שינוי קבצים
 npm run format        # תיקון עיצוב קוד מקומי
 npm run check         # שער מקומי מלא: typecheck, lint, tests ו-build
@@ -178,6 +179,16 @@ Vitest נטען דרך תצורת Astro ב-`vitest.config.ts`, ולכן בדיק
 ## גבולות תוכן
 
 ה-Build קורא קטלוג רק מתוך `content/approved/catalog.json` ומאמת אותו לפני Astro. הקובץ הנוכחי הוא Seed טכני שמסומן במפורש כלא מיועד לפרסום. קובצי עבודה תחת `content/draft/` ודוחות תחת `content/diagnostics/` נשארים מקומיים, אינם נשמרים ב-Git ואסור שייכללו ב-`dist/`.
+
+Baseline התוכן שבחר הבעלים לשנת תשפ״ז נשמר ללא שינוי תחת
+`content/baseline/catalog_2026-2027.json`, עם SHA-256
+`cc7440cc19542e8a1aca012c1cba9ca79edbf437f26facc4138f10409755a5ca`.
+הוא אינו קלט Build ואסור שייכלל ב-`dist/`. הפקודה
+`npm run content:migrate-baseline` מאמתת את ה-hash ומפיקה באופן דטרמיניסטי
+טיוטת Schema מקומית ב-`content/draft/baseline/catalog.json` ואבחונים ב-
+`content/diagnostics/baseline-migration.json`. אפשר גם לבחור את קובץ ה-baseline
+ישירות בעורך; ההמרה מתבצעת דרך API ה-loopback, וכל החסמים מוצגים לפני ייצוא.
+אין קידום אוטומטי ל-`content/approved/catalog.json`.
 
 מקור הייבוא המאושר הוא `artifacts/2027 cources details - blueprint.md`. לאחר כל תוספת או שינוי מאושר במקור, מפיקים מחדש snapshot דטרמיניסטי ושומר-מיקום באמצעות:
 

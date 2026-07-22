@@ -1,6 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 
 import { sanitizeDescriptionHtml } from '../../src/content/sanitize-html';
+import { migrateBaselineCatalog } from '../baseline-migrator/migrate-baseline';
 
 import {
   exportApproved,
@@ -73,6 +74,12 @@ export async function handleLocalApi(
         200,
         validateEditorCatalog(body.catalog, body.warnings),
       );
+      return true;
+    }
+
+    if (request.method === 'POST' && url.pathname === '/api/migrate-baseline') {
+      const body = await readJson(request);
+      writeJson(response, 200, migrateBaselineCatalog(body.catalog));
       return true;
     }
 
