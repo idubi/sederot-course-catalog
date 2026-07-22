@@ -130,6 +130,12 @@ PUBLIC_BASE_PATH=/sderot-course-catalog/ npm run build
 
 לאתר בדומיין או בתת-דומיין עצמאי אין צורך בערך נוסף; ברירת המחדל היא `/`. הפריסה עצמה תוגדר במשימות השחרור.
 
+סביבת הפרסום הזמנית היא GitHub Pages בכתובת
+`https://idubi.github.io/sederot-course-catalog/`. רק Push מאושר ל-`main` שעבר
+את שער `Production gates` יכול ליצור תוצר Pages ולפרוס אותו. לאחר הפריסה רצה
+בדיקת HTTPS מרוחקת למסלולי הבית, הקבוצה, הקורס, מידע הרישום וההדפסה. נוהל
+הראיות והשחזור מתועד ב-`artifacts/deployment-runbook.md`.
+
 ## בדיקות איכות
 
 ```bash
@@ -140,6 +146,7 @@ npm run test:e2e      # Build + זרימות Chromium מול Preview ועורך 
 npm run test:e2e:install # התקנה חד-פעמית של Chromium עבור Playwright
 npm run production:verify # בדיקת קישורים וגבולות התוצר שכבר נבנה
 npm run production:gate # שער פרסום מלא, כולל Build, תוצר ו-E2E
+npm run deployment:smoke -- https://host/base/ # בדיקת עשן מרוחקת לפריסה
 npm run content:validate # אימות content/approved/catalog.json בלבד
 npm run content:normalize-source # יצירת טיוטת תוכניות/קבוצות/קורסים/מופעים מקומית
 npm run content:import-draft # יצירת טיוטה ואבחונים מובנים מקומיים

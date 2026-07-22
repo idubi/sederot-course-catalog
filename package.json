@@ -25,6 +25,7 @@
     "content:import-draft": "node --import tsx tools/source-diagnostics/write-import-artifacts.ts",
     "content:validate": "node --import tsx src/content/validate-approved.ts",
     "production:verify": "node scripts/verify-production.mjs",
+    "deployment:smoke": "node scripts/smoke-deployment.mjs",
     "production:gate": "npm run content:validate && npm run typecheck && npm run test && npm run build && npm run production:verify && npm run test:e2e:run",
     "check": "npm run typecheck && npm run lint && npm run test && npm run build"
   },

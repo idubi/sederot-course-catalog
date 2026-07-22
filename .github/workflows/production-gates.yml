@@ -42,3 +42,63 @@ jobs:
           path: dist/
           if-no-files-found: error
           retention-days: 7
+
+  pages-artifact:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: production-gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+
+    steps:
+      - name: Check out gated main commit
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build GitHub Pages artifact
+        env:
+          PUBLIC_BASE_PATH: /sderot-course-catalog/
+        run: npm run build
+
+      - name: Verify GitHub Pages artifact
+        env:
+          PUBLIC_BASE_PATH: /sderot-course-catalog/
+        run: npm run production:verify
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist/
+
+  deploy-pages:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: pages-artifact
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy gated artifact to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Check out smoke-test contract
+        uses: actions/checkout@v4
+
+      - name: Smoke-test temporary HTTPS release
+        run: node scripts/smoke-deployment.mjs "${{ steps.deployment.outputs.page_url }}"
