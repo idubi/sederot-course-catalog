@@ -39,8 +39,8 @@ Course cards and course details never initiate registration.
 - [x] [TASK-027: Complete responsive RTL and accessibility behavior](../tasks/TASK-027-responsive-accessibility.md) — Complete
 - [x] [TASK-028: Add unit and component coverage](../tasks/TASK-028-unit-component-tests.md) — Complete
 - [x] [TASK-029: Add end-to-end program and editor flows](../tasks/TASK-029-end-to-end-tests.md) — Complete
-- [ ] [TASK-030: Enforce production build and content gates](../tasks/TASK-030-production-gates.md) — Ready for review
-- [ ] [TASK-031: Deploy validated main to temporary hosting](../tasks/TASK-031-temporary-deployment.md)
+- [x] [TASK-030: Enforce production build and content gates](../tasks/TASK-030-production-gates.md) — Complete
+- [ ] [TASK-031: Deploy validated main to temporary hosting](../tasks/TASK-031-temporary-deployment.md) — Ready for review; deployment follows approved merge
 - [ ] [TASK-032: Connect council subdomain and operations](../tasks/TASK-032-subdomain-operations.md)
 - [ ] [TASK-033: Complete MVP acceptance and handoff](../tasks/TASK-033-mvp-acceptance.md)
 

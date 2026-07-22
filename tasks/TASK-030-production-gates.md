@@ -1,6 +1,6 @@
 # TASK-030: Enforce production build and content gates
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Release
 - **Branch:** `task/030-production-gates`
 - **Depends on:** `TASK-019`, `TASK-028`, `TASK-029`
@@ -39,6 +39,6 @@ Run content validation, Astro checks, tests, build, link checks, and dist exclus
 
 ## Completion record
 
-- **Completed by:** Pending human review and approved merge
-- **Completed at:** Pending human review and approved merge
-- **Notes:** Implementation and automated validation are complete on the required task branch; PR #38 targets `main` and was not merged automatically.
+- **Completed by:** Codex, with human review and merge approval
+- **Completed at:** 2026-07-22
+- **Notes:** PR #38 merged into `main` at `9916ff9b6ce52a8849a6e508b70f705441b8f4d7`; its production-gates check passed before TASK-031 began.
