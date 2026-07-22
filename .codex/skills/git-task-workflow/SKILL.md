@@ -1,6 +1,6 @@
 ---
 name: git-task-workflow
-description: Create one task branch from main, commit and push focused work, and open one reviewed pull request directly to main without automatic merging.
+description: Publish categorized construction or bug-fix work through one focused task branch and one reviewed pull request directly to main without automatic merging.
 ---
 
 # Git Task Workflow
@@ -13,7 +13,8 @@ Use this skill whenever starting, committing, publishing, reviewing, or closing 
 
 - `main` is the sole task base and pull-request target.
 - One task, one branch, one focused task pull request. Never mix unrelated tasks.
-- Branch names are `task/NNN-short-name` and must match the task file.
+- Store TASK-001 through TASK-033 under `tasks/construction/`; store TASK-034 and later corrective tasks under `tasks/bug-fix/` unless a future category is explicitly established.
+- Branch names are `task/NNN-short-name` and must match the categorized task filename.
 - Create every task branch from updated `main`. Never implement or commit directly on `main`; start only after checking `git status --short --branch` and accounting for all existing changes.
 - Do not overwrite, discard, stash, or commit unrelated user work.
 - Make small, intentional commits with the task ID and an imperative summary. Never commit secrets, `.env`, generated caches, or unapproved artifacts.

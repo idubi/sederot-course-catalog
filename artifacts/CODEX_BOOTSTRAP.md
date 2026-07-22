@@ -20,7 +20,7 @@ For every task, read:
 5. `artifacts/Sderot_Courses_Use_Case_Specification_v1.0.md` when public/editor/deployment behavior applies.
 6. `artifacts/registration process described heb.md` for public navigation or registration behavior.
 7. `artifacts/content-import.md` for importer, normalization, validation, approved JSON, or editor work.
-8. `artifacts/DEVELOPMENT_TASKS.md` and the selected `tasks/TASK-XXX-*.md`.
+8. `artifacts/DEVELOPMENT_TASKS.md` and the selected categorized task under `tasks/construction/` or `tasks/bug-fix/`.
 9. Any task-specific specification, decision record, requirement, fixture description, or template under `artifacts/`.
 
 The repository currently has no `artifacts/templates/` or `artifacts/requirements/` directory and no standalone requirements Markdown file. The design Markdown files reference a requirements baseline that is not present as a separate repository file. Codex must record the gap and must not invent missing requirements. The canonical consolidated SDD is `artifacts/SDD.md`. Never create a duplicate under `docs/`.

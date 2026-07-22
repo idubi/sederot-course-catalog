@@ -89,14 +89,15 @@ Each task must include:
 The file must also contain a master checklist linking to every individual
 task file.
 
-3. ./tasks/
+3. ./tasks/construction/ and ./tasks/bug-fix/
 
 Create one Markdown file per development task.
 
 Use this naming convention:
 
-./tasks/TASK-001-<short-name>.md
-./tasks/TASK-002-<short-name>.md
+./tasks/construction/TASK-001-<short-name>.md
+./tasks/construction/TASK-002-<short-name>.md
+./tasks/bug-fix/TASK-034-<short-name>.md
 ...
 
 Each task file must include:

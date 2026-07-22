@@ -1,8 +1,9 @@
-# TASK-034: Bootstrap the approved catalog with schema-valid course content
+# TASK-034: Fix JSON anomalies
 
 - **Status:** In progress
 - **Phase:** Content
-- **Branch:** `task/034-course-catalog-bootstrap`
+- **Category:** Bug fix
+- **Branch:** `task/034-fix-json-anomalies`
 - **Depends on:** `TASK-019`, `TASK-030`
 - **Pull request target:** `main` (one reviewed PR; do not auto-merge)
 - **Sources:** `AGENTS.md`, `artifacts/SDD.md`, `artifacts/content-import.md`, `artifacts/2027 cources details - blueprint.md`, `artifacts/Sderot_Courses_SDD_v1.0_final.md`, `artifacts/Sderot_Courses_SDD_v1.1.md`, `artifacts/Sderot_Courses_Detailed_Design_v1.0.md`, `artifacts/Sderot_Courses_Use_Case_Specification_v1.0.md`, `artifacts/registration process described heb.md`, and owner-designated `content/baseline/catalog_2026-2027.json` at SHA-256 `cc7440cc19542e8a1aca012c1cba9ca79edbf437f26facc4138f10409755a5ca`
