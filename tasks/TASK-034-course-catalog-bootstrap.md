@@ -49,7 +49,7 @@ Transform the owner-designated course JSON into the canonical catalog schema, re
 - **Documentation:** Updated `README.md` and `artifacts/content-import.md` with the immutable baseline contract, command, output paths, editor behavior, diagnostics, and production exclusion.
 - **Security/privacy:** The baseline is never a production input; generated drafts and diagnostics remain ignored and are excluded from `dist/`. Missing contacts and registration targets remain blocking diagnostics rather than invented values. Server-side migration and sanitation stay on the loopback-only editor boundary; no runtime public API or course/offering registration behavior was added.
 - **Skill compliance:** In progress — development-lifecycle and git-task-workflow loaded; unrelated approved-catalog edits and untracked owner files remain unstaged.
-- **Commit:** Pending
+- **Commits:** `e61cd72` (`TASK-034 guard legacy catalog editor imports`), `d3cbb55` (`TASK-034 migrate baseline catalog to canonical draft`); final content-resolution commit pending
 - **Pull request:** [#42](https://github.com/idubi/sederot-course-catalog/pull/42), open directly to `main`; implementation remains in progress and is not approved for merge
 
 ## Completion record
