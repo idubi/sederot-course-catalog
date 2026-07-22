@@ -1,6 +1,6 @@
 # TASK-026: Implement RTL print and PDF support
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Public UI
 - **Branch:** `task/026-print-support`
 - **Depends on:** `TASK-022`, `TASK-023`
@@ -39,6 +39,6 @@ Create printable program/course views and print CSS without interactive controls
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Codex after owner approval
+- **Completed at:** 2026-07-22
+- **Notes:** PR #34 was approved and merged to `main` as `9602dd8`.

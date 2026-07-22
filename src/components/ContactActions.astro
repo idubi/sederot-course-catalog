@@ -27,10 +27,11 @@ const links = buildContactLinks(contacts, {
       href={links.whatsapp}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`פתיחת WhatsApp למספר ${contacts.whatsapp}`}
+      aria-label={`פתיחת WhatsApp למספר ${contacts.whatsapp}, בחלון חדש`}
     >
       <span>WhatsApp</span>
       <bdi>{contacts.whatsapp}</bdi>
+      <span class="visually-hidden"> (נפתח בחלון חדש)</span>
     </a>
     <a href={links.email} aria-label={`שליחת דוא״ל אל ${contacts.email}`}>
       <span>דוא״ל</span>

@@ -19,30 +19,49 @@ const groups = catalog.audienceGroups.map(
 >
   <fieldset>
     <legend>מציאת קבוצת התוכנית</legend>
-    <p>
+    <p id="selection-help">
       הבחירה בקהל היא הצהרה לצורכי ניווט בלבד. לא מתבצע אימות והיא אינה נשמרת.
     </p>
-    <label
-      >תוכנית<select name="program" required
-        ><option value="">בחירת תוכנית</option>{
-          catalog.programs.map((p) => <option value={p.id}>{p.name}</option>)
-        }</select
-      ></label
+    <label for="program-selection">תוכנית</label>
+    <select
+      id="program-selection"
+      name="program"
+      required
+      aria-describedby="selection-help selection-status"
     >
-    <label
-      >שכבה<select name="grade" required disabled
-        ><option value="">בחירת שכבה</option></select
-      ></label
+      <option value="">בחירת תוכנית</option>
+      {catalog.programs.map((p) => <option value={p.id}>{p.name}</option>)}
+    </select>
+    <label for="grade-selection">שכבה</label>
+    <select
+      id="grade-selection"
+      name="grade"
+      required
+      disabled
+      aria-describedby="selection-status"
     >
-    <label
-      >קהל<select name="gender" required disabled
-        ><option value="">בחירת קהל</option><option value="boys">בנים</option
-        ><option value="girls">בנות</option><option value="mixed">מעורב</option
-        ></select
-      ></label
+      <option value="">בחירת שכבה</option>
+    </select>
+    <label for="gender-selection">קהל</label>
+    <select
+      id="gender-selection"
+      name="gender"
+      required
+      disabled
+      aria-describedby="selection-help selection-status"
     >
+      <option value="">בחירת קהל</option>
+      <option value="boys">בנים</option>
+      <option value="girls">בנות</option>
+      <option value="mixed">מעורב</option>
+    </select>
     <button type="submit" disabled>הצגת אשכול הקורסים</button>
-    <p class="selection-status" role="status" aria-live="polite">
+    <p
+      id="selection-status"
+      class="selection-status"
+      role="status"
+      aria-live="polite"
+    >
       יש להשלים תוכנית, שכבה וקהל.
     </p>
   </fieldset>
@@ -70,11 +89,8 @@ const groups = catalog.audienceGroups.map(
         ).entries(),
       ];
       if (grade.dataset.program !== program.value) {
-        grade.innerHTML =
-          '<option value="">בחירת שכבה</option>' +
-          grades
-            .map(([id, label]) => `<option value="${id}">${label}</option>`)
-            .join('');
+        grade.replaceChildren(new Option('בחירת שכבה', ''));
+        grades.forEach(([id, label]) => grade.add(new Option(label, id)));
         grade.dataset.program = program.value;
         gender.value = '';
       }
@@ -119,8 +135,6 @@ const groups = catalog.audienceGroups.map(
     font-weight: 800;
   }
   .selection label {
-    display: grid;
-    gap: 0.35rem;
     font-weight: 700;
   }
   .selection select,
@@ -137,7 +151,9 @@ const groups = catalog.audienceGroups.map(
     font-weight: 800;
   }
   .selection button:disabled {
-    opacity: 0.5;
+    color: #4b5870;
+    background: #dbe2ec;
+    cursor: not-allowed;
   }
   .selection-status {
     margin: 0;
