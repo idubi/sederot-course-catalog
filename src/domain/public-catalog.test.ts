@@ -40,6 +40,43 @@ describe('public catalog view models', () => {
     );
   });
 
+  it('uses the course image when there is no offering override', () => {
+    const copy = structuredClone(catalog);
+    copy.courses[0]!.defaultImage = {
+      src: '/content/images/default.webp',
+      alt: 'default',
+    };
+    delete copy.offerings[0]!.imageOverride;
+
+    expect(buildProgramGroups(copy)[0]?.offerings[0]?.image?.alt).toBe(
+      'default',
+    );
+  });
+
+  it('keeps an image absent when neither image source exists', () => {
+    const copy = structuredClone(catalog);
+    delete copy.courses[0]!.defaultImage;
+    delete copy.offerings[0]!.imageOverride;
+
+    expect(buildProgramGroups(copy)[0]?.offerings[0]?.image).toBeUndefined();
+  });
+
+  it('sorts contextual offerings by display order and then stable ID', () => {
+    const copy = structuredClone(catalog);
+    const original = copy.offerings[0]!;
+    copy.offerings = [
+      { ...original, id: 'z-course', displayOrder: 2 },
+      { ...original, id: 'b-course', displayOrder: 1 },
+      { ...original, id: 'a-course', displayOrder: 1 },
+    ];
+
+    expect(
+      buildProgramGroups(copy)[0]?.offerings.map(
+        ({ offeringId }) => offeringId,
+      ),
+    ).toEqual(['a-course', 'b-course', 'z-course']);
+  });
+
   it('resolves group registration targets before the program default', () => {
     const copy = structuredClone(catalog);
     copy.registrationTargets.push({

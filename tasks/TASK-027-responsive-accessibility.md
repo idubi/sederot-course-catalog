@@ -1,6 +1,6 @@
 # TASK-027: Complete responsive RTL and accessibility behavior
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Quality
 - **Branch:** `task/027-responsive-accessibility`
 - **Depends on:** `TASK-021`, `TASK-022`, `TASK-023`, `TASK-024`, `TASK-025`, `TASK-026`
@@ -39,6 +39,6 @@ Verify mobile-first layout, keyboard flow, focus, semantics, contrast, long Hebr
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Codex after owner approval
+- **Completed at:** 2026-07-22
+- **Notes:** PR #35 was approved and merged to `main` as `f3bdd00`.
