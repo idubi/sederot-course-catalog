@@ -42,7 +42,8 @@ Course cards and course details never initiate registration.
 - [x] [TASK-030: Enforce production build and content gates](../tasks/TASK-030-production-gates.md) — Complete
 - [x] [TASK-031: Deploy validated main to temporary hosting](../tasks/TASK-031-temporary-deployment.md) — Complete
 - [ ] [TASK-032: Connect council subdomain and operations](../tasks/TASK-032-subdomain-operations.md) — Deferred by owner; council hostname/DNS access unavailable
-- [ ] [TASK-033: Complete MVP acceptance and handoff](../tasks/TASK-033-mvp-acceptance.md)
+- [ ] [TASK-033: Complete MVP acceptance and handoff](../tasks/TASK-033-mvp-acceptance.md) — Blocked on real approved content and content-owner approval
+- [ ] [TASK-034: Bootstrap the approved catalog with schema-valid course content](../tasks/TASK-034-course-catalog-bootstrap.md) — Ready; baseline provenance and owner approval required before production export
 
 ## Execution rules
 
