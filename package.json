@@ -17,6 +17,8 @@
     "format:check": "prettier --check .",
     "lint": "eslint . && npm run format:check",
     "test": "vitest run --passWithNoTests",
+    "test:e2e": "npm run build && playwright test",
+    "test:e2e:install": "playwright install chromium",
     "content:read-source": "node --import tsx tools/source-reader/write-blueprint-snapshot.ts",
     "content:normalize-source": "node --import tsx tools/source-normalizer/write-normalized-draft.ts",
     "content:import-draft": "node --import tsx tools/source-diagnostics/write-import-artifacts.ts",
@@ -26,6 +28,7 @@
   "devDependencies": {
     "@astrojs/check": "0.9.9",
     "@eslint/js": "10.0.1",
+    "@playwright/test": "1.58.2",
     "@types/node": "26.1.1",
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
