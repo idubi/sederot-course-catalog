@@ -3,7 +3,6 @@ import type {
   Course,
   CourseOffering,
 } from '../../../src/domain/catalog';
-import { sanitizeDescriptionHtml } from '../../../src/content/sanitize-html';
 import {
   reorderOffering,
   resolveOfferingImage,
@@ -18,6 +17,20 @@ export function CourseOfferingForms({
   catalog: Catalog;
   onChange: (value: Catalog) => void;
 }) {
+  const sanitizeDescription = async (value: string): Promise<string> => {
+    const response = await fetch('/api/sanitize-description', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ value }),
+    });
+    const result = (await response.json()) as {
+      error?: string;
+      value?: string;
+    };
+    if (!response.ok || typeof result.value !== 'string')
+      throw new Error(result.error ?? 'Sanitization failed');
+    return result.value;
+  };
   const uploadImage = async (
     file: File | undefined,
     entityId: string,
@@ -113,9 +126,11 @@ export function CourseOfferingForms({
                 course(value.id, { descriptionHtml: e.target.value })
               }
               onBlur={(e) =>
-                course(value.id, {
-                  descriptionHtml: sanitizeDescriptionHtml(e.target.value),
-                })
+                void sanitizeDescription(e.target.value)
+                  .then((descriptionHtml) =>
+                    course(value.id, { descriptionHtml }),
+                  )
+                  .catch((error: Error) => window.alert(error.message))
               }
             />
           </label>

@@ -1,6 +1,6 @@
 # TASK-034: Bootstrap the approved catalog with schema-valid course content
 
-- **Status:** Ready
+- **Status:** In progress
 - **Phase:** Content
 - **Branch:** `task/034-course-catalog-bootstrap`
 - **Depends on:** `TASK-019`, `TASK-030`
@@ -44,13 +44,13 @@ Transform the owner-designated course JSON into the canonical catalog schema, re
 
 ## Completion evidence
 
-- **Implementation:** Pending
-- **Tests:** Pending
+- **Implementation:** In progress — hardened local JSON import so legacy `groups` catalogs remain available in the raw text editor but cannot crash canonical structured forms, and moved description sanitation behind the loopback API so Node-only sanitation dependencies are not bundled into the browser.
+- **Tests:** Partial — Astro type checking passed for 67 files with 0 diagnostics; Vitest passed 80/80 tests across 19 files; both focused Chromium editor flows passed, including legacy `groups` upload without a page error; the static site and standalone editor production bundles succeeded without Node-module externalization warnings. Full content migration and production gates remain pending.
 - **Documentation:** Pending
-- **Security/privacy:** Pending
-- **Skill compliance:** Pending
+- **Security/privacy:** Raw legacy JSON remains local and is neither silently transformed nor exported. Server-side sanitation remains on the loopback-only editor boundary; no runtime public API or registration behavior was added.
+- **Skill compliance:** In progress — development-lifecycle and git-task-workflow loaded; unrelated approved-catalog edits and untracked owner files remain unstaged.
 - **Commit:** Pending
-- **Pull request:** Pending
+- **Pull request:** [#42](https://github.com/idubi/sederot-course-catalog/pull/42), open directly to `main`; implementation remains in progress and is not approved for merge
 
 ## Completion record
 

@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 
-import { formatImportedJson, validateWebCatalogUrl } from './catalog-import';
+import {
+  catalogShapeMessage,
+  formatImportedJson,
+  isEditableCatalog,
+  validateWebCatalogUrl,
+} from './catalog-import';
 
 describe('catalog JSON import', () => {
   it('parses and formats a selected JSON document', () => {
@@ -20,5 +25,36 @@ describe('catalog JSON import', () => {
     expect(() =>
       validateWebCatalogUrl('http://example.test/catalog.json'),
     ).toThrow('https://');
+  });
+
+  it('rejects legacy groups from structured editing without rejecting the JSON text', () => {
+    const legacy = {
+      schemaVersion: '1.0',
+      academicYear: '2026-2027',
+      programs: [],
+      groups: [],
+      courses: [],
+      offerings: [],
+      registrationTargets: [],
+      contacts: {},
+    };
+
+    expect(isEditableCatalog(legacy)).toBe(false);
+    expect(catalogShapeMessage(legacy)).toContain('groups');
+  });
+
+  it('recognizes the canonical top-level editor shape', () => {
+    expect(
+      isEditableCatalog({
+        schemaVersion: '1.0',
+        academicYear: { id: '2026-2027', label: 'תשפ״ז' },
+        programs: [],
+        audienceGroups: [],
+        courses: [],
+        offerings: [],
+        registrationTargets: [],
+        contacts: {},
+      }),
+    ).toBe(true);
   });
 });

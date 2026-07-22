@@ -1,7 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import type { Catalog } from '../../../src/domain/catalog';
-import { formatImportedJson, validateWebCatalogUrl } from '../catalog-import';
+import {
+  catalogShapeMessage,
+  formatImportedJson,
+  isEditableCatalog,
+  validateWebCatalogUrl,
+} from '../catalog-import';
 import {
   loadEditorText,
   persistEditorText,
@@ -28,13 +33,17 @@ export function App() {
   const [message, setMessage] = useState<Message>(null);
   const [acknowledgeWarnings, setAcknowledgeWarnings] = useState(false);
   const [webCatalogUrl, setWebCatalogUrl] = useState('');
-  const parsedCatalog = useMemo(() => {
+  const parsedJson = useMemo(() => {
     try {
-      return JSON.parse(text) as Catalog;
+      return JSON.parse(text) as unknown;
     } catch {
       return null;
     }
   }, [text]);
+  const parsedCatalog: Catalog | null = isEditableCatalog(parsedJson)
+    ? parsedJson
+    : null;
+  const shapeMessage = parsedJson ? catalogShapeMessage(parsedJson) : null;
 
   useEffect(() => {
     const timer = window.setTimeout(
@@ -237,6 +246,12 @@ export function App() {
       {message && (
         <p className={`message message--${message.kind}`} role="status">
           {message.text}
+        </p>
+      )}
+
+      {shapeMessage && (
+        <p className="message message--error" role="alert">
+          {shapeMessage}
         </p>
       )}
 

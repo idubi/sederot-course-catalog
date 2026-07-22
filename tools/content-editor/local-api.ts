@@ -1,5 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 
+import { sanitizeDescriptionHtml } from '../../src/content/sanitize-html';
+
 import {
   exportApproved,
   loadCatalog,
@@ -15,6 +17,7 @@ interface CatalogRequest {
   acknowledgeWarnings?: boolean;
   catalog?: unknown;
   warnings?: string[];
+  value?: string;
 }
 
 type EditorRequest = CatalogRequest & Partial<ImageUpload>;
@@ -70,6 +73,19 @@ export async function handleLocalApi(
         200,
         validateEditorCatalog(body.catalog, body.warnings),
       );
+      return true;
+    }
+
+    if (
+      request.method === 'POST' &&
+      url.pathname === '/api/sanitize-description'
+    ) {
+      const body = await readJson(request);
+      if (typeof body.value !== 'string')
+        throw new Error('Missing description value');
+      writeJson(response, 200, {
+        value: sanitizeDescriptionHtml(body.value),
+      });
       return true;
     }
 
