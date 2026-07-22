@@ -3,6 +3,7 @@
 .vscode/
 content/diagnostics/
 content/draft/
+content/baseline/
 dist/
 node_modules/
 tasks/
