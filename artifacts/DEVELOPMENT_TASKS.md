@@ -35,8 +35,8 @@ Course cards and course details never initiate registration.
 - [x] [TASK-023: Implement contextual course cards and details](../tasks/TASK-023-course-details.md) — Complete
 - [x] [TASK-024: Implement registration-information and external-link flow](../tasks/TASK-024-registration-information.md) — Complete
 - [x] [TASK-025: Implement contextual contact actions](../tasks/TASK-025-contact-actions.md) — Complete
-- [ ] [TASK-026: Implement RTL print and PDF support](../tasks/TASK-026-print-support.md) — Ready for review
-- [ ] [TASK-027: Complete responsive RTL and accessibility behavior](../tasks/TASK-027-responsive-accessibility.md)
+- [x] [TASK-026: Implement RTL print and PDF support](../tasks/TASK-026-print-support.md) — Complete
+- [ ] [TASK-027: Complete responsive RTL and accessibility behavior](../tasks/TASK-027-responsive-accessibility.md) — Ready for review
 - [ ] [TASK-028: Add unit and component coverage](../tasks/TASK-028-unit-component-tests.md)
 - [ ] [TASK-029: Add end-to-end program and editor flows](../tasks/TASK-029-end-to-end-tests.md)
 - [ ] [TASK-030: Enforce production build and content gates](../tasks/TASK-030-production-gates.md)

@@ -27,7 +27,7 @@ const groupUrl = `${base}programs/${registration.groupId}/`;
   <nav aria-label="פירורי לחם">
     <a href={groupUrl}>חזרה אל {registration.programName}</a>
   </nav>
-  <main class="registration-card">
+  <article class="registration-card">
     <p class="eyebrow">לפני שממשיכים לאתר החיצוני</p>
     <h1>מידע לפני הרשמה</h1>
     <p class="context">
@@ -51,10 +51,13 @@ const groupUrl = `${base}programs/${registration.groupId}/`;
         class="external"
         href={registration.targetUrl}
         target="_blank"
-        rel="noopener noreferrer">המשך לאתר הרישום החיצוני</a
+        rel="noopener noreferrer"
+        >המשך לאתר הרישום החיצוני<span class="visually-hidden">
+          (נפתח בחלון חדש)</span
+        ></a
       >
     </div>
-  </main>
+  </article>
 </BaseLayout>
 
 <style>
@@ -103,6 +106,10 @@ const groupUrl = `${base}programs/${registration.groupId}/`;
     gap: 0.75rem;
   }
   .actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
     padding: 0.8rem 1rem;
     border: 1px solid #315c9c;
     border-radius: 0.6rem;
