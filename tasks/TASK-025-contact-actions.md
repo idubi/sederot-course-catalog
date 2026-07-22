@@ -1,6 +1,6 @@
 # TASK-025: Implement contextual contact actions
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Public UI
 - **Branch:** `task/025-contact-actions`
 - **Depends on:** `TASK-022`, `TASK-023`
@@ -39,6 +39,6 @@ Add accessible phone, WhatsApp, and email links with approved non-sensitive cont
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Codex after owner approval
+- **Completed at:** 2026-07-22
+- **Notes:** PR #33 was approved and merged to `main` as `ad1e2fb`.
