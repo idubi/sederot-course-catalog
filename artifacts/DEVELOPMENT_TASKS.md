@@ -37,8 +37,8 @@ Course cards and course details never initiate registration.
 - [x] [TASK-025: Implement contextual contact actions](../tasks/TASK-025-contact-actions.md) — Complete
 - [x] [TASK-026: Implement RTL print and PDF support](../tasks/TASK-026-print-support.md) — Complete
 - [x] [TASK-027: Complete responsive RTL and accessibility behavior](../tasks/TASK-027-responsive-accessibility.md) — Complete
-- [ ] [TASK-028: Add unit and component coverage](../tasks/TASK-028-unit-component-tests.md) — Ready for review
-- [ ] [TASK-029: Add end-to-end program and editor flows](../tasks/TASK-029-end-to-end-tests.md)
+- [x] [TASK-028: Add unit and component coverage](../tasks/TASK-028-unit-component-tests.md) — Complete
+- [ ] [TASK-029: Add end-to-end program and editor flows](../tasks/TASK-029-end-to-end-tests.md) — Ready for review
 - [ ] [TASK-030: Enforce production build and content gates](../tasks/TASK-030-production-gates.md)
 - [ ] [TASK-031: Deploy validated main to temporary hosting](../tasks/TASK-031-temporary-deployment.md)
 - [ ] [TASK-032: Connect council subdomain and operations](../tasks/TASK-032-subdomain-operations.md)

@@ -136,6 +136,8 @@ PUBLIC_BASE_PATH=/sderot-course-catalog/ npm run build
 npm run typecheck     # בדיקת TypeScript ו-Astro במצב strictest
 npm run lint          # ESLint לקובצי TypeScript/Astro + אימות Prettier
 npm run test          # בדיקות Vitest דטרמיניסטיות (גם לפני הוספת קובצי test)
+npm run test:e2e      # Build + זרימות Chromium מול Preview ועורך מקומי
+npm run test:e2e:install # התקנה חד-פעמית של Chromium עבור Playwright
 npm run content:validate # אימות content/approved/catalog.json בלבד
 npm run content:normalize-source # יצירת טיוטת תוכניות/קבוצות/קורסים/מופעים מקומית
 npm run content:import-draft # יצירת טיוטה ואבחונים מובנים מקומיים
@@ -150,6 +152,12 @@ Vitest נטען דרך תצורת Astro ב-`vitest.config.ts`, ולכן בדיק
 קובצי `.astro` אמיתיים. הכיסוי כולל את מסלול הבחירה, קיבוץ וסדר שיוכים, הכרעת
 תמונות, פתרון יעד רישום, Schema, כרטיס קורס, פעולות קשר ומסך מידע לפני רישום,
 כולל בדיקות רגרסיה שמונעות פעולת או יעד רישום ברמת קורס או שיוך.
+
+בדיקות Playwright מפעילות במקביל את `astro preview` על `127.0.0.1:4321` ואת
+העורך המקומי על `127.0.0.1:4333`. הן מכסות בחירה עד חזרה מפרטי קורס, תיווך
+מידע לפני יעד רישום חיצוני, תצוגת הדפסה, רוחב 320px וטעינה/אימות בעורך. תרחיש
+העורך אינו מפעיל שמירת טיוטה או ייצוא מאושר ולכן אינו כותב קובצי תוכן. דוחות
+וכשלי Playwright נשמרים מקומית ומוחרגים מ-Git.
 
 ## גבולות תוכן
 

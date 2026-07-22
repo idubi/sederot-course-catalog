@@ -1,6 +1,6 @@
 # TASK-028: Add unit and component coverage
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Quality
 - **Branch:** `task/028-unit-component-tests`
 - **Depends on:** `TASK-019`, `TASK-020`, `TASK-021`, `TASK-022`, `TASK-023`, `TASK-024`
@@ -39,6 +39,6 @@ Test selection, grouping, images, registration resolution, validation, cards, an
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Codex after owner approval
+- **Completed at:** 2026-07-22
+- **Notes:** PR #36 was approved and merged to `main` as `846ae5d`.

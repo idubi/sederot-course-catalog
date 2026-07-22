@@ -4,3 +4,5 @@ node_modules/
 dist/
 .astro/
 tools/content-editor/.local-dist/
+playwright-report/
+test-results/
