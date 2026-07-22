@@ -19,7 +19,7 @@ Deploy only reviewed main artifacts, capture evidence, smoke-test the complete p
 - [x] Add or update tests and documentation proportional to the change.
 - [x] Run relevant validation and record exact evidence below.
 - [x] Review the diff for unrelated files and secrets.
-- [ ] Commit, push, and open one reviewed pull request directly to `main`.
+- [x] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
@@ -34,11 +34,11 @@ Deploy only reviewed main artifacts, capture evidence, smoke-test the complete p
 - **Documentation:** Added `artifacts/deployment-runbook.md` with the temporary environment, required evidence, emergency known-good redeploy, durable reviewed revert/fix, and prohibited bypasses. Updated `README.md` with the Pages URL, gated deployment behavior, smoke command, and runbook pointer; synchronized TASK-030’s approved merge and the master checklist.
 - **Security/privacy:** Deployment permissions are job-scoped: artifact creation has read-only contents access; only the final Pages job receives `pages: write` and `id-token: write`. Pull requests cannot deploy. The smoke script requires HTTPS and confirms the external registration target appears on the registration-information page but not the course page. Only static `dist/` is uploaded; the editor, questionnaire source, drafts, diagnostics, APIs, personal data, authentication, analytics, and tracking are excluded.
 - **Skill compliance:** Followed deployment, development-lifecycle, and git-task-workflow instructions; verified PR #38 and its gate, synchronized `main` at `9916ff9`, and created `task/031-temporary-deployment`. The existing Pages endpoint and errored legacy root-source configuration were inspected read-only before selecting the already-provisioned target. No deployment or Pages setting was changed from the task branch; publication awaits human review, merge, and the gated `main` workflow. User-owned `content/approved/catalog.json`, `.vscode/`, and `instractions` remain excluded.
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Commit:** `0f370d3` (`TASK-031 add gated temporary deployment`)
+- **Pull request:** [#39](https://github.com/idubi/sederot-course-catalog/pull/39)
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Pending human review, approved merge, live deployment, and smoke evidence
+- **Completed at:** Pending human review, approved merge, live deployment, and smoke evidence
+- **Notes:** PR #39 targets `main` and does not deploy from the task branch. After merge, switch the existing Pages source from the legacy root questionnaire to GitHub Actions, observe the gated deployment, run/confirm remote smoke, and record the deployment and rollback references before closing TASK-031.
