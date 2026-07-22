@@ -19,7 +19,7 @@ Execute acceptance criteria, content-owner review, accessibility/print verificat
 - [x] Add or update tests and documentation proportional to the change.
 - [x] Run relevant validation and record exact evidence below.
 - [x] Review the diff for unrelated files and secrets.
-- [ ] Commit, push, and open one reviewed pull request directly to `main`.
+- [x] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
@@ -34,8 +34,8 @@ Execute acceptance criteria, content-owner review, accessibility/print verificat
 - **Documentation:** Added `artifacts/mvp-acceptance-handoff.md` with the release decision, Must-use-case matrix, accessibility/print boundaries, operational commands, and exact content-owner actions required to unblock approval.
 - **Security/privacy:** No placeholder value was silently treated as approved business content. No authentication, database, analytics, tracking, personal-data collection, or course/offering registration target was added. The temporary static preview remains technically safe but must not be represented as approved council content.
 - **Skill compliance:** Followed development-lifecycle and deployment evidence rules; synchronized `main` at PR #40 merge `7e90871`, created the required TASK-033 branch, preserved user-owned local files, and refused to claim content-owner approval that has not occurred.
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Commit:** `e4efdfb` (`TASK-033 record MVP acceptance audit`)
+- **Pull request:** [#41](https://github.com/idubi/sederot-course-catalog/pull/41), opened directly to `main` for human review; not merged automatically
 
 ## Completion record
 
