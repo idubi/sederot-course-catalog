@@ -19,7 +19,7 @@ Configure DNS/TLS, provider-neutral security settings, monitoring-free operation
 - [x] Add or update tests and documentation proportional to the change.
 - [x] Run relevant validation and record exact evidence below.
 - [x] Review the diff for unrelated files and secrets.
-- [ ] Commit, push, and open one reviewed pull request directly to `main`.
+- [x] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
@@ -34,11 +34,11 @@ Configure DNS/TLS, provider-neutral security settings, monitoring-free operation
 - **Documentation:** Recorded the owner-approved deferral, retained the existing provider-neutral DNS/TLS and rollback runbook, and synchronized TASK-031’s live deployment evidence and the master checklist. When resumed, the task requires the exact council hostname, DNS owner/contact, authorization to change records, and an agreed maintenance window.
 - **Security/privacy:** No DNS or external-system mutation occurred. The temporary release remains HTTPS-only, static, monitoring-free at the application layer, and free of authentication, analytics, tracking, or course/offering registration targets.
 - **Skill compliance:** Followed deployment and development-lifecycle constraints by refusing to guess a municipal hostname or change DNS without explicit details and authority. The documented SDD fallback applies: keep the temporary HTTPS URL active while council DNS is pending.
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Commit:** `8ab00d0` (`TASK-032 record subdomain deferral`)
+- **Pull request:** [#40](https://github.com/idubi/sederot-course-catalog/pull/40)
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
+- **Completed by:** Deferred by project owner
+- **Completed at:** Not completed — deferred on 2026-07-22
 - **Notes:** Deferred at the owner’s direction on 2026-07-22. This task may be resumed later without changing the application architecture; its council-URL acceptance criterion remains unmet.
