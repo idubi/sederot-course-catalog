@@ -19,7 +19,7 @@ Run content validation, Astro checks, tests, build, link checks, and dist exclus
 - [x] Add or update tests and documentation proportional to the change.
 - [x] Run relevant validation and record exact evidence below.
 - [x] Review the diff for unrelated files and secrets.
-- [ ] Commit, push, and open one reviewed pull request directly to `main`.
+- [x] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
@@ -34,11 +34,11 @@ Run content validation, Astro checks, tests, build, link checks, and dist exclus
 - **Documentation:** Updated `README.md` with the canonical gate and artifact-verification commands, enforced sequence, CI triggers, exclusions, and short-lived validated artifact behavior. Synchronized TASK-029 merge closure and the master checklist.
 - **Security/privacy:** The verifier rejects HTTP and unknown URL schemes, editor APIs/tooling, drafts, diagnostics, source documents, source maps, and TypeScript/Astro sources in `dist`; it also fails if an enabled registration target reaches a generated course page. CI permissions are read-only and no runtime API, authentication, analytics, tracking, personal-data storage, or offering-level registration field was added.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow instructions; started from synchronized `main` at TASK-029 merge commit `1fec38e`; used the required task branch; preserved user-owned `content/approved/catalog.json`, `.vscode/`, and `instractions`; and kept the approved JSON as the sole production input. No blocking source conflict or missing canonical task dependency was found; the consolidated registration decision supersedes older offering-level wording.
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Commit:** `e4098d7` (`TASK-030 enforce production gates`)
+- **Pull request:** [#38](https://github.com/idubi/sederot-course-catalog/pull/38)
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Pending human review and approved merge
+- **Completed at:** Pending human review and approved merge
+- **Notes:** Implementation and automated validation are complete on the required task branch; PR #38 targets `main` and was not merged automatically.
