@@ -1,6 +1,6 @@
 # TASK-024: Implement registration-information and external-link flow
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Public UI
 - **Branch:** `task/024-registration-information`
 - **Depends on:** `TASK-017`, `TASK-022`
@@ -39,6 +39,6 @@ Create /programs/[groupId]/registration, group/program target resolution, close/
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Codex after owner approval
+- **Completed at:** 2026-07-22
+- **Notes:** PR #32 was approved and merged to `main` as `dde89da`.

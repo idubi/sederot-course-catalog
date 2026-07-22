@@ -1,0 +1,80 @@
+---
+import type { Contacts } from '../domain/catalog';
+import { buildContactLinks } from '../domain/contact-links';
+
+const { contacts, programName, gradeLabels, courseName } = Astro.props as {
+  contacts: Contacts;
+  programName: string;
+  gradeLabels: string[];
+  courseName?: string;
+};
+const links = buildContactLinks(contacts, {
+  courseName,
+  gradeLabels,
+  programName,
+});
+---
+
+<aside class="contact-actions" aria-labelledby="contact-title">
+  <h2 id="contact-title">צריכים עזרה?</h2>
+  <p>אפשר לפנות ישירות למרכז. האתר אינו שולח או שומר את ההודעה.</p>
+  <div class="links">
+    <a href={links.phone} aria-label={`התקשרות למרכז בטלפון ${contacts.phone}`}>
+      <span>טלפון</span>
+      <bdi>{contacts.phone}</bdi>
+    </a>
+    <a
+      href={links.whatsapp}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`פתיחת WhatsApp למספר ${contacts.whatsapp}`}
+    >
+      <span>WhatsApp</span>
+      <bdi>{contacts.whatsapp}</bdi>
+    </a>
+    <a href={links.email} aria-label={`שליחת דוא״ל אל ${contacts.email}`}>
+      <span>דוא״ל</span>
+      <bdi>{contacts.email}</bdi>
+    </a>
+  </div>
+</aside>
+
+<style>
+  .contact-actions {
+    margin-block: 2rem 3rem;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    background: #eaf0fb;
+  }
+  h2,
+  p {
+    margin-block: 0 0.5rem;
+  }
+  .links {
+    display: grid;
+    gap: 0.75rem;
+    margin-block-start: 1rem;
+  }
+  a {
+    display: flex;
+    flex-direction: column;
+    min-height: 3rem;
+    padding: 0.7rem 1rem;
+    border: 1px solid #315c9c;
+    border-radius: 0.6rem;
+    background: #fff;
+    text-decoration: none;
+  }
+  a span {
+    color: #315c9c;
+    font-weight: 800;
+  }
+  bdi {
+    overflow-wrap: anywhere;
+  }
+  @media (min-width: 48rem) {
+    .links {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>
