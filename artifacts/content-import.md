@@ -50,7 +50,9 @@ The local HTML editor is used to:
 - add images
 - add registration targets
 
-The editor autosaves the current JSON text in browser Local Storage and exposes explicit repository writes through its loopback-only API. Draft save is confined to `content/draft/editor/catalog.json`; approved export is confined to `content/approved/catalog.json`. Both writes are atomic. Approved export uses the shared catalog schema, blocks all errors, requires explicit acknowledgement when warnings are supplied, and serializes identical input byte-for-byte identically.
+The editor accepts canonical or legacy JSON and Markdown/text blueprint documents. A document import produces the closest canonical editable draft and structured diagnostics; it never silently treats missing values as approved. The editor autosaves the current JSON text in browser Local Storage and exposes explicit repository writes through its loopback-only API. Draft save is confined to `content/draft/editor/catalog.json`; approved export is confined to `content/approved/catalog.json`. Both writes are atomic. Approved export uses the shared catalog schema, blocks all errors, requires explicit acknowledgement when warnings are supplied, and serializes identical input byte-for-byte identically.
+
+For an isolated development dataset, the editor can explicitly export a schema-valid catalog to `contents/<folder-name>/bootstrap.json`. Run it with `npm run dev -- --data=./contents/<folder-name>`. The development launcher accepts only a folder beneath this repository's `contents/` directory, requires the exact `bootstrap.json` filename, and rejects path traversal and symlink escape. This export never changes approved content. The override is forbidden when `NODE_ENV=production`; normal builds continue to consume approved JSON only.
 
 The approved JSON, not the DOCX, is the direct input to the Astro build.
 
@@ -61,7 +63,8 @@ The approved JSON, not the DOCX, is the direct input to the Astro build.
 - `content/approved/catalog.json` is committed and is the only catalog input imported by production code.
 - `content/draft/` contains local importer/editor working files. Its directory policy ignores every payload.
 - `content/diagnostics/` contains local structured diagnostics and source excerpts. Its directory policy ignores every payload.
-- `src/content/catalog-loader.ts` has no configurable path and statically imports only the approved catalog.
+- `contents/<folder-name>/bootstrap.json` is an explicit editor export for an isolated local development run. It is not a production input and must not enter `dist/`.
+- `src/content/catalog-loader.ts` statically imports approved content by default and permits the validated `contents/` override only through the local development launcher.
 - `npm run content:validate` parses the approved catalog with the shared schema and is invoked before every Astro build.
 
 The committed catalog is a technical seed marked “not for publication.” Reserved `.invalid` contact and registration destinations prevent accidental live use. It must be replaced by business-approved content before deployment.

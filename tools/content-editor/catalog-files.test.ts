@@ -7,6 +7,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import approvedCatalog from '../../content/approved/catalog.json';
 import {
   exportApproved,
+  exportBootstrap,
   loadCatalog,
   saveDraft,
   type EditorPaths,
@@ -67,5 +68,30 @@ describe('editor catalog file service', () => {
     expect(await readFile(paths.approved, 'utf8')).toContain(
       '"descriptionHtml": "<p>תיאור</p>"',
     );
+  });
+
+  it('exports a valid bootstrap into contents/<folder>/bootstrap.json', async () => {
+    const result = await exportBootstrap(
+      approvedCatalog,
+      'school-year-2026-2027',
+      [],
+      true,
+      directory,
+    );
+    expect(result.valid).toBe(true);
+    expect(
+      JSON.parse(
+        await readFile(
+          join(directory, 'contents/school-year-2026-2027/bootstrap.json'),
+          'utf8',
+        ),
+      ),
+    ).toEqual(approvedCatalog);
+  });
+
+  it('rejects unsafe bootstrap folder names', async () => {
+    await expect(
+      exportBootstrap(approvedCatalog, '../outside', [], true, directory),
+    ).rejects.toThrow('Bootstrap folder');
   });
 });

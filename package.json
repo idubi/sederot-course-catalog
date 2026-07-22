@@ -8,7 +8,7 @@
     "npm": ">=10.0.0"
   },
   "scripts": {
-    "dev": "astro dev",
+    "dev": "node scripts/run-dev.mjs",
     "editor": "vite --config tools/content-editor/vite.config.ts",
     "build": "npm run content:validate && astro check && astro build",
     "preview": "astro preview",

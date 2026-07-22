@@ -2,9 +2,11 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 
 import { sanitizeDescriptionHtml } from '../../src/content/sanitize-html';
 import { migrateBaselineCatalog } from '../baseline-migrator/migrate-baseline';
+import { importBlueprintDocument } from './document-import';
 
 import {
   exportApproved,
+  exportBootstrap,
   loadCatalog,
   saveDraft,
   validateEditorCatalog,
@@ -19,6 +21,9 @@ interface CatalogRequest {
   catalog?: unknown;
   warnings?: string[];
   value?: string;
+  folderName?: string;
+  fileName?: string;
+  source?: string;
 }
 
 type EditorRequest = CatalogRequest & Partial<ImageUpload>;
@@ -83,6 +88,20 @@ export async function handleLocalApi(
       return true;
     }
 
+    if (request.method === 'POST' && url.pathname === '/api/import-document') {
+      const body = await readJson(request);
+      if (typeof body.source !== 'string' || typeof body.fileName !== 'string')
+        throw new Error('Missing document source or filename');
+      if (!/\.(?:md|txt)$/iu.test(body.fileName))
+        throw new Error('Only Markdown or text blueprint files are supported');
+      writeJson(
+        response,
+        200,
+        importBlueprintDocument(body.source, body.fileName),
+      );
+      return true;
+    }
+
     if (
       request.method === 'POST' &&
       url.pathname === '/api/sanitize-description'
@@ -123,6 +142,30 @@ export async function handleLocalApi(
       writeJson(response, result.valid && !blockedByWarnings ? 200 : 422, {
         ...result,
         exported: result.valid && !blockedByWarnings,
+        warningsRequireAcknowledgement: blockedByWarnings,
+      });
+      return true;
+    }
+
+    if (
+      request.method === 'POST' &&
+      url.pathname === '/api/catalog/bootstrap'
+    ) {
+      const body = await readJson(request);
+      if (typeof body.folderName !== 'string')
+        throw new Error('Missing Bootstrap folder name');
+      const result = await exportBootstrap(
+        body.catalog,
+        body.folderName,
+        body.warnings ?? [],
+        body.acknowledgeWarnings === true,
+      );
+      const blockedByWarnings =
+        result.warnings.length > 0 && body.acknowledgeWarnings !== true;
+      writeJson(response, result.valid && !blockedByWarnings ? 200 : 422, {
+        ...result,
+        exported: result.valid && !blockedByWarnings,
+        folder: `contents/${body.folderName}`,
         warningsRequireAcknowledgement: blockedByWarnings,
       });
       return true;

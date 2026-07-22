@@ -22,7 +22,7 @@ type ImportDiagnostic = {
   code: string;
   message: string;
   path: PropertyKey[];
-  severity: 'error' | 'warning';
+  severity: 'error' | 'warning' | 'info';
 };
 
 async function requestJson(path: string, init?: RequestInit) {
@@ -40,6 +40,7 @@ export function App() {
   const [message, setMessage] = useState<Message>(null);
   const [acknowledgeWarnings, setAcknowledgeWarnings] = useState(false);
   const [webCatalogUrl, setWebCatalogUrl] = useState('');
+  const [bootstrapFolder, setBootstrapFolder] = useState('');
   const [importDiagnostics, setImportDiagnostics] = useState<
     ImportDiagnostic[]
   >([]);
@@ -115,6 +116,33 @@ export function App() {
     }
   }
 
+  async function loadDocument(file: File | undefined) {
+    if (!file) return;
+    try {
+      const result = await requestJson('/api/import-document', {
+        method: 'POST',
+        body: JSON.stringify({
+          fileName: file.name,
+          source: await file.text(),
+        }),
+      });
+      const diagnostics = Array.isArray(result.diagnostics)
+        ? (result.diagnostics as ImportDiagnostic[])
+        : [];
+      setText(`${JSON.stringify(result.catalog, null, 2)}\n`);
+      setImportDiagnostics(diagnostics);
+      setMessage({
+        kind: 'success',
+        text: `${file.name} הומר לטיוטת JSON עם ${diagnostics.length} אבחונים`,
+      });
+    } catch (error) {
+      setMessage({
+        kind: 'error',
+        text: error instanceof Error ? error.message : 'ייבוא מסמך המקור נכשל',
+      });
+    }
+  }
+
   async function loadFromWeb() {
     try {
       const url = validateWebCatalogUrl(webCatalogUrl.trim());
@@ -168,6 +196,29 @@ export function App() {
     }
   }
 
+  async function exportBootstrap() {
+    try {
+      const result = await requestJson('/api/catalog/bootstrap', {
+        method: 'POST',
+        body: JSON.stringify({
+          acknowledgeWarnings,
+          catalog: catalog(),
+          folderName: bootstrapFolder.trim(),
+          warnings: importDiagnostics.map(({ message }) => message),
+        }),
+      });
+      setMessage({
+        kind: 'success',
+        text: `bootstrap.json נשמר בתוך contents/${bootstrapFolder.trim()} (${JSON.stringify(result)})`,
+      });
+    } catch (error) {
+      setMessage({
+        kind: 'error',
+        text: error instanceof Error ? error.message : 'ייצוא Bootstrap נכשל',
+      });
+    }
+  }
+
   function reset() {
     if (
       !window.confirm(
@@ -179,6 +230,7 @@ export function App() {
     resetEditorState(localStorage);
     setText('');
     setWebCatalogUrl('');
+    setBootstrapFolder('');
     setAcknowledgeWarnings(false);
     setImportDiagnostics([]);
     setMessage({
@@ -267,6 +319,45 @@ export function App() {
         </p>
       </section>
 
+      <section className="import-panel" aria-labelledby="document-title">
+        <h2 id="document-title">יצירת JSON ממסמך Blueprint</h2>
+        <label>
+          מסמך Markdown או טקסט
+          <input
+            type="file"
+            accept="text/markdown,text/plain,.md,.txt"
+            onChange={(event) => void loadDocument(event.target.files?.[0])}
+          />
+        </label>
+        <p>
+          הטקסט מומר לטיוטה הקרובה ביותר. תוכן חסר או לא ודאי נשאר כאבחון לעריכה
+          לפני ייצוא.
+        </p>
+      </section>
+
+      <section className="import-panel" aria-labelledby="bootstrap-title">
+        <h2 id="bootstrap-title">ייצוא סביבת Bootstrap</h2>
+        <label>
+          שם תיקייה תחת contents
+          <input
+            dir="ltr"
+            required
+            pattern="[a-z0-9][a-z0-9._-]*"
+            placeholder="school-year-2026-2027"
+            value={bootstrapFolder}
+            onChange={(event) => setBootstrapFolder(event.target.value)}
+          />
+        </label>
+        <button
+          type="button"
+          disabled={!bootstrapFolder.trim()}
+          onClick={() => void exportBootstrap()}
+        >
+          ייצוא contents/&lt;folder&gt;/bootstrap.json
+        </button>
+        <p>הייצוא דורש Schema תקין ואישור אזהרות. הוא אינו משנה תוכן מאושר.</p>
+      </section>
+
       <label className="warning-check">
         <input
           type="checkbox"
@@ -296,7 +387,12 @@ export function App() {
             {importDiagnostics.map((diagnostic, index) => (
               <li key={`${diagnostic.code}-${index}`}>
                 <strong>
-                  {diagnostic.severity === 'error' ? 'שגיאה' : 'אזהרה'}:
+                  {diagnostic.severity === 'error'
+                    ? 'שגיאה'
+                    : diagnostic.severity === 'warning'
+                      ? 'אזהרה'
+                      : 'מידע'}
+                  :
                 </strong>{' '}
                 {diagnostic.message} <code>{diagnostic.path.join('.')}</code>
               </li>

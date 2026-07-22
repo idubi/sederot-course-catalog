@@ -94,3 +94,26 @@ export async function exportApproved(
   await writeAtomic(paths.approved, serializeCatalog(catalog));
   return validation;
 }
+
+export async function exportBootstrap(
+  catalog: unknown,
+  folderName: string,
+  warnings: string[],
+  acknowledgeWarnings: boolean,
+  repositoryRoot = REPOSITORY_ROOT,
+): Promise<ValidationResult> {
+  if (!/^[a-z0-9][a-z0-9._-]*$/u.test(folderName)) {
+    throw new Error(
+      'Bootstrap folder must use lowercase letters, numbers, dots, underscores, or hyphens',
+    );
+  }
+  const validation = validateEditorCatalog(catalog, warnings);
+  if (!validation.valid || (warnings.length > 0 && !acknowledgeWarnings)) {
+    return validation;
+  }
+  await writeAtomic(
+    resolve(repositoryRoot, 'contents', folderName, 'bootstrap.json'),
+    serializeCatalog(catalog),
+  );
+  return validation;
+}
