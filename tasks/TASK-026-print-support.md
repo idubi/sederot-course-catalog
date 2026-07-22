@@ -35,7 +35,7 @@ Create printable program/course views and print CSS without interactive controls
 - **Security/privacy:** The small client script only compares URL IDs with approved content already embedded at build time and invokes the browser print dialog. It performs no network request, server PDF generation, storage, tracking, authentication, registration, or contact action.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; verified PR #33 merged, branched from updated `main`, verified TASK-022/TASK-023 dependencies, preserved unrelated local files, and kept the PR target as `main` without automatic merge.
 - **Commit:** `7a90223` (`TASK-026 add RTL print support`)
-- **Pull request:** Pending
+- **Pull request:** [#34](https://github.com/idubi/sederot-course-catalog/pull/34)
 
 ## Completion record
 
