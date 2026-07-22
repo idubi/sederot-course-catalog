@@ -34,7 +34,7 @@ Test selection, grouping, images, registration resolution, validation, cards, an
 - **Documentation:** Updated `README.md` with the Astro-aware Vitest configuration, covered domain/component areas, and prohibited course-registration regression contract; synchronized TASK-027 approved merge evidence.
 - **Security/privacy:** Tests use synthetic public labels and invalid/example destinations only. Production components remain unchanged; no registration field, personal data, storage, tracking, authentication, dependency, or runtime behavior was introduced.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; verified PR #35 merged, branched from updated `main`, verified TASK-019 through TASK-024 dependencies, preserved unrelated local files, and kept the PR target as `main` without automatic merge.
-- **Commit:** Pending
+- **Commit:** `44b4c5e` (`TASK-028 add unit and component coverage`)
 - **Pull request:** Pending
 
 ## Completion record
