@@ -34,7 +34,7 @@ Test selection → group → course → back and group → registration informat
 - **Documentation:** Updated `README.md` with E2E/install commands, ports, covered flows, no-write editor boundary, and ignored report locations; synchronized TASK-028 approved merge evidence.
 - **Security/privacy:** The browser suite uses only loopback servers. It inspects but does not follow the external registration URL, clears only browser-local editor state, and invokes only editor load/validate APIs—never draft save or approved export—so repository content is not changed. No production runtime behavior was added.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; verified PR #36 merged, branched from updated `main`, verified TASK-012/TASK-017/TASK-027/TASK-028 dependencies, preserved unrelated local files, and kept the PR target as `main` without automatic merge.
-- **Commit:** Pending
+- **Commit:** `13c37ae` (`TASK-029 add end-to-end browser flows`)
 - **Pull request:** Pending
 
 ## Completion record
