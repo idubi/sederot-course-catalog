@@ -138,6 +138,8 @@ npm run lint          # ESLint לקובצי TypeScript/Astro + אימות Pretti
 npm run test          # בדיקות Vitest דטרמיניסטיות (גם לפני הוספת קובצי test)
 npm run test:e2e      # Build + זרימות Chromium מול Preview ועורך מקומי
 npm run test:e2e:install # התקנה חד-פעמית של Chromium עבור Playwright
+npm run production:verify # בדיקת קישורים וגבולות התוצר שכבר נבנה
+npm run production:gate # שער פרסום מלא, כולל Build, תוצר ו-E2E
 npm run content:validate # אימות content/approved/catalog.json בלבד
 npm run content:normalize-source # יצירת טיוטת תוכניות/קבוצות/קורסים/מופעים מקומית
 npm run content:import-draft # יצירת טיוטה ואבחונים מובנים מקומיים
@@ -147,6 +149,13 @@ npm run check         # שער מקומי מלא: typecheck, lint, tests ו-buil
 ```
 
 `npm run build` מריץ בדיקת טיפוסים לפני יצירת `dist/`, כדי שבנייה לא תצליח כאשר קיימות שגיאות TypeScript. ESLint בודק קובצי JavaScript, TypeScript ו-Astro, ו-Prettier אוכף עיצוב דטרמיניסטי. קובצי build, תלויות, מסמכי מקור וה-HTML הישן מוחרגים במפורש.
+
+`npm run production:gate` הוא תנאי הפרסום הקנוני. הוא מאמת את ה-JSON המאושר,
+מריץ בדיקות Astro, יחידה ורכיבים, בונה את האתר, בודק שכל קישור פנימי וקישור עוגן
+נפתרים ושכל URL חיצוני משתמש ב-HTTPS או בסכימת קשר מאושרת, דוחה כלי עריכה,
+טיוטות, אבחונים ומסמכי מקור מתוך `dist/`, ולבסוף מריץ את זרימות ה-E2E מול
+התוצר הסטטי. אותו שער רץ ב-GitHub Actions בכל Pull Request אל `main` ובכל Push
+אליו; רק לאחר הצלחה מועלה `dist/` כארטיפקט קצר-טווח למשימות הפריסה.
 
 Vitest נטען דרך תצורת Astro ב-`vitest.config.ts`, ולכן בדיקות הרכיבים מרנדרות
 קובצי `.astro` אמיתיים. הכיסוי כולל את מסלול הבחירה, קיבוץ וסדר שיוכים, הכרעת

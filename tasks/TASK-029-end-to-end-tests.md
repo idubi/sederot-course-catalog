@@ -1,6 +1,6 @@
 # TASK-029: Add end-to-end program and editor flows
 
-- **Status:** Ready for review
+- **Status:** Complete
 - **Phase:** Quality
 - **Branch:** `task/029-end-to-end-tests`
 - **Depends on:** `TASK-012`, `TASK-017`, `TASK-027`, `TASK-028`
@@ -35,10 +35,10 @@ Test selection → group → course → back and group → registration informat
 - **Security/privacy:** The browser suite uses only loopback servers. It inspects but does not follow the external registration URL, clears only browser-local editor state, and invokes only editor load/validate APIs—never draft save or approved export—so repository content is not changed. No production runtime behavior was added.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; verified PR #36 merged, branched from updated `main`, verified TASK-012/TASK-017/TASK-027/TASK-028 dependencies, preserved unrelated local files, and kept the PR target as `main` without automatic merge.
 - **Commit:** `13c37ae` (`TASK-029 add end-to-end browser flows`)
-- **Pull request:** [#37](https://github.com/idubi/sederot-course-catalog/pull/37)
+- **Pull request:** [#37](https://github.com/idubi/sederot-course-catalog/pull/37) merged into `main` at commit `1fec38e62bbf98dbd6a7660bb12260a0d74f21af` on 2026-07-22.
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Pending
+- **Completed by:** Codex, with human review and merge approval
+- **Completed at:** 2026-07-22
+- **Notes:** Human approval and merge were confirmed before TASK-030 started from synchronized `main`.
