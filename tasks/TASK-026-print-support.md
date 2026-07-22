@@ -1,6 +1,6 @@
 # TASK-026: Implement RTL print and PDF support
 
-- **Status:** Not started
+- **Status:** Ready for review
 - **Phase:** Public UI
 - **Branch:** `task/026-print-support`
 - **Depends on:** `TASK-022`, `TASK-023`
@@ -13,29 +13,29 @@ Create printable program/course views and print CSS without interactive controls
 
 ## Implementation checklist
 
-- [ ] Re-read the task sources and record conflicts or missing inputs.
-- [ ] Implement only this task's focused scope on its task branch.
-- [ ] Preserve RTL, mobile-first, static-output, approved-JSON, privacy, and program-level registration constraints.
-- [ ] Add or update tests and documentation proportional to the change.
-- [ ] Run relevant validation and record exact evidence below.
-- [ ] Review the diff for unrelated files and secrets.
-- [ ] Commit, push, and open one reviewed pull request directly to `main`.
+- [x] Re-read the task sources and record conflicts or missing inputs.
+- [x] Implement only this task's focused scope on its task branch.
+- [x] Preserve RTL, mobile-first, static-output, approved-JSON, privacy, and program-level registration constraints.
+- [x] Add or update tests and documentation proportional to the change.
+- [x] Run relevant validation and record exact evidence below.
+- [x] Review the diff for unrelated files and secrets.
+- [x] Commit, push, and open one reviewed pull request directly to `main`.
 
 ## Acceptance criteria
 
-- [ ] Printed output is readable RTL and matches approved content.
-- [ ] No individual course or offering gains a registration action or target.
-- [ ] Referenced files and task dependencies exist and use canonical Markdown paths.
+- [x] Printed output is readable RTL and matches approved content.
+- [x] No individual course or offering gains a registration action or target.
+- [x] Referenced files and task dependencies exist and use canonical Markdown paths.
 
 ## Completion evidence
 
-- **Implementation:** Pending
-- **Tests:** Pending
-- **Documentation:** Pending
-- **Security/privacy:** Pending
-- **Skill compliance:** Pending
-- **Commit:** Pending
-- **Pull request:** Pending
+- **Implementation:** Added `/print` as a static RTL print view that selects only approved embedded group/offering IDs from the URL. Group actions print the full course cluster; contextual course details can print one offering. The view includes center/program context, academic year, schedule, course metadata, sanitized descriptions, and a generation date, with an explicit browser print/save-as-PDF action and invalid-context message.
+- **Tests:** Type checking passed for 60 files with 0 diagnostics; ESLint and focused Prettier checks passed; Vitest passed 70/70 tests across 18 files; approved-content validation and the five-page static build passed. Output assertions confirmed approved group/offering data, group and course print links, A4/print CSS, print action, absence of registration/contact targets in print content, and `git diff --check`.
+- **Documentation:** Updated `README.md` with group/course print scope, printed fields, A4 control hiding and page-break behavior, and browser-only PDF generation; synchronized TASK-025 approved merge evidence.
+- **Security/privacy:** The small client script only compares URL IDs with approved content already embedded at build time and invokes the browser print dialog. It performs no network request, server PDF generation, storage, tracking, authentication, registration, or contact action.
+- **Skill compliance:** Followed development-lifecycle and git-task-workflow; verified PR #33 merged, branched from updated `main`, verified TASK-022/TASK-023 dependencies, preserved unrelated local files, and kept the PR target as `main` without automatic merge.
+- **Commit:** `7a90223` (`TASK-026 add RTL print support`)
+- **Pull request:** [#34](https://github.com/idubi/sederot-course-catalog/pull/34)
 
 ## Completion record
 

@@ -75,6 +75,11 @@ const semesterLabels = {
       <a class="back-link" href={`${base}programs/${group.groupId}/`}
         >חזרה לאשכול הקורסים של התוכנית</a
       >
+      <a
+        class="print-link"
+        href={`${base}print/?group=${group.groupId}&offering=${offering.offeringId}`}
+        >תצוגה להדפסת הקורס</a
+      >
     </div>
   </article>
   <ContactActions
@@ -140,8 +145,10 @@ const semesterLabels = {
   .description :global(a) {
     overflow-wrap: anywhere;
   }
-  .back-link {
+  .back-link,
+  .print-link {
     display: inline-block;
+    margin-block-start: 0.5rem;
     padding: 0.7rem 1rem;
     border: 1px solid #315c9c;
     border-radius: 0.6rem;

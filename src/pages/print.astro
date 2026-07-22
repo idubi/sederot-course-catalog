@@ -1,0 +1,219 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { loadApprovedCatalog } from '../content/catalog-loader';
+import { buildProgramGroups } from '../domain/public-catalog';
+
+const catalog = loadApprovedCatalog();
+const groups = buildProgramGroups(catalog);
+const base = import.meta.env.BASE_URL;
+const genderLabels = { boys: 'בנים', girls: 'בנות', mixed: 'מעורב' };
+const semesterLabels = {
+  annual: 'שנתי',
+  first: 'מחצית א׳',
+  second: 'מחצית ב׳',
+};
+---
+
+<BaseLayout
+  title="תצוגה להדפסה | קטלוג מרכז המצוינות שדרות"
+  description="תצוגת RTL להדפסה או שמירה כ-PDF של תוכנית וקורסים נבחרים"
+>
+  <div class="print-controls" aria-label="פעולות הדפסה">
+    <a href={base}>חזרה לקטלוג</a>
+    <button type="button" data-print-button>הדפסה או שמירה כ-PDF</button>
+  </div>
+  <p class="screen-only instructions">
+    בחרו „הדפסה או שמירה כ-PDF”. בחלון ההדפסה של הדפדפן ניתן לבחור מדפסת או
+    שמירה כ-PDF.
+  </p>
+  <p class="screen-only error" data-print-error hidden role="alert">
+    לא נמצאה תוכנית תואמת להדפסה. חזרו לקטלוג ובחרו תוכנית מחדש.
+  </p>
+  <div data-print-content hidden>
+    {
+      groups.map((group) => (
+        <article class="print-view" data-group-id={group.groupId} hidden>
+          <header>
+            <p>מרכז המצוינות שדרות</p>
+            <h1>{group.programName}</h1>
+            <p>{catalog.academicYear.label}</p>
+            <dl>
+              <div>
+                <dt>שכבה</dt>
+                <dd>{group.gradeLabels.join(', ')}</dd>
+              </div>
+              <div>
+                <dt>קהל</dt>
+                <dd>{genderLabels[group.gender]}</dd>
+              </div>
+              <div>
+                <dt>מועד</dt>
+                <dd>
+                  {group.day}, {group.startTime}–{group.endTime}
+                </dd>
+              </div>
+            </dl>
+            <p>
+              הופק בתאריך{' '}
+              <time data-print-date>
+                {new Date().toLocaleDateString('he-IL')}
+              </time>
+            </p>
+          </header>
+          <section aria-label="קורסים להדפסה">
+            {group.offerings.map((offering) => (
+              <article
+                class="print-course"
+                data-offering-id={offering.offeringId}
+              >
+                <h2>{offering.courseName}</h2>
+                <p>{offering.shortName}</p>
+                <dl>
+                  <div>
+                    <dt>מנחים</dt>
+                    <dd>{offering.instructors.join(', ')}</dd>
+                  </div>
+                  <div>
+                    <dt>תקופה</dt>
+                    <dd>{semesterLabels[offering.semester]}</dd>
+                  </div>
+                </dl>
+                <div class="description" set:html={offering.descriptionHtml} />
+              </article>
+            ))}
+          </section>
+        </article>
+      ))
+    }
+  </div>
+  <script>
+    const parameters = new URLSearchParams(window.location.search);
+    const groupId = parameters.get('group');
+    const offeringId = parameters.get('offering');
+    const content = document.querySelector<HTMLElement>('[data-print-content]');
+    const error = document.querySelector<HTMLElement>('[data-print-error]');
+    const selectedGroup = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-group-id]'),
+    ).find((group) => group.dataset.groupId === groupId);
+
+    if (selectedGroup && content) {
+      selectedGroup.hidden = false;
+      content.hidden = false;
+      if (offeringId) {
+        const courses = Array.from(
+          selectedGroup.querySelectorAll<HTMLElement>('[data-offering-id]'),
+        );
+        const selectedOffering = courses.find(
+          (course) => course.dataset.offeringId === offeringId,
+        );
+        courses.forEach((course) => {
+          course.hidden = course !== selectedOffering;
+        });
+        if (!selectedOffering) {
+          content.hidden = true;
+          if (error) error.hidden = false;
+        }
+      }
+    } else if (error) {
+      error.hidden = false;
+    }
+
+    document
+      .querySelector('[data-print-button]')
+      ?.addEventListener('click', () => {
+        window.print();
+      });
+  </script>
+</BaseLayout>
+
+<style>
+  .print-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-block: 1rem;
+  }
+  .print-controls a,
+  .print-controls button {
+    min-height: 3rem;
+    padding: 0.7rem 1rem;
+    border: 1px solid #315c9c;
+    border-radius: 0.6rem;
+    color: #17233c;
+    background: #fff;
+    font: inherit;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .print-controls button {
+    color: #fff;
+    background: #315c9c;
+  }
+  .instructions,
+  .error {
+    padding: 1rem;
+    border-radius: 0.6rem;
+    background: #eaf0fb;
+  }
+  .error {
+    color: #8a1c1c;
+    background: #fff0f0;
+  }
+  .print-view {
+    padding: 1.5rem;
+    border: 1px solid #cbd6e8;
+    border-radius: 1rem;
+    background: #fff;
+  }
+  .print-view header > p,
+  h1,
+  h2 {
+    margin-block: 0 0.5rem;
+  }
+  dl {
+    display: grid;
+    gap: 0.5rem;
+  }
+  dl div {
+    display: flex;
+    gap: 0.5rem;
+  }
+  dt {
+    font-weight: 800;
+  }
+  dd {
+    margin: 0;
+  }
+  .print-course {
+    padding-block: 1.25rem;
+    border-block-start: 1px solid #cbd6e8;
+    break-inside: avoid;
+  }
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+  @media print {
+    :global(.site-header),
+    .print-controls,
+    .screen-only {
+      display: none !important;
+    }
+    :global(.site-shell) {
+      width: auto;
+      padding: 0;
+    }
+    .print-view {
+      padding: 0;
+      border: 0;
+    }
+    .print-course {
+      break-inside: avoid-page;
+    }
+    a {
+      color: #000;
+      text-decoration: none;
+    }
+  }
+</style>
