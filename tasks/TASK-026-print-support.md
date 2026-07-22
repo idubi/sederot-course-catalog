@@ -34,7 +34,7 @@ Create printable program/course views and print CSS without interactive controls
 - **Documentation:** Updated `README.md` with group/course print scope, printed fields, A4 control hiding and page-break behavior, and browser-only PDF generation; synchronized TASK-025 approved merge evidence.
 - **Security/privacy:** The small client script only compares URL IDs with approved content already embedded at build time and invokes the browser print dialog. It performs no network request, server PDF generation, storage, tracking, authentication, registration, or contact action.
 - **Skill compliance:** Followed development-lifecycle and git-task-workflow; verified PR #33 merged, branched from updated `main`, verified TASK-022/TASK-023 dependencies, preserved unrelated local files, and kept the PR target as `main` without automatic merge.
-- **Commit:** Pending
+- **Commit:** `7a90223` (`TASK-026 add RTL print support`)
 - **Pull request:** Pending
 
 ## Completion record
