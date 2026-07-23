@@ -42,7 +42,7 @@ Move manual JSON editing into a dedicated editor tab and provide a side inspecto
 - **Implementation:** Complete — raw JSON editing now appears only in a dedicated JSON tab. A responsive side inspector selects and renders one formatted object and provides relationship navigation among programs, groups, courses, offerings, and registration targets. Caret/scroll movement in raw JSON updates the inspector, while object and relationship selection focuses and scrolls the raw editor to the corresponding `id`.
 - **Tests:** `npm run typecheck` — 83 files with zero diagnostics; focused JSON-reference Vitest — 3/3 passed; focused two-way JSON/sidebar Chromium flow — passed; final `npm run production:gate` — content validation, typecheck, 25 files and 105 tests, five-page build, artifact verification, and 8 Chromium flows passed; `git diff --check` — passed.
 - **Documentation:** Updated `README.md`, `artifacts/content-import.md`, the master task list, and this task record.
-- **Commits:** `bb54860` (implementation, tests, documentation, and initial evidence)
+- **Commits:** `bb54860` (dedicated JSON reference tab); `c0dc88a` (two-way raw JSON/sidebar synchronization)
 - **Pull request:** [#51](https://github.com/idubi/sederot-course-catalog/pull/51) targets `main`; awaiting checks and human review.
 
 ## Completion record
