@@ -8,10 +8,10 @@ import {
   removeCourse,
   reorderOffering,
   resolveOfferingImage,
-  setCourseGroupAssignment,
   updateCourse,
   updateOffering,
 } from '../catalog-editing';
+import { CourseProgramAssignments } from './CourseProgramAssignments';
 import { EntityBrowser } from './EntityBrowser';
 
 export function CourseOfferingForms({
@@ -144,49 +144,11 @@ export function CourseOfferingForms({
                     }
                   />
                 </label>
-                <fieldset className="assignment-checklist">
-                  <legend>תוכניות וקבוצות שבהן הקורס מופיע</legend>
-                  {catalog.programs.map((programValue) => (
-                    <div key={programValue.id}>
-                      <strong>{programValue.name}</strong>
-                      {catalog.audienceGroups
-                        .filter(
-                          ({ programId }) => programId === programValue.id,
-                        )
-                        .map((groupValue) => {
-                          const assigned = catalog.offerings.some(
-                            ({ audienceGroupId, courseId }) =>
-                              courseId === value.id &&
-                              audienceGroupId === groupValue.id,
-                          );
-                          return (
-                            <label key={groupValue.id}>
-                              <input
-                                type="checkbox"
-                                checked={assigned}
-                                onChange={(event) =>
-                                  onChange(
-                                    setCourseGroupAssignment(
-                                      catalog,
-                                      value.id,
-                                      groupValue.id,
-                                      event.target.checked,
-                                    ),
-                                  )
-                                }
-                              />
-                              {groupValue.gradeLabels.join('-')} —{' '}
-                              {groupValue.gender === 'boys'
-                                ? 'בנים'
-                                : groupValue.gender === 'girls'
-                                  ? 'בנות'
-                                  : 'מעורב'}
-                            </label>
-                          );
-                        })}
-                    </div>
-                  ))}
-                </fieldset>
+                <CourseProgramAssignments
+                  catalog={catalog}
+                  courseId={value.id}
+                  onChange={onChange}
+                />
                 <label>
                   תיאור HTML
                   <textarea
