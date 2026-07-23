@@ -1,6 +1,6 @@
 # TASK-037: Split course assignments into program tabs
 
-- **Status:** In progress
+- **Status:** In review
 - **Phase:** Content tooling
 - **Category:** Bug fix
 - **Branch:** `task/037-course-program-tabs`
@@ -25,7 +25,7 @@ Divide each course's program/group assignment area into program tabs so editors 
 - [x] Support RTL keyboard tab navigation and narrow viewports.
 - [x] Add focused browser coverage and update documentation.
 - [x] Run typecheck, tests, standalone editor build, production gate, and `git diff --check`.
-- [ ] Record evidence, commit, push, and open one reviewed PR to `main`.
+- [x] Record evidence, commit, push, and open one reviewed PR to `main`.
 
 ## Acceptance criteria
 
@@ -40,8 +40,8 @@ Divide each course's program/group assignment area into program tabs so editors 
 - **Implementation:** Complete — extracted a course-program assignment tablist that renders one tab per program and one matching group panel. RTL arrow, Home, and End keys use roving focus; group checkboxes continue to call the canonical offering helper.
 - **Tests:** `npm run typecheck` — 81 files, zero diagnostics; `npm test` — 24 files and 98 tests passed; `npx vite build --config tools/content-editor/vite.config.ts` — 25 modules and no externalized Node warnings; `npm run production:gate` — content validation, typecheck, 98 tests, five-page build, artifact verification, and 8 Chromium flows passed; `git diff --check` — passed.
 - **Documentation:** Updated `README.md` and `artifacts/content-import.md`.
-- **Commits:** Pending
-- **Pull request:** Pending
+- **Commits:** `f5e4792` (implementation, tests, documentation, and initial evidence)
+- **Pull request:** [#47](https://github.com/idubi/sederot-course-catalog/pull/47) targets `main`; awaiting checks and human review.
 
 ## Completion record
 
