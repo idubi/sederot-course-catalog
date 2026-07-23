@@ -52,7 +52,7 @@ TASK-034 and subsequent corrective tasks live under `tasks/bug-fix/`.
 
 - [ ] [TASK-034: Fix JSON anomalies](../tasks/bug-fix/TASK-034-fix-json-anomalies.md) — In progress; legacy editor safety fixed, baseline migration and owner approval pending
 - [ ] [TASK-035: Fine-tune the local content editor](../tasks/bug-fix/TASK-035-editor-fine-tuning.md) — In review in owner-authorized follow-up PR #45
-- [ ] [TASK-036: Add single-entity editor browser](../tasks/bug-fix/TASK-036-entity-browser.md) — In progress
+- [ ] [TASK-036: Add single-entity editor browser](../tasks/bug-fix/TASK-036-entity-browser.md) — In review in PR #46
 
 ## Execution rules
 

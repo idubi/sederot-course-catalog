@@ -1,6 +1,6 @@
 # TASK-036: Add single-entity editor browser
 
-- **Status:** In progress
+- **Status:** In review
 - **Phase:** Content tooling
 - **Category:** Bug fix
 - **Branch:** `task/036-entity-browser`
@@ -26,7 +26,7 @@ Replace the editor's long entity-card lists with a master-detail layout that sho
 - [x] Stack the browser and card cleanly on narrow RTL viewports.
 - [x] Add focused unit/E2E coverage and update editor documentation.
 - [x] Run relevant tests, standalone editor build, production gate, and `git diff --check`.
-- [ ] Record evidence, commit, push, and open one reviewed PR to `main`.
+- [x] Record evidence, commit, push, and open one reviewed PR to `main`.
 
 ## Acceptance criteria
 
@@ -41,8 +41,8 @@ Replace the editor's long entity-card lists with a master-detail layout that sho
 - **Implementation:** Complete — added a reusable RTL entity browser and controlled master-detail selection for Courses, Groups, and Programs. Exactly one card renders; add selects the new entity, delete selects a neighbor, ID edits retain selection, and diagnostic jumps select before focusing.
 - **Tests:** `npm run typecheck` — 80 files, zero diagnostics; `npm test` — 24 files and 97 tests passed; `npx vite build --config tools/content-editor/vite.config.ts` — 24 modules and no externalized Node warnings; focused editor Playwright — 3 passed; `npm run production:gate` — content validation, typecheck, 97 tests, five-page build, artifact verification, and 7 Chromium flows passed; `git diff --check` — passed.
 - **Documentation:** Updated `README.md` and `artifacts/content-import.md`. Playwright now uses isolated loopback port 4334 for editor tests so it cannot reuse a developer's editor on 4333.
-- **Commits:** Pending
-- **Pull request:** Pending
+- **Commits:** `6000a58` (implementation, tests, documentation, and initial evidence)
+- **Pull request:** [#46](https://github.com/idubi/sederot-course-catalog/pull/46) targets `main`; awaiting checks and human review.
 
 ## Completion record
 
