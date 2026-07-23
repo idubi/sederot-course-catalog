@@ -164,6 +164,34 @@ test('editor browser pinpoints one entity card at a time', async ({ page }) => {
   await expect(
     page.getByRole('textbox', { name: 'שם', exact: true }),
   ).toHaveValue('תוכנית שנייה');
+  const programUrl = page.getByRole('textbox', {
+    name: 'כתובת סליקה/רישום של התוכנית',
+  });
+  await expect(programUrl).toBeVisible();
+  await programUrl.fill('https://service.example/second-program');
+  await expect(programUrl).toHaveValue(
+    'https://service.example/second-program',
+  );
+  await expect(
+    page.getByText('יעדים ייעודיים לקבוצות', { exact: true }),
+  ).toHaveCount(0);
+
+  await page.getByRole('button', { name: 'קבוצות' }).click();
+  await groupBrowser.getByRole('button', { name: /כיתה ו׳/u }).click();
+  const groupUrl = page.getByRole('textbox', {
+    name: 'כתובת סליקה/רישום ייעודית לקבוצה',
+  });
+  await expect(groupUrl).toHaveValue('');
+  const effectiveUrl = page.locator('bdi[dir="ltr"]');
+  await expect(effectiveUrl).toHaveText(
+    'https://service.example/second-program',
+  );
+  await groupUrl.fill('https://service.example/second-group');
+  await expect(effectiveUrl).toHaveText('https://service.example/second-group');
+  await groupUrl.fill('');
+  await expect(effectiveUrl).toHaveText(
+    'https://service.example/second-program',
+  );
 });
 
 test('editor saves a specific warning and returns to it later', async ({

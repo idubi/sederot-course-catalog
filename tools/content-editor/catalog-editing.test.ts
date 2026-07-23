@@ -10,6 +10,8 @@ import {
   updateOffering,
   updateProgram,
   resolveRegistrationTarget,
+  setAudienceGroupRegistrationUrl,
+  setProgramRegistrationUrl,
   setCourseGroupAssignment,
   updateRegistrationTarget,
   resolveOfferingImage,
@@ -129,6 +131,68 @@ describe('program and audience-group editing', () => {
       'registration-updated',
     );
     expect(JSON.stringify(updated.offerings)).not.toContain('registration');
+  });
+
+  it('edits a program registration URL directly in its owning card', () => {
+    const program = catalog.programs[0]!;
+    const updated = setProgramRegistrationUrl(
+      catalog,
+      program.id,
+      'https://service.example/program',
+    );
+    const target = updated.registrationTargets.find(
+      ({ id }) => id === updated.programs[0]?.defaultRegistrationTargetId,
+    );
+    expect(target?.url).toBe('https://service.example/program');
+  });
+
+  it('creates and removes a group-specific URL without changing the program default', () => {
+    const group = catalog.audienceGroups[0]!;
+    const programTargetId = catalog.programs[0]!.defaultRegistrationTargetId;
+    const withOverride = setAudienceGroupRegistrationUrl(
+      catalog,
+      group.id,
+      'https://service.example/group',
+    );
+    expect(resolveRegistrationTarget(withOverride, group.id)?.url).toBe(
+      'https://service.example/group',
+    );
+    expect(withOverride.programs[0]?.defaultRegistrationTargetId).toBe(
+      programTargetId,
+    );
+
+    const inherited = setAudienceGroupRegistrationUrl(
+      withOverride,
+      group.id,
+      '',
+    );
+    expect(inherited.audienceGroups[0]?.registrationTargetId).toBeUndefined();
+    expect(resolveRegistrationTarget(inherited, group.id)?.id).toBe(
+      programTargetId,
+    );
+  });
+
+  it('isolates a URL edit when a registration target is shared', () => {
+    const sharedTargetId = catalog.programs[0]!.defaultRegistrationTargetId!;
+    const shared: Catalog = {
+      ...catalog,
+      audienceGroups: [
+        { ...catalog.audienceGroups[0]!, registrationTargetId: sharedTargetId },
+      ],
+    };
+    const updated = setAudienceGroupRegistrationUrl(
+      shared,
+      shared.audienceGroups[0]!.id,
+      'https://service.example/group-only',
+    );
+    expect(updated.audienceGroups[0]?.registrationTargetId).not.toBe(
+      sharedTargetId,
+    );
+    expect(
+      updated.registrationTargets.find(({ id }) => id === sharedTargetId)?.url,
+    ).toBe(
+      catalog.registrationTargets.find(({ id }) => id === sharedTargetId)?.url,
+    );
   });
 
   it('resolves an offering image before the course default', () => {

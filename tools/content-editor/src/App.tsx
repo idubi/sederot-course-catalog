@@ -10,7 +10,6 @@ import {
 import { persistEditorText, resetEditorState } from '../editor-state';
 import { CourseOfferingForms } from './CourseOfferingForms';
 import { ProgramGroupForms } from './ProgramGroupForms';
-import { RegistrationForms } from './RegistrationForms';
 import {
   classifyDiagnostics,
   type DiagnosticState,
@@ -614,14 +613,6 @@ export function App() {
                 catalog={parsedCatalog}
                 selectedId={selectedCourseId}
                 onSelect={setSelectedCourseId}
-                onChange={(value) =>
-                  setText(`${JSON.stringify(value, null, 2)}\n`)
-                }
-              />
-            )}
-            {activeTab === 'programs' && (
-              <RegistrationForms
-                catalog={parsedCatalog}
                 onChange={(value) =>
                   setText(`${JSON.stringify(value, null, 2)}\n`)
                 }

@@ -9,6 +9,9 @@ import {
   moveAudienceGroup,
   removeAudienceGroup,
   removeProgram,
+  resolveRegistrationTarget,
+  setAudienceGroupRegistrationUrl,
+  setProgramRegistrationUrl,
   updateAudienceGroup,
   updateProgram,
 } from '../catalog-editing';
@@ -106,26 +109,32 @@ export function ProgramGroupForms({
                     </select>
                   </label>
                   <label>
-                    קישור סליקה/רישום ברירת מחדל
-                    <select
-                      value={value.defaultRegistrationTargetId ?? ''}
-                      onChange={(event) => {
-                        const update = { ...value };
-                        if (event.target.value)
-                          update.defaultRegistrationTargetId =
-                            event.target.value;
-                        else delete update.defaultRegistrationTargetId;
-                        program(value.id, update);
-                      }}
-                    >
-                      <option value="">חסר — הייצוא ייחסם</option>
-                      {catalog.registrationTargets.map((target) => (
-                        <option key={target.id} value={target.id}>
-                          {target.label} — {target.url}
-                        </option>
-                      ))}
-                    </select>
+                    כתובת סליקה/רישום של התוכנית
+                    <input
+                      dir="ltr"
+                      type="url"
+                      inputMode="url"
+                      placeholder="https://"
+                      value={
+                        catalog.registrationTargets.find(
+                          ({ id }) => id === value.defaultRegistrationTargetId,
+                        )?.url ?? ''
+                      }
+                      onChange={(event) =>
+                        onChange(
+                          setProgramRegistrationUrl(
+                            catalog,
+                            value.id,
+                            event.target.value,
+                          ),
+                        )
+                      }
+                    />
                   </label>
+                  <small>
+                    אפשר להזין כתובת HTTPS של כל שירות חיצוני. ללא כתובת, האימות
+                    והייצוא ייחסמו.
+                  </small>
                   <div>
                     <strong>קורסים בתוכנית</strong>
                     <p>
@@ -273,27 +282,35 @@ export function ProgramGroupForms({
                       />
                     </label>
                     <label>
-                      קישור סליקה/רישום לקבוצה
-                      <select
-                        value={value.registrationTargetId ?? ''}
-                        onChange={(event) => {
-                          const update = { ...value };
-                          if (event.target.value)
-                            update.registrationTargetId = event.target.value;
-                          else delete update.registrationTargetId;
-                          group(value.id, update);
-                        }}
-                      >
-                        <option value="">
-                          שימוש בקישור ברירת המחדל של התוכנית
-                        </option>
-                        {catalog.registrationTargets.map((target) => (
-                          <option key={target.id} value={target.id}>
-                            {target.label} — {target.url}
-                          </option>
-                        ))}
-                      </select>
+                      כתובת סליקה/רישום ייעודית לקבוצה
+                      <input
+                        dir="ltr"
+                        type="url"
+                        inputMode="url"
+                        placeholder="https:// (רשות)"
+                        value={
+                          catalog.registrationTargets.find(
+                            ({ id }) => id === value.registrationTargetId,
+                          )?.url ?? ''
+                        }
+                        onChange={(event) =>
+                          onChange(
+                            setAudienceGroupRegistrationUrl(
+                              catalog,
+                              value.id,
+                              event.target.value,
+                            ),
+                          )
+                        }
+                      />
                     </label>
+                    <small>
+                      שדה ריק משתמש בכתובת התוכנית. הכתובת האפקטיבית:{' '}
+                      <bdi dir="ltr">
+                        {resolveRegistrationTarget(catalog, value.id)?.url ??
+                          'חסרה'}
+                      </bdi>
+                    </small>
                     <div>
                       <strong>קורסים המשויכים לקבוצה</strong>
                       <p>
