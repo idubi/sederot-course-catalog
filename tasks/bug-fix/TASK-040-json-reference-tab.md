@@ -1,6 +1,6 @@
 # TASK-040: Add a JSON reference browser tab
 
-- **Status:** In progress
+- **Status:** In review
 - **Phase:** Content tooling
 - **Category:** Bug fix
 - **Branch:** `task/040-json-reference-tab`
@@ -26,7 +26,7 @@ Move manual JSON editing into a dedicated editor tab and provide a side inspecto
 - [x] Preserve raw editing, validation, RTL layout, and narrow-screen behavior.
 - [x] Add focused unit/browser coverage and update documentation.
 - [x] Run relevant tests, production gate, and `git diff --check`.
-- [ ] Record evidence, commit, push, and open one reviewed PR to `main`.
+- [x] Record evidence, commit, push, and open one reviewed PR to `main`.
 
 ## Acceptance criteria
 
@@ -40,8 +40,8 @@ Move manual JSON editing into a dedicated editor tab and provide a side inspecto
 - **Implementation:** Complete — raw JSON editing now appears only in a dedicated JSON tab. A responsive side inspector selects and renders one formatted object and provides relationship navigation among programs, groups, courses, offerings, and registration targets.
 - **Tests:** `npm run typecheck` — 83 files with zero diagnostics; focused JSON-reference Vitest — 2/2 passed; focused JSON-tab Chromium flow — passed; `npm run production:gate` — content validation, typecheck, 25 files and 104 tests, five-page build, artifact verification, and 8 Chromium flows passed; `git diff --check` — passed.
 - **Documentation:** Updated `README.md`, `artifacts/content-import.md`, the master task list, and this task record.
-- **Commits:** Pending
-- **Pull request:** Pending
+- **Commits:** `bb54860` (implementation, tests, documentation, and initial evidence)
+- **Pull request:** [#51](https://github.com/idubi/sederot-course-catalog/pull/51) targets `main`; awaiting checks and human review.
 
 ## Completion record
 
