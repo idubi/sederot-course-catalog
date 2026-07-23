@@ -1,6 +1,6 @@
 # TASK-035: Fine-tune the local content editor
 
-- **Status:** In progress
+- **Status:** In review
 - **Phase:** Content tooling
 - **Category:** Bug fix
 - **Branch:** `task/035-editor-fine-tuning`
@@ -32,7 +32,7 @@ Fine-tune the local content editor so imported course documents can be reviewed,
 - [x] Update `README.md`, `artifacts/content-import.md`, this checklist, and the master task list with final behavior and evidence.
 - [x] Run `npm run typecheck`, `npm test`, the standalone editor build, relevant Playwright flows, `npm run production:gate`, and `git diff --check`.
 - [x] Review the diff for unrelated files, source excerpts, personal data, secrets, generated content, and accidental approved-content changes.
-- [ ] Record exact evidence, commit, push, and open one reviewed pull request directly to `main`.
+- [x] Record exact evidence, commit, push, and open the owner-authorized follow-up pull request directly to `main`.
 
 ## Acceptance criteria
 
@@ -52,11 +52,11 @@ Fine-tune the local content editor so imported course documents can be reviewed,
 - **Documentation:** Updated `README.md`, `artifacts/content-import.md`, and this task record; the master list remains correctly marked In progress until review and approved merge. Supplied wireframes are retained under `artifacts/editor forms/`.
 - **Security/privacy:** External registration/payment remains program/group-owned and opens outside the static site only after the existing information step. No course registration action, payment processing, runtime public API, or editor code in production was added.
 - **Skill compliance:** Development-lifecycle and git-task-workflow loaded. The unrelated `.vscode/`, `instractions`, and approved-catalog whitespace-only change remain outside the task commit.
-- **Commits:** Pending
-- **Pull request:** Pending
+- **Commits:** `95328dc` (task plan), `f9b03f8` (implementation, tests, documentation, and initial evidence)
+- **Pull request:** [#45](https://github.com/idubi/sederot-course-catalog/pull/45) targets `main`; awaiting checks and human review. PR #44 had already merged the planning commit only, so the repository owner explicitly authorized this follow-up implementation PR.
 
 ## Completion record
 
 - **Completed by:** Pending
 - **Completed at:** Pending
-- **Notes:** TASK-034 was merged in PR #43. TASK-035 starts from that merged state and is limited to editor fine-tuning; it does not imply approval of unresolved catalog content.
+- **Notes:** TASK-034 was merged in PR #43. TASK-035 starts from that merged state and is limited to editor fine-tuning; it does not imply approval of unresolved catalog content. PR #44 prematurely merged only the TASK-035 planning record; the owner authorized PR #45 as the necessary workflow exception for the completed implementation.
