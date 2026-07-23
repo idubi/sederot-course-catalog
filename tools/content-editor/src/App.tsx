@@ -24,6 +24,7 @@ const diagnosticStateLabels: Record<DiagnosticState, string> = {
   stale: 'לא עדכני',
   duplicate: 'כפול',
 };
+const PINNED_DIAGNOSTICS_KEY = 'sderot-editor-pinned-diagnostics';
 
 async function requestJson(path: string, init?: RequestInit) {
   const response = await fetch(path, {
@@ -40,6 +41,11 @@ export function App() {
   const [activeTab, setActiveTab] = useState<'courses' | 'groups' | 'programs'>(
     'courses',
   );
+  const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
+  const [selectedGroupId, setSelectedGroupId] = useState<string | null>(null);
+  const [selectedProgramId, setSelectedProgramId] = useState<string | null>(
+    null,
+  );
   const [message, setMessage] = useState<Message>(null);
   const [acknowledgeWarnings, setAcknowledgeWarnings] = useState(false);
   const [bootstrapFolder, setBootstrapFolder] = useState('');
@@ -47,8 +53,27 @@ export function App() {
     ImportDiagnostic[]
   >([]);
   const [diagnosticFilter, setDiagnosticFilter] = useState<
-    'all' | DiagnosticState
+    'all' | 'saved' | DiagnosticState
   >('active');
+  const [pinnedDiagnosticKeys, setPinnedDiagnosticKeys] = useState<Set<string>>(
+    () => {
+      try {
+        const value = JSON.parse(
+          localStorage.getItem(PINNED_DIAGNOSTICS_KEY) ?? '[]',
+        ) as unknown;
+        return new Set(
+          Array.isArray(value)
+            ? value.filter((item): item is string => typeof item === 'string')
+            : [],
+        );
+      } catch {
+        return new Set();
+      }
+    },
+  );
+  const [lastDiagnosticKey, setLastDiagnosticKey] = useState<string | null>(
+    null,
+  );
   const parsedJson = useMemo(() => {
     try {
       return JSON.parse(text) as unknown;
@@ -74,7 +99,11 @@ export function App() {
     ? classifyDiagnostics(importDiagnostics, parsedCatalog)
     : [];
   const visibleDiagnostics = classifiedDiagnostics.filter(
-    ({ state }) => diagnosticFilter === 'all' || state === diagnosticFilter,
+    ({ key, state }) =>
+      diagnosticFilter === 'all' ||
+      (diagnosticFilter === 'saved'
+        ? pinnedDiagnosticKeys.has(key)
+        : state === diagnosticFilter),
   );
   const activeImportWarnings = classifiedDiagnostics
     .filter(
@@ -90,6 +119,23 @@ export function App() {
     );
     return () => window.clearTimeout(timer);
   }, [text]);
+
+  useEffect(() => {
+    if (!parsedCatalog) return;
+    if (!parsedCatalog.courses.some(({ id }) => id === selectedCourseId))
+      setSelectedCourseId(parsedCatalog.courses[0]?.id ?? null);
+    if (!parsedCatalog.audienceGroups.some(({ id }) => id === selectedGroupId))
+      setSelectedGroupId(parsedCatalog.audienceGroups[0]?.id ?? null);
+    if (!parsedCatalog.programs.some(({ id }) => id === selectedProgramId))
+      setSelectedProgramId(parsedCatalog.programs[0]?.id ?? null);
+  }, [parsedCatalog, selectedCourseId, selectedGroupId, selectedProgramId]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      PINNED_DIAGNOSTICS_KEY,
+      JSON.stringify([...pinnedDiagnosticKeys]),
+    );
+  }, [pinnedDiagnosticKeys]);
 
   function catalog() {
     return JSON.parse(text) as unknown;
@@ -391,15 +437,19 @@ export function App() {
                   <option value="resolved">נפתרו</option>
                   <option value="stale">לא עדכניים</option>
                   <option value="duplicate">כפולים</option>
+                  <option value="saved">
+                    שמורים לחזרה ({pinnedDiagnosticKeys.size})
+                  </option>
                   <option value="all">הכול</option>
                 </select>
               </label>
               <ul>
                 {visibleDiagnostics.map(
-                  ({ diagnostic, entity, state }, index) => (
+                  ({ diagnostic, entity, key, state }) => (
                     <li
+                      id={`diagnostic-${key}`}
                       className={`diagnostic diagnostic--${state}`}
-                      key={`${diagnostic.code}-${index}`}
+                      key={key}
                     >
                       <strong>
                         {diagnostic.severity === 'error'
@@ -425,11 +475,37 @@ export function App() {
                           <q>{diagnostic.sourceExcerpt}</q>
                         )}
                       </div>
+                      <button
+                        type="button"
+                        aria-pressed={pinnedDiagnosticKeys.has(key)}
+                        onClick={() =>
+                          setPinnedDiagnosticKeys((current) => {
+                            const next = new Set(current);
+                            if (next.has(key)) next.delete(key);
+                            else next.add(key);
+                            return next;
+                          })
+                        }
+                      >
+                        {pinnedDiagnosticKeys.has(key)
+                          ? 'הסרה מהשמורים'
+                          : 'שמירה לחזרה מאוחרת'}
+                      </button>
                       {entity && (
                         <button
                           type="button"
                           onClick={() => {
+                            setLastDiagnosticKey(key);
                             setActiveTab(entity.tab);
+                            const entityId = entity.id.replace(
+                              /^(?:course|group|program)-/u,
+                              '',
+                            );
+                            if (entity.tab === 'courses')
+                              setSelectedCourseId(entityId);
+                            else if (entity.tab === 'groups')
+                              setSelectedGroupId(entityId);
+                            else setSelectedProgramId(entityId);
                             window.setTimeout(
                               () =>
                                 document
@@ -469,6 +545,27 @@ export function App() {
             </section>
           )}
 
+          {lastDiagnosticKey && (
+            <button
+              className="return-to-diagnostic"
+              type="button"
+              onClick={() => {
+                setDiagnosticFilter(
+                  pinnedDiagnosticKeys.has(lastDiagnosticKey) ? 'saved' : 'all',
+                );
+                window.setTimeout(
+                  () =>
+                    document
+                      .getElementById(`diagnostic-${lastDiagnosticKey}`)
+                      ?.scrollIntoView({ behavior: 'smooth', block: 'center' }),
+                  0,
+                );
+              }}
+            >
+              חזרה לאבחון האחרון
+            </button>
+          )}
+
           <nav className="entity-tabs" aria-label="ישויות קטלוג">
             {(
               [
@@ -494,6 +591,8 @@ export function App() {
               <ProgramGroupForms
                 view="programs"
                 catalog={parsedCatalog}
+                selectedId={selectedProgramId}
+                onSelect={setSelectedProgramId}
                 onChange={(value) =>
                   setText(`${JSON.stringify(value, null, 2)}\n`)
                 }
@@ -503,6 +602,8 @@ export function App() {
               <ProgramGroupForms
                 view="groups"
                 catalog={parsedCatalog}
+                selectedId={selectedGroupId}
+                onSelect={setSelectedGroupId}
                 onChange={(value) =>
                   setText(`${JSON.stringify(value, null, 2)}\n`)
                 }
@@ -511,6 +612,8 @@ export function App() {
             {activeTab === 'courses' && (
               <CourseOfferingForms
                 catalog={parsedCatalog}
+                selectedId={selectedCourseId}
+                onSelect={setSelectedCourseId}
                 onChange={(value) =>
                   setText(`${JSON.stringify(value, null, 2)}\n`)
                 }

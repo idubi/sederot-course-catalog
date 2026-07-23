@@ -12,13 +12,18 @@ import {
   updateCourse,
   updateOffering,
 } from '../catalog-editing';
+import { EntityBrowser } from './EntityBrowser';
 
 export function CourseOfferingForms({
   catalog,
   onChange,
+  onSelect,
+  selectedId,
 }: {
   catalog: Catalog;
   onChange: (value: Catalog) => void;
+  onSelect: (id: string) => void;
+  selectedId: string | null;
 }) {
   const sanitizeDescription = async (value: string): Promise<string> => {
     const response = await fetch('/api/sanitize-description', {
@@ -72,7 +77,10 @@ export function CourseOfferingForms({
   };
   const course = (id: string, patch: Partial<Course>) => {
     const value = catalog.courses.find((item) => item.id === id);
-    if (value) onChange(updateCourse(catalog, id, { ...value, ...patch }));
+    if (value) {
+      onChange(updateCourse(catalog, id, { ...value, ...patch }));
+      if (patch.id !== undefined) onSelect(patch.id);
+    }
   };
   const offering = (id: string, patch: Partial<CourseOffering>) => {
     const value = catalog.offerings.find((item) => item.id === id);
@@ -81,185 +89,229 @@ export function CourseOfferingForms({
   return (
     <section className="structured-editor">
       <h2>קורסים ושיוכים לקבוצות</h2>
-      {catalog.courses.map((value) => (
-        <fieldset key={value.id} id={`course-${value.id}`}>
-          <legend>{value.name}</legend>
-          <label>
-            מזהה
-            <input
-              dir="ltr"
-              value={value.id}
-              onChange={(e) => course(value.id, { id: e.target.value })}
-            />
-          </label>
-          <label>
-            שם
-            <input
-              value={value.name}
-              onChange={(e) => course(value.id, { name: e.target.value })}
-            />
-          </label>
-          <label>
-            שם קצר
-            <input
-              value={value.shortName}
-              onChange={(e) => course(value.id, { shortName: e.target.value })}
-            />
-          </label>
-          <label>
-            מנחים
-            <input
-              value={value.instructors.join(', ')}
-              onChange={(e) =>
-                course(value.id, {
-                  instructors: e.target.value
-                    .split(',')
-                    .map((item) => item.trim())
-                    .filter(Boolean),
-                })
-              }
-            />
-          </label>
-          <fieldset className="assignment-checklist">
-            <legend>תוכניות וקבוצות שבהן הקורס מופיע</legend>
-            {catalog.programs.map((programValue) => (
-              <div key={programValue.id}>
-                <strong>{programValue.name}</strong>
-                {catalog.audienceGroups
-                  .filter(({ programId }) => programId === programValue.id)
-                  .map((groupValue) => {
-                    const assigned = catalog.offerings.some(
-                      ({ audienceGroupId, courseId }) =>
-                        courseId === value.id &&
-                        audienceGroupId === groupValue.id,
-                    );
-                    return (
-                      <label key={groupValue.id}>
-                        <input
-                          type="checkbox"
-                          checked={assigned}
-                          onChange={(event) =>
-                            onChange(
-                              setCourseGroupAssignment(
-                                catalog,
-                                value.id,
-                                groupValue.id,
-                                event.target.checked,
-                              ),
-                            )
-                          }
-                        />
-                        {groupValue.gradeLabels.join('-')} —{' '}
-                        {groupValue.gender === 'boys'
-                          ? 'בנים'
-                          : groupValue.gender === 'girls'
-                            ? 'בנות'
-                            : 'מעורב'}
-                      </label>
-                    );
-                  })}
-              </div>
-            ))}
-          </fieldset>
-          <label>
-            תיאור HTML
-            <textarea
-              dir="rtl"
-              value={value.descriptionHtml}
-              onChange={(e) =>
-                course(value.id, { descriptionHtml: e.target.value })
-              }
-              onBlur={(e) =>
-                void sanitizeDescription(e.target.value)
-                  .then((descriptionHtml) =>
-                    course(value.id, { descriptionHtml }),
-                  )
-                  .catch((error: Error) => window.alert(error.message))
-              }
-            />
-          </label>
-          <label>
-            נתיב תמונה כללית
-            <input
-              dir="ltr"
-              value={value.defaultImage?.src ?? ''}
-              onChange={(e) =>
-                onChange(
-                  updateCourse(
-                    catalog,
-                    value.id,
-                    courseImage(
-                      value,
-                      e.target.value,
-                      value.defaultImage?.alt ?? '',
-                    ),
-                  ),
-                )
-              }
-            />
-          </label>
-          <label>
-            העלאת תמונה כללית
-            <input
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
-              onChange={(event) =>
-                void uploadImage(event.target.files?.[0], value.id, 'course')
-                  .then((src) => {
-                    if (src)
+      <div className="entity-master-detail">
+        <EntityBrowser
+          entityLabel="הקורסים"
+          items={catalog.courses.map(({ id, name }) => ({
+            id,
+            label: name,
+            meta: id,
+          }))}
+          selectedId={selectedId}
+          onSelect={onSelect}
+        />
+        <div className="entity-detail">
+          {catalog.courses
+            .filter(({ id }) => id === selectedId)
+            .map((value) => (
+              <fieldset key={value.id} id={`course-${value.id}`}>
+                <legend>{value.name}</legend>
+                <label>
+                  מזהה
+                  <input
+                    dir="ltr"
+                    value={value.id}
+                    onChange={(e) => course(value.id, { id: e.target.value })}
+                  />
+                </label>
+                <label>
+                  שם
+                  <input
+                    value={value.name}
+                    onChange={(e) => course(value.id, { name: e.target.value })}
+                  />
+                </label>
+                <label>
+                  שם קצר
+                  <input
+                    value={value.shortName}
+                    onChange={(e) =>
+                      course(value.id, { shortName: e.target.value })
+                    }
+                  />
+                </label>
+                <label>
+                  מנחים
+                  <input
+                    value={value.instructors.join(', ')}
+                    onChange={(e) =>
+                      course(value.id, {
+                        instructors: e.target.value
+                          .split(',')
+                          .map((item) => item.trim())
+                          .filter(Boolean),
+                      })
+                    }
+                  />
+                </label>
+                <fieldset className="assignment-checklist">
+                  <legend>תוכניות וקבוצות שבהן הקורס מופיע</legend>
+                  {catalog.programs.map((programValue) => (
+                    <div key={programValue.id}>
+                      <strong>{programValue.name}</strong>
+                      {catalog.audienceGroups
+                        .filter(
+                          ({ programId }) => programId === programValue.id,
+                        )
+                        .map((groupValue) => {
+                          const assigned = catalog.offerings.some(
+                            ({ audienceGroupId, courseId }) =>
+                              courseId === value.id &&
+                              audienceGroupId === groupValue.id,
+                          );
+                          return (
+                            <label key={groupValue.id}>
+                              <input
+                                type="checkbox"
+                                checked={assigned}
+                                onChange={(event) =>
+                                  onChange(
+                                    setCourseGroupAssignment(
+                                      catalog,
+                                      value.id,
+                                      groupValue.id,
+                                      event.target.checked,
+                                    ),
+                                  )
+                                }
+                              />
+                              {groupValue.gradeLabels.join('-')} —{' '}
+                              {groupValue.gender === 'boys'
+                                ? 'בנים'
+                                : groupValue.gender === 'girls'
+                                  ? 'בנות'
+                                  : 'מעורב'}
+                            </label>
+                          );
+                        })}
+                    </div>
+                  ))}
+                </fieldset>
+                <label>
+                  תיאור HTML
+                  <textarea
+                    dir="rtl"
+                    value={value.descriptionHtml}
+                    onChange={(e) =>
+                      course(value.id, { descriptionHtml: e.target.value })
+                    }
+                    onBlur={(e) =>
+                      void sanitizeDescription(e.target.value)
+                        .then((descriptionHtml) =>
+                          course(value.id, { descriptionHtml }),
+                        )
+                        .catch((error: Error) => window.alert(error.message))
+                    }
+                  />
+                </label>
+                <label>
+                  נתיב תמונה כללית
+                  <input
+                    dir="ltr"
+                    value={value.defaultImage?.src ?? ''}
+                    onChange={(e) =>
                       onChange(
                         updateCourse(
                           catalog,
                           value.id,
                           courseImage(
                             value,
-                            src,
+                            e.target.value,
                             value.defaultImage?.alt ?? '',
                           ),
                         ),
-                      );
-                  })
-                  .catch((error: Error) => window.alert(error.message))
-              }
-            />
-          </label>
-          <label>
-            טקסט חלופי לתמונה
-            <input
-              value={value.defaultImage?.alt ?? ''}
-              onChange={(e) =>
-                onChange(
-                  updateCourse(
-                    catalog,
-                    value.id,
-                    courseImage(
-                      value,
-                      value.defaultImage?.src ?? '',
-                      e.target.value,
-                    ),
-                  ),
-                )
-              }
-            />
-          </label>
-          {value.defaultImage?.src && (
-            <figure className="image-preview">
-              <img src={value.defaultImage.src} alt={value.defaultImage.alt} />
-              <figcaption>{value.defaultImage.alt || 'תמונת הקורס'}</figcaption>
-            </figure>
-          )}
+                      )
+                    }
+                  />
+                </label>
+                <label>
+                  העלאת תמונה כללית
+                  <input
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    onChange={(event) =>
+                      void uploadImage(
+                        event.target.files?.[0],
+                        value.id,
+                        'course',
+                      )
+                        .then((src) => {
+                          if (src)
+                            onChange(
+                              updateCourse(
+                                catalog,
+                                value.id,
+                                courseImage(
+                                  value,
+                                  src,
+                                  value.defaultImage?.alt ?? '',
+                                ),
+                              ),
+                            );
+                        })
+                        .catch((error: Error) => window.alert(error.message))
+                    }
+                  />
+                </label>
+                <label>
+                  טקסט חלופי לתמונה
+                  <input
+                    value={value.defaultImage?.alt ?? ''}
+                    onChange={(e) =>
+                      onChange(
+                        updateCourse(
+                          catalog,
+                          value.id,
+                          courseImage(
+                            value,
+                            value.defaultImage?.src ?? '',
+                            e.target.value,
+                          ),
+                        ),
+                      )
+                    }
+                  />
+                </label>
+                {value.defaultImage?.src && (
+                  <figure className="image-preview">
+                    <img
+                      src={value.defaultImage.src}
+                      alt={value.defaultImage.alt}
+                    />
+                    <figcaption>
+                      {value.defaultImage.alt || 'תמונת הקורס'}
+                    </figcaption>
+                  </figure>
+                )}
+                <button
+                  className="danger"
+                  type="button"
+                  onClick={() => {
+                    const index = catalog.courses.findIndex(
+                      ({ id }) => id === value.id,
+                    );
+                    const neighbor =
+                      catalog.courses[index + 1] ?? catalog.courses[index - 1];
+                    onSelect(neighbor?.id ?? '');
+                    onChange(removeCourse(catalog, value.id));
+                  }}
+                >
+                  מחיקת קורס
+                </button>
+              </fieldset>
+            ))}
           <button
-            className="danger"
             type="button"
-            onClick={() => onChange(removeCourse(catalog, value.id))}
+            onClick={() => {
+              const next = addCourse(catalog);
+              onChange(next);
+              onSelect(next.courses.at(-1)?.id ?? '');
+            }}
           >
-            מחיקת קורס
+            + הוספת קורס
           </button>
-        </fieldset>
-      ))}
-      <button type="button" onClick={() => onChange(addCourse(catalog))}>
-        + הוספת קורס
-      </button>
+        </div>
+      </div>
       {false &&
         catalog.offerings.map((value) => (
           <fieldset key={value.id}>
