@@ -36,7 +36,7 @@ Arrange the program assignment headers inside course cards as a responsive equal
 ## Completion evidence
 
 - **Implementation:** Complete — course-card program assignment headers use a responsive equal-width grid matching the primary tab treatment while preserving the active tab and RTL keyboard behavior.
-- **Tests:** `npm run production:gate` — approved content validated; 80 files checked with zero diagnostics; 24 test files and 102 tests passed; five production pages built and verified; 8 Chromium flows passed. `git diff --check` — passed.
+- **Tests:** After merging current `main` at `b50ed23`, `npm run production:gate` — approved content validated; 80 files checked with zero diagnostics; 24 test files and 109 tests passed; five production pages built and verified; 8 Chromium flows passed. `git diff --check` — passed.
 - **Documentation:** Updated `README.md`, `artifacts/content-import.md`, the master list, and this task record.
 - **Commits:** `4a0ab65`, `72e1e3a`
 - **Pull request:** [#52](https://github.com/idubi/sederot-course-catalog/pull/52)
