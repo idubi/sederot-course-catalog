@@ -134,6 +134,18 @@ test('editor browser pinpoints one entity card at a time', async ({ page }) => {
       exact: true,
     }),
   ).toHaveValue('קורס שני');
+  const assignmentTabs = page.getByRole('tablist', { name: 'תוכניות' });
+  await expect(assignmentTabs.getByRole('tab')).toHaveCount(2);
+  await assignmentTabs.getByRole('tab').first().press('ArrowLeft');
+  await expect(
+    assignmentTabs.getByRole('tab', { name: 'תוכנית שנייה' }),
+  ).toHaveAttribute('aria-selected', 'true');
+  const secondProgramGroup = page.getByRole('tabpanel').getByRole('checkbox', {
+    name: /כיתה ו׳/u,
+  });
+  await expect(secondProgramGroup).not.toBeChecked();
+  await secondProgramGroup.check();
+  await expect(secondProgramGroup).toBeChecked();
 
   await page.getByRole('button', { name: 'קבוצות' }).click();
   const groupBrowser = page.getByRole('navigation', { name: 'דפדפן הקבוצות' });
