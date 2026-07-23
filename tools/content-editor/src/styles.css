@@ -166,10 +166,6 @@ select {
   padding-inline: 0.25rem;
 }
 
-.json-source {
-  margin-block-start: 1rem;
-}
-
 .message {
   overflow-wrap: anywhere;
   padding: 0.75rem;
@@ -297,6 +293,57 @@ select {
   font-family: monospace;
   line-height: 1.5;
   resize: vertical;
+}
+
+.json-workspace {
+  display: grid;
+  gap: 1rem;
+  padding-block: 1rem;
+}
+
+.json-edit-pane,
+.json-reference-pane {
+  min-width: 0;
+}
+
+.json-reference-pane {
+  padding: 1rem;
+  border: 1px solid #8d99af;
+  border-radius: 0.75rem;
+  background: #f8f9fc;
+}
+
+.json-reference-pane label,
+.json-reference-pane select {
+  display: block;
+  width: 100%;
+}
+
+.json-reference-pane select {
+  margin-block: 0.5rem 1rem;
+}
+
+.json-reference-pane pre {
+  max-height: 24rem;
+  overflow: auto;
+  padding: 0.75rem;
+  border: 1px solid #d8deea;
+  border-radius: 0.5rem;
+  background: #fff;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.json-reference-links {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.json-reference-links button {
+  width: 100%;
+  text-align: start;
 }
 
 .structured-editor fieldset {
@@ -579,5 +626,9 @@ select {
 
   .entity-browser ul {
     max-height: calc(100vh - 11rem);
+  }
+
+  .json-workspace {
+    grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 0.75fr);
   }
 }

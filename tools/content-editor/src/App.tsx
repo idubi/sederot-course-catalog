@@ -9,6 +9,7 @@ import {
 } from '../catalog-import';
 import { persistEditorText, resetEditorState } from '../editor-state';
 import { CourseOfferingForms } from './CourseOfferingForms';
+import { JsonReferenceEditor } from './JsonReferenceEditor';
 import { ProgramGroupForms } from './ProgramGroupForms';
 import {
   classifyDiagnostics,
@@ -41,7 +42,7 @@ async function requestJson(path: string, init?: RequestInit) {
 export function App() {
   const [text, setText] = useState('');
   const [activeTab, setActiveTab] = useState<
-    'courses' | 'diagnostics' | 'groups' | 'programs'
+    'courses' | 'diagnostics' | 'groups' | 'json' | 'programs'
   >('courses');
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
   const [selectedGroupId, setSelectedGroupId] = useState<string | null>(null);
@@ -555,6 +556,7 @@ export function App() {
                 ['groups', 'קבוצות'],
                 ['programs', 'תוכניות'],
                 ['diagnostics', 'שגיאות ואזהרות'],
+                ['json', 'JSON'],
               ] as const
             ).map(([id, label]) => (
               <button
@@ -842,20 +844,14 @@ export function App() {
                 }
               />
             )}
-          </section>
-
-          <details className="json-source">
-            <summary>עריכת JSON גולמי</summary>
-            <label className="json-editor">
-              <span>קטלוג JSON</span>
-              <textarea
-                dir="ltr"
-                spellCheck={false}
-                value={text}
-                onChange={(event) => setText(event.target.value)}
+            {activeTab === 'json' && (
+              <JsonReferenceEditor
+                catalog={parsedCatalog}
+                text={text}
+                onTextChange={setText}
               />
-            </label>
-          </details>
+            )}
+          </section>
         </>
       )}
     </main>
