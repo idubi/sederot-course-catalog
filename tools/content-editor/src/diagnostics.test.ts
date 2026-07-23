@@ -96,4 +96,12 @@ describe('editor diagnostic state', () => {
       'duplicate',
     );
   });
+
+  it('classifies an explicitly approved diagnostic as approved', () => {
+    const value = diagnostic('OWNER_APPROVED');
+    expect(
+      classifyDiagnostics([value], catalog, new Set([diagnosticKey(value)]))[0]
+        ?.state,
+    ).toBe('approved');
+  });
 });

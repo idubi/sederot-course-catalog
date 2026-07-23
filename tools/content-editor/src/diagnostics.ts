@@ -17,7 +17,8 @@ export type ImportDiagnostic = {
   };
 };
 
-export type DiagnosticState = 'active' | 'resolved' | 'stale' | 'duplicate';
+export type DiagnosticState =
+  'active' | 'approved' | 'resolved' | 'stale' | 'duplicate';
 export type DiagnosticEntity = {
   id: string;
   tab: 'courses' | 'groups' | 'programs';
@@ -106,6 +107,7 @@ export function diagnosticState(
 export function classifyDiagnostics(
   diagnostics: ImportDiagnostic[],
   catalog: Catalog,
+  approvedKeys: ReadonlySet<string> = new Set(),
 ) {
   return diagnostics.map((diagnostic, index) => {
     const baseKey = diagnosticKey(diagnostic);
@@ -113,11 +115,14 @@ export function classifyDiagnostics(
       .slice(0, index)
       .filter((candidate) => diagnosticKey(candidate) === baseKey).length;
     const duplicate = occurrence > 0;
+    const key = diagnosticKey(diagnostic, occurrence);
     return {
       diagnostic,
       entity: diagnosticEntity(diagnostic, catalog),
-      key: diagnosticKey(diagnostic, occurrence),
-      state: diagnosticState(diagnostic, catalog, duplicate),
+      key,
+      state: approvedKeys.has(key)
+        ? ('approved' as const)
+        : diagnosticState(diagnostic, catalog, duplicate),
     };
   });
 }

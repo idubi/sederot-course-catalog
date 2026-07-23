@@ -216,6 +216,17 @@ select {
   color: #475467;
 }
 
+.diagnostic--approved {
+  border-inline-start-color: #25834a;
+  color: #185c35;
+  background: #effbf3;
+}
+
+.diagnostic--approved .diagnostic-state {
+  color: #185c35;
+  background: #d8f5e2;
+}
+
 .diagnostic-state {
   display: inline-block;
   padding: 0.1rem 0.45rem;

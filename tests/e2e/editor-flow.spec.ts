@@ -94,12 +94,20 @@ test('editor migrates a legacy groups catalog without crashing structured forms'
   });
 
   await expect(page.getByRole('status')).toContainText('הומר לטיוטת הסכמה');
-  await expect(page.getByText(/אבחוני המרה/)).toBeVisible();
+  await expect(page.getByText(/אבחוני המרה/)).toHaveCount(0);
   await expect(page.getByLabel('קטלוג JSON')).toContainText('"audienceGroups"');
   await expect(page.getByLabel('קטלוג JSON')).not.toContainText('"groups"');
   await expect(
     page.getByRole('heading', { name: 'קורסים ושיוכים לקבוצות' }),
   ).toBeVisible();
+  await page.getByRole('button', { name: 'שגיאות ואזהרות' }).click();
+  await expect(
+    page.getByRole('heading', { name: 'כל השגיאות והאזהרות' }),
+  ).toBeVisible();
+  await expect(page.getByText(/אבחוני המרה/)).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'קורסים ושיוכים לקבוצות' }),
+  ).toHaveCount(0);
   expect(pageErrors).toEqual([]);
 });
 
@@ -225,21 +233,25 @@ test('editor browser pinpoints one entity card at a time', async ({ page }) => {
 test('editor saves a specific warning and returns to it later', async ({
   page,
 }) => {
+  const warningSource = [
+    '# קטלוג',
+    "- כיתה ג' מעורב תוכנית מחוננים לומדים ביום ראשון בין 08:00 ל-12:00",
+    '- קורס זמני',
+  ].join('\n');
   await page.goto('/');
   await page.evaluate(() => localStorage.clear());
   await page.reload();
   await page.getByLabel('בחירת קובץ').setInputFiles({
     name: 'warning-source.md',
     mimeType: 'text/markdown',
-    buffer: Buffer.from(
-      [
-        '# קטלוג',
-        "- כיתה ג' מעורב תוכנית מחוננים לומדים ביום ראשון בין 08:00 ל-12:00",
-        '- קורס זמני',
-      ].join('\n'),
-    ),
+    buffer: Buffer.from(warningSource),
   });
 
+  await expect(page.getByRole('status')).toContainText('הומר לטיוטת JSON עם');
+  await expect(
+    page.getByRole('heading', { name: 'כל השגיאות והאזהרות' }),
+  ).toHaveCount(0);
+  await page.getByRole('button', { name: 'שגיאות ואזהרות' }).click();
   const diagnostic = page
     .locator('.diagnostic')
     .filter({ has: page.getByRole('button', { name: 'מעבר לישות' }) })
@@ -267,4 +279,37 @@ test('editor saves a specific warning and returns to it later', async ({
   await expect(
     page.getByRole('button', { name: 'חזרה לאבחון האחרון' }),
   ).toHaveCount(0);
+
+  await page.getByRole('button', { name: 'אישור וסגירת אבחון' }).click();
+  await expect(
+    page.getByText(
+      'Course description and instructors are not yet linked: קורס זמני',
+    ),
+  ).toHaveCount(0);
+  await page.getByLabel('סינון אבחונים').selectOption('approved');
+  const approvedDiagnostic = page
+    .locator('.diagnostic--approved')
+    .filter({ hasText: 'Course description and instructors' });
+  await expect(approvedDiagnostic).toBeVisible();
+  await expect(approvedDiagnostic.getByText('אושר')).toBeVisible();
+
+  await page.reload();
+  await page.getByLabel('בחירת קובץ').setInputFiles({
+    name: 'warning-source.md',
+    mimeType: 'text/markdown',
+    buffer: Buffer.from(warningSource),
+  });
+  await expect(page.getByRole('status')).toContainText('הומר לטיוטת JSON עם');
+  await page.getByRole('button', { name: 'שגיאות ואזהרות' }).click();
+  await expect(
+    page.getByText(
+      'Course description and instructors are not yet linked: קורס זמני',
+    ),
+  ).toHaveCount(0);
+  await page.getByLabel('סינון אבחונים').selectOption('approved');
+  await expect(
+    page
+      .locator('.diagnostic--approved')
+      .filter({ hasText: 'Course description and instructors' }),
+  ).toBeVisible();
 });
