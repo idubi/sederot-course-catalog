@@ -235,6 +235,21 @@ select {
   flex-basis: 100%;
 }
 
+.diagnostic > button + button {
+  margin-inline-start: 0.5rem;
+}
+
+.return-to-diagnostic {
+  position: sticky;
+  z-index: 2;
+  top: 0.5rem;
+  margin-block: 0.5rem;
+  border-color: #315dba;
+  color: #163a82;
+  background: #eaf0ff;
+  box-shadow: 0 0.3rem 0.8rem rgb(34 50 84 / 16%);
+}
+
 .json-editor,
 .json-editor span {
   display: block;

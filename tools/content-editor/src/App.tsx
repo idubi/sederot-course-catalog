@@ -24,6 +24,7 @@ const diagnosticStateLabels: Record<DiagnosticState, string> = {
   stale: 'לא עדכני',
   duplicate: 'כפול',
 };
+const PINNED_DIAGNOSTICS_KEY = 'sderot-editor-pinned-diagnostics';
 
 async function requestJson(path: string, init?: RequestInit) {
   const response = await fetch(path, {
@@ -52,8 +53,27 @@ export function App() {
     ImportDiagnostic[]
   >([]);
   const [diagnosticFilter, setDiagnosticFilter] = useState<
-    'all' | DiagnosticState
+    'all' | 'saved' | DiagnosticState
   >('active');
+  const [pinnedDiagnosticKeys, setPinnedDiagnosticKeys] = useState<Set<string>>(
+    () => {
+      try {
+        const value = JSON.parse(
+          localStorage.getItem(PINNED_DIAGNOSTICS_KEY) ?? '[]',
+        ) as unknown;
+        return new Set(
+          Array.isArray(value)
+            ? value.filter((item): item is string => typeof item === 'string')
+            : [],
+        );
+      } catch {
+        return new Set();
+      }
+    },
+  );
+  const [lastDiagnosticKey, setLastDiagnosticKey] = useState<string | null>(
+    null,
+  );
   const parsedJson = useMemo(() => {
     try {
       return JSON.parse(text) as unknown;
@@ -79,7 +99,11 @@ export function App() {
     ? classifyDiagnostics(importDiagnostics, parsedCatalog)
     : [];
   const visibleDiagnostics = classifiedDiagnostics.filter(
-    ({ state }) => diagnosticFilter === 'all' || state === diagnosticFilter,
+    ({ key, state }) =>
+      diagnosticFilter === 'all' ||
+      (diagnosticFilter === 'saved'
+        ? pinnedDiagnosticKeys.has(key)
+        : state === diagnosticFilter),
   );
   const activeImportWarnings = classifiedDiagnostics
     .filter(
@@ -105,6 +129,13 @@ export function App() {
     if (!parsedCatalog.programs.some(({ id }) => id === selectedProgramId))
       setSelectedProgramId(parsedCatalog.programs[0]?.id ?? null);
   }, [parsedCatalog, selectedCourseId, selectedGroupId, selectedProgramId]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      PINNED_DIAGNOSTICS_KEY,
+      JSON.stringify([...pinnedDiagnosticKeys]),
+    );
+  }, [pinnedDiagnosticKeys]);
 
   function catalog() {
     return JSON.parse(text) as unknown;
@@ -406,15 +437,19 @@ export function App() {
                   <option value="resolved">נפתרו</option>
                   <option value="stale">לא עדכניים</option>
                   <option value="duplicate">כפולים</option>
+                  <option value="saved">
+                    שמורים לחזרה ({pinnedDiagnosticKeys.size})
+                  </option>
                   <option value="all">הכול</option>
                 </select>
               </label>
               <ul>
                 {visibleDiagnostics.map(
-                  ({ diagnostic, entity, state }, index) => (
+                  ({ diagnostic, entity, key, state }) => (
                     <li
+                      id={`diagnostic-${key}`}
                       className={`diagnostic diagnostic--${state}`}
-                      key={`${diagnostic.code}-${index}`}
+                      key={key}
                     >
                       <strong>
                         {diagnostic.severity === 'error'
@@ -440,10 +475,27 @@ export function App() {
                           <q>{diagnostic.sourceExcerpt}</q>
                         )}
                       </div>
+                      <button
+                        type="button"
+                        aria-pressed={pinnedDiagnosticKeys.has(key)}
+                        onClick={() =>
+                          setPinnedDiagnosticKeys((current) => {
+                            const next = new Set(current);
+                            if (next.has(key)) next.delete(key);
+                            else next.add(key);
+                            return next;
+                          })
+                        }
+                      >
+                        {pinnedDiagnosticKeys.has(key)
+                          ? 'הסרה מהשמורים'
+                          : 'שמירה לחזרה מאוחרת'}
+                      </button>
                       {entity && (
                         <button
                           type="button"
                           onClick={() => {
+                            setLastDiagnosticKey(key);
                             setActiveTab(entity.tab);
                             const entityId = entity.id.replace(
                               /^(?:course|group|program)-/u,
@@ -491,6 +543,27 @@ export function App() {
                 ))}
               </ul>
             </section>
+          )}
+
+          {lastDiagnosticKey && (
+            <button
+              className="return-to-diagnostic"
+              type="button"
+              onClick={() => {
+                setDiagnosticFilter(
+                  pinnedDiagnosticKeys.has(lastDiagnosticKey) ? 'saved' : 'all',
+                );
+                window.setTimeout(
+                  () =>
+                    document
+                      .getElementById(`diagnostic-${lastDiagnosticKey}`)
+                      ?.scrollIntoView({ behavior: 'smooth', block: 'center' }),
+                  0,
+                );
+              }}
+            >
+              חזרה לאבחון האחרון
+            </button>
           )}
 
           <nav className="entity-tabs" aria-label="ישויות קטלוג">

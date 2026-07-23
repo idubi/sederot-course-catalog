@@ -153,3 +153,41 @@ test('editor browser pinpoints one entity card at a time', async ({ page }) => {
     page.getByRole('textbox', { name: 'שם', exact: true }),
   ).toHaveValue('תוכנית שנייה');
 });
+
+test('editor saves a specific warning and returns to it later', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+  await page.getByLabel('בחירת קובץ').setInputFiles({
+    name: 'warning-source.md',
+    mimeType: 'text/markdown',
+    buffer: Buffer.from(
+      [
+        '# קטלוג',
+        "- כיתה ג' מעורב תוכנית מחוננים לומדים ביום ראשון בין 08:00 ל-12:00",
+        '- קורס זמני',
+      ].join('\n'),
+    ),
+  });
+
+  const diagnostic = page
+    .locator('.diagnostic')
+    .filter({ has: page.getByRole('button', { name: 'מעבר לישות' }) })
+    .first();
+  await diagnostic.getByRole('button', { name: 'שמירה לחזרה מאוחרת' }).click();
+  await expect(
+    diagnostic.getByRole('button', { name: 'הסרה מהשמורים' }),
+  ).toHaveAttribute('aria-pressed', 'true');
+  await diagnostic.getByRole('button', { name: 'מעבר לישות' }).click();
+  await expect(
+    page.getByRole('button', { name: 'חזרה לאבחון האחרון' }),
+  ).toBeVisible();
+
+  await page.getByRole('button', { name: 'חזרה לאבחון האחרון' }).click();
+  await expect(page.getByLabel('סינון אבחונים')).toHaveValue('saved');
+  await expect(
+    page.getByRole('button', { name: 'הסרה מהשמורים' }),
+  ).toBeVisible();
+});

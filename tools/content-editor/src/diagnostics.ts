@@ -23,6 +23,20 @@ export type DiagnosticEntity = {
   tab: 'courses' | 'groups' | 'programs';
 };
 
+export function diagnosticKey(
+  diagnostic: ImportDiagnostic,
+  occurrence = 0,
+): string {
+  return [
+    diagnostic.code,
+    diagnostic.entityRef ?? '',
+    diagnostic.path.join('.'),
+    diagnostic.sourceFile ?? '',
+    diagnostic.sourceLocation?.line ?? '',
+    occurrence,
+  ].join('|');
+}
+
 export function diagnosticEntity(
   diagnostic: ImportDiagnostic,
   catalog: Catalog,
@@ -94,17 +108,15 @@ export function classifyDiagnostics(
   catalog: Catalog,
 ) {
   return diagnostics.map((diagnostic, index) => {
-    const key = `${diagnostic.code}|${diagnostic.entityRef ?? ''}|${diagnostic.path.join('.')}`;
-    const duplicate = diagnostics
+    const baseKey = diagnosticKey(diagnostic);
+    const occurrence = diagnostics
       .slice(0, index)
-      .some(
-        (candidate) =>
-          `${candidate.code}|${candidate.entityRef ?? ''}|${candidate.path.join('.')}` ===
-          key,
-      );
+      .filter((candidate) => diagnosticKey(candidate) === baseKey).length;
+    const duplicate = occurrence > 0;
     return {
       diagnostic,
       entity: diagnosticEntity(diagnostic, catalog),
+      key: diagnosticKey(diagnostic, occurrence),
       state: diagnosticState(diagnostic, catalog, duplicate),
     };
   });

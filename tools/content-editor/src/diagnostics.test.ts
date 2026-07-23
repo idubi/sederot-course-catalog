@@ -4,6 +4,7 @@ import type { Catalog } from '../../../src/domain/catalog';
 import {
   classifyDiagnostics,
   diagnosticEntity,
+  diagnosticKey,
   diagnosticState,
   type ImportDiagnostic,
 } from './diagnostics';
@@ -58,6 +59,12 @@ function diagnostic(code: string, entityRef = 'course'): ImportDiagnostic {
 }
 
 describe('editor diagnostic state', () => {
+  it('creates a stable key for returning to a specific diagnostic', () => {
+    const value = diagnostic('COURSE_WITHOUT_PROGRAM');
+    expect(diagnosticKey(value)).toBe(diagnosticKey({ ...value }));
+    expect(diagnosticKey(value, 1)).not.toBe(diagnosticKey(value));
+  });
+
   it('links entity diagnostics to the structured editor', () => {
     expect(diagnosticEntity(diagnostic('ANY'), catalog)).toEqual({
       id: 'course-course',

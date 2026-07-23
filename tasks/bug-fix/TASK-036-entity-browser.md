@@ -23,6 +23,7 @@ Replace the editor's long entity-card lists with a master-detail layout that sho
 - [x] Add an accessible side browser containing every entity in the active tab.
 - [x] Keep selection stable when entity content changes and choose a safe neighbor after add/delete.
 - [x] Preserve diagnostic navigation to the selected entity.
+- [x] Pin a specific diagnostic for later and return from its entity to the exact warning or error.
 - [x] Stack the browser and card cleanly on narrow RTL viewports.
 - [x] Add focused unit/E2E coverage and update editor documentation.
 - [x] Run relevant tests, standalone editor build, production gate, and `git diff --check`.
@@ -34,12 +35,13 @@ Replace the editor's long entity-card lists with a master-detail layout that sho
 - [x] Every entity can be selected by name from the adjacent browser.
 - [x] Selection works with keyboard and exposes the selected state to assistive technology.
 - [x] Add, delete, ID editing, and diagnostic jumps keep the editor usable.
+- [x] Saved diagnostic identities survive tab changes and are recognized after re-importing the same source.
 - [x] Existing schema, write-path, registration, import, and production boundaries remain unchanged.
 
 ## Completion evidence
 
-- **Implementation:** Complete — added a reusable RTL entity browser and controlled master-detail selection for Courses, Groups, and Programs. Exactly one card renders; add selects the new entity, delete selects a neighbor, ID edits retain selection, and diagnostic jumps select before focusing.
-- **Tests:** `npm run typecheck` — 80 files, zero diagnostics; `npm test` — 24 files and 97 tests passed; `npx vite build --config tools/content-editor/vite.config.ts` — 24 modules and no externalized Node warnings; focused editor Playwright — 3 passed; `npm run production:gate` — content validation, typecheck, 97 tests, five-page build, artifact verification, and 7 Chromium flows passed; `git diff --check` — passed.
+- **Implementation:** Complete — added a reusable RTL entity browser and controlled master-detail selection for Courses, Groups, and Programs. Exactly one card renders; add selects the new entity, delete selects a neighbor, ID edits retain selection, and diagnostic jumps select before focusing. Diagnostics now have stable identities, local “save for later” pins, a saved filter, and an exact return action from the affected entity.
+- **Tests:** `npm run typecheck` — 80 files, zero diagnostics; `npm test` — 24 files and 98 tests passed; `npx vite build --config tools/content-editor/vite.config.ts` — 24 modules and no externalized Node warnings; `npm run production:gate` — content validation, typecheck, 98 tests, five-page build, artifact verification, and 8 Chromium flows passed; `git diff --check` — passed.
 - **Documentation:** Updated `README.md` and `artifacts/content-import.md`. Playwright now uses isolated loopback port 4334 for editor tests so it cannot reuse a developer's editor on 4333.
 - **Commits:** `6000a58` (implementation, tests, documentation, and initial evidence)
 - **Pull request:** [#46](https://github.com/idubi/sederot-course-catalog/pull/46) targets `main`; awaiting checks and human review.
