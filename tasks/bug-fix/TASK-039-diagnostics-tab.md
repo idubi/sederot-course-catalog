@@ -41,7 +41,7 @@ Keep errors and warnings out of the active entity workspace by presenting all di
 - **Implementation:** Complete — added a dedicated Errors and Warnings tab for Schema scan results, importer diagnostics, relationship warnings, and editor operation errors; entity tabs no longer render diagnostic panels above their active card. Rescan, entity navigation, filtering, saved diagnostics, and return navigation switch to the correct tab. Any imported error, warning, or information item can be approved and closed by stable identity; approval persists in Local Storage for the same source, removes the item from active/return state, and renders it green in the Approved/all filters.
 - **Tests:** `npm run typecheck` — 80 files with zero diagnostics; focused diagnostics Vitest — 5/5 passed; focused Playwright editor flow — 4/4 passed, including approval persistence across reload and same-source reimport; final `npm run production:gate` — content validation, typecheck, 24 files and 102 tests, five-page build, artifact verification, and 8 Chromium flows passed; `git diff --check` — passed.
 - **Documentation:** Updated `README.md`, `artifacts/content-import.md`, the master task list, and this task record.
-- **Commits:** `7936f20` (implementation, tests, documentation, and initial evidence)
+- **Commits:** `7936f20` (dedicated diagnostics tab); `555292f` (persistent per-diagnostic approval)
 - **Pull request:** [#49](https://github.com/idubi/sederot-course-catalog/pull/49) targets `main`; awaiting checks and human review.
 
 ## Completion record
