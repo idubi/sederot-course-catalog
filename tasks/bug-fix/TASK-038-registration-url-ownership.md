@@ -40,7 +40,7 @@ Make external registration/payment URLs directly editable on the program or grou
 - **Implementation:** Complete — program and group cards now edit their own external URL directly, group cards show inherited/effective behavior, shared legacy targets are isolated on edit, and the global registration section was removed.
 - **Tests:** `npm run typecheck` — 80 files with zero diagnostics; focused Vitest — 14/14 passed; standalone editor Vite build — 24 modules; focused Playwright flow — passed; `npm run production:gate` — content validation, typecheck, 24 files and 101 tests, five-page build, artifact verification, and 8 Chromium flows passed; `git diff --check` — passed.
 - **Documentation:** Updated `README.md`, `artifacts/content-import.md`, and the development task list.
-- **Commits:** Pending.
+- **Commits:** `4e356c4` (implementation, tests, documentation, and initial evidence)
 - **Pull request:** Pending.
 
 ## Completion record
