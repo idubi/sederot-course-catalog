@@ -34,6 +34,17 @@ test('editor loads approved JSON and validates without writing files', async ({
   await expect(
     page.getByRole('heading', { name: 'תוכניות', exact: true }),
   ).toBeVisible();
+  await expect(page.getByLabel('מידע לפני רישום (HTML)')).toBeVisible();
+  await page
+    .getByLabel('מידע לפני רישום (HTML)')
+    .fill('<p>נוהל תשלום ופנייה לצוות</p>');
+  await page.getByRole('button', { name: 'קבוצות' }).click();
+  await expect(
+    page.getByLabel('מידע ייעודי לפני רישום לקבוצה (HTML)'),
+  ).toBeVisible();
+  await expect(
+    page.getByText('השדה ריק ולכן יוצג המידע של תוכנית האם.'),
+  ).toBeVisible();
 
   await page.getByRole('button', { name: 'סריקת שגיאות מחדש' }).click();
   await expect(page.getByRole('status')).toContainText('התוכן תקין');

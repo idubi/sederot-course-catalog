@@ -101,4 +101,32 @@ describe('public catalog view models', () => {
     expect(registration).not.toHaveProperty('offeringId');
     expect(registration).not.toHaveProperty('courseId');
   });
+
+  it('resolves group registration information before the program content', () => {
+    const copy = structuredClone(catalog);
+    copy.programs[0]!.registrationInfoHtml = '<p>מידע תוכנית</p>';
+    copy.audienceGroups[0]!.registrationInfoHtml = '<p>מידע קבוצה</p>';
+
+    expect(buildRegistrationPages(copy)[0]?.registrationInfoHtml).toBe(
+      '<p>מידע קבוצה</p>',
+    );
+  });
+
+  it('inherits program registration information when the group is blank', () => {
+    const copy = structuredClone(catalog);
+    copy.programs[0]!.registrationInfoHtml = '<p>מידע תוכנית</p>';
+    delete copy.audienceGroups[0]!.registrationInfoHtml;
+
+    expect(buildRegistrationPages(copy)[0]?.registrationInfoHtml).toBe(
+      '<p>מידע תוכנית</p>',
+    );
+  });
+
+  it('keeps the built-in safety notice for legacy catalogs', () => {
+    const registration = buildRegistrationPages(catalog)[0]!;
+
+    expect(registration.registrationInfoHtml).toContain(
+      'המשך ההרשמה והתשלום מתבצע באתר חיצוני',
+    );
+  });
 });

@@ -337,6 +337,9 @@ sourceFile?: { name: string; importedAt: string };
 - סגירה או חזרה מובילות לעמוד הקבוצה.
 - רק לאחר המידע מוצג Anchor HTTPS ליעד החיצוני המאושר.
 - היעד נפתר מ-`AudienceGroup.registrationTargetId`, עם fallback ל-`Program.defaultRegistrationTargetId`.
+- תוכן המידע נפתר מ-`AudienceGroup.registrationInfoHtml`, עם fallback
+  ל-`Program.registrationInfoHtml` ולאחר מכן לנוסח הבטיחות המובנה עבור קטלוגים
+  ישנים. התוכן עובר את אותה רשימת HTML בטוחה של תיאורי הקורסים.
 - אין CTA רישום בכרטיס או בפרטי קורס ואין fallback ברמת Offering.
 
 # 11\. Contact Link Design

@@ -153,4 +153,29 @@ describe('catalog schema', () => {
     catalog.courses[0]!.descriptionHtml = '<p onclick="bad()">תיאור</p>';
     expect(issuePaths(catalog)).toContain('courses.0.descriptionHtml');
   });
+
+  it('accepts safe inherited registration information HTML', () => {
+    const catalog = createValidCatalog();
+    catalog.programs[0]!.registrationInfoHtml =
+      '<p><strong>נוהל תשלום:</strong> תשלום באתר החיצוני.</p>';
+    catalog.audienceGroups[0]!.registrationInfoHtml =
+      '<ul><li>יש לפנות לצוות הקבוצה לפני הרישום.</li></ul>';
+
+    expect(validateCatalog(catalog).success).toBe(true);
+  });
+
+  it('rejects unsafe registration information HTML at the owning entity', () => {
+    const catalog = createValidCatalog();
+    catalog.programs[0]!.registrationInfoHtml =
+      '<p onclick="bad()">מידע תוכנית</p>';
+    catalog.audienceGroups[0]!.registrationInfoHtml =
+      '<script>bad()</script><p>מידע קבוצה</p>';
+
+    expect(issuePaths(catalog)).toEqual(
+      expect.arrayContaining([
+        'programs.0.registrationInfoHtml',
+        'audienceGroups.0.registrationInfoHtml',
+      ]),
+    );
+  });
 });
