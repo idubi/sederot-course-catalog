@@ -94,12 +94,20 @@ test('editor migrates a legacy groups catalog without crashing structured forms'
   });
 
   await expect(page.getByRole('status')).toContainText('הומר לטיוטת הסכמה');
-  await expect(page.getByText(/אבחוני המרה/)).toBeVisible();
+  await expect(page.getByText(/אבחוני המרה/)).toHaveCount(0);
   await expect(page.getByLabel('קטלוג JSON')).toContainText('"audienceGroups"');
   await expect(page.getByLabel('קטלוג JSON')).not.toContainText('"groups"');
   await expect(
     page.getByRole('heading', { name: 'קורסים ושיוכים לקבוצות' }),
   ).toBeVisible();
+  await page.getByRole('button', { name: 'שגיאות ואזהרות' }).click();
+  await expect(
+    page.getByRole('heading', { name: 'כל השגיאות והאזהרות' }),
+  ).toBeVisible();
+  await expect(page.getByText(/אבחוני המרה/)).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'קורסים ושיוכים לקבוצות' }),
+  ).toHaveCount(0);
   expect(pageErrors).toEqual([]);
 });
 
@@ -240,6 +248,13 @@ test('editor saves a specific warning and returns to it later', async ({
     ),
   });
 
+  await expect(page.getByRole('status')).toContainText(
+    'הומר לטיוטת JSON עם',
+  );
+  await expect(
+    page.getByRole('heading', { name: 'כל השגיאות והאזהרות' }),
+  ).toHaveCount(0);
+  await page.getByRole('button', { name: 'שגיאות ואזהרות' }).click();
   const diagnostic = page
     .locator('.diagnostic')
     .filter({ has: page.getByRole('button', { name: 'מעבר לישות' }) })

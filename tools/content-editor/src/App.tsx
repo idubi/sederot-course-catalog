@@ -38,9 +38,9 @@ async function requestJson(path: string, init?: RequestInit) {
 
 export function App() {
   const [text, setText] = useState('');
-  const [activeTab, setActiveTab] = useState<'courses' | 'groups' | 'programs'>(
-    'courses',
-  );
+  const [activeTab, setActiveTab] = useState<
+    'courses' | 'diagnostics' | 'groups' | 'programs'
+  >('courses');
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
   const [selectedGroupId, setSelectedGroupId] = useState<string | null>(null);
   const [selectedProgramId, setSelectedProgramId] = useState<string | null>(
@@ -283,6 +283,7 @@ export function App() {
         setValidationScannedText(text);
         setDiagnosticFilter('active');
         setLastDiagnosticKey(null);
+        setActiveTab('diagnostics');
         if (result.valid !== true) {
           setMessage({
             kind: 'error',
@@ -448,7 +449,7 @@ export function App() {
             בדקתי ואני מאשר/ת את האזהרות לפני ייצוא
           </label>
 
-          {message && (
+          {message?.kind === 'success' && (
             <p className={`message message--${message.kind}`} role="status">
               {message.text}
             </p>
@@ -460,189 +461,13 @@ export function App() {
             </p>
           )}
 
-          {validationScannedText !== null && (
-            <section
-              className="diagnostics-panel"
-              aria-labelledby="validation-title"
-            >
-              <h2 id="validation-title">תוצאות סריקת שגיאות</h2>
-              {validationScannedText !== text && (
-                <p className="message message--error" role="status">
-                  התוכן השתנה מאז הסריקה האחרונה. יש לסרוק מחדש.
-                </p>
-              )}
-              {validationIssues.length > 0 ? (
-                <ul>
-                  {validationIssues.map((issue, index) => (
-                    <li key={`${issue.path}-${issue.message}-${index}`}>
-                      <code>{issue.path || 'catalog'}</code>: {issue.message}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>לא נמצאו שגיאות Schema בסריקה האחרונה.</p>
-              )}
-            </section>
-          )}
-
-          {importDiagnostics.length > 0 && (
-            <details className="diagnostics-panel" open>
-              <summary>אבחוני המרה ({importDiagnostics.length})</summary>
-              <p>
-                אבחונים פעילים דורשים בדיקה. אבחונים שנפתרו או אינם עדכניים
-                נשמרים כראיית מקור ואינם מוצגים כאזהרה פעילה.
-              </p>
-              <label>
-                סינון אבחונים
-                <select
-                  value={diagnosticFilter}
-                  onChange={(event) =>
-                    setDiagnosticFilter(
-                      event.target.value as typeof diagnosticFilter,
-                    )
-                  }
-                >
-                  <option value="active">פעילים</option>
-                  <option value="resolved">נפתרו</option>
-                  <option value="stale">לא עדכניים</option>
-                  <option value="duplicate">כפולים</option>
-                  <option value="saved">
-                    שמורים לחזרה ({pinnedDiagnosticKeys.size})
-                  </option>
-                  <option value="all">הכול</option>
-                </select>
-              </label>
-              <ul>
-                {visibleDiagnostics.map(
-                  ({ diagnostic, entity, key, state }) => (
-                    <li
-                      id={`diagnostic-${key}`}
-                      className={`diagnostic diagnostic--${state}`}
-                      key={key}
-                    >
-                      <strong>
-                        {diagnostic.severity === 'error'
-                          ? 'שגיאה'
-                          : diagnostic.severity === 'warning'
-                            ? 'אזהרה'
-                            : 'מידע'}
-                        :
-                      </strong>{' '}
-                      <span className="diagnostic-state">
-                        {diagnosticStateLabels[state]}
-                      </span>{' '}
-                      {diagnostic.message}
-                      <div className="diagnostic-context">
-                        <code>{diagnostic.path.join('.')}</code>
-                        {diagnostic.sourceLocation && (
-                          <span>
-                            {diagnostic.sourceFile ?? 'מסמך מקור'}, שורה{' '}
-                            {diagnostic.sourceLocation.line}
-                          </span>
-                        )}
-                        {diagnostic.sourceExcerpt && (
-                          <q>{diagnostic.sourceExcerpt}</q>
-                        )}
-                      </div>
-                      <button
-                        type="button"
-                        aria-pressed={pinnedDiagnosticKeys.has(key)}
-                        onClick={() =>
-                          setPinnedDiagnosticKeys((current) => {
-                            const next = new Set(current);
-                            if (next.has(key)) next.delete(key);
-                            else next.add(key);
-                            return next;
-                          })
-                        }
-                      >
-                        {pinnedDiagnosticKeys.has(key)
-                          ? 'הסרה מהשמורים'
-                          : 'שמירה לחזרה מאוחרת'}
-                      </button>
-                      {entity && (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setLastDiagnosticKey(key);
-                            setActiveTab(entity.tab);
-                            const entityId = entity.id.replace(
-                              /^(?:course|group|program)-/u,
-                              '',
-                            );
-                            if (entity.tab === 'courses')
-                              setSelectedCourseId(entityId);
-                            else if (entity.tab === 'groups')
-                              setSelectedGroupId(entityId);
-                            else setSelectedProgramId(entityId);
-                            window.setTimeout(
-                              () =>
-                                document
-                                  .getElementById(entity.id)
-                                  ?.scrollIntoView({
-                                    behavior: 'smooth',
-                                    block: 'start',
-                                  }),
-                              0,
-                            );
-                          }}
-                        >
-                          מעבר לישות
-                        </button>
-                      )}
-                    </li>
-                  ),
-                )}
-              </ul>
-              {visibleDiagnostics.length === 0 && (
-                <p role="status">אין אבחונים התואמים למסנן.</p>
-              )}
-            </details>
-          )}
-
-          {relationshipWarnings.length > 0 && (
-            <section
-              className="diagnostics-panel"
-              aria-labelledby="relations-title"
-            >
-              <h2 id="relations-title">אזהרות שיוך</h2>
-              <ul>
-                {relationshipWarnings.map((warning) => (
-                  <li key={warning}>{warning}</li>
-                ))}
-              </ul>
-            </section>
-          )}
-
-          {lastDiagnosticKey && (
-            <button
-              className="return-to-diagnostic"
-              type="button"
-              onClick={() => {
-                const diagnosticKey = lastDiagnosticKey;
-                setLastDiagnosticKey(null);
-                setDiagnosticFilter(
-                  pinnedDiagnosticKeys.has(diagnosticKey) ? 'saved' : 'all',
-                );
-                window.setTimeout(
-                  () =>
-                    document
-                      .getElementById(`diagnostic-${diagnosticKey}`)
-                      ?.scrollIntoView({ behavior: 'smooth', block: 'center' }),
-                  0,
-                );
-              }}
-            >
-              חזרה לאבחון האחרון
-            </button>
-          )}
-
           <nav className="entity-tabs" aria-label="ישויות קטלוג">
             {(
               [
                 ['courses', 'קורסים'],
                 ['groups', 'קבוצות'],
                 ['programs', 'תוכניות'],
+                ['diagnostics', 'שגיאות ואזהרות'],
               ] as const
             ).map(([id, label]) => (
               <button
@@ -656,6 +481,206 @@ export function App() {
               </button>
             ))}
           </nav>
+
+          {activeTab === 'diagnostics' && (
+            <section
+              className="tab-workspace diagnostics-workspace"
+              aria-labelledby="diagnostics-tab-title"
+            >
+              <h2 id="diagnostics-tab-title">כל השגיאות והאזהרות</h2>
+              {message?.kind === 'error' && (
+                <p className="message message--error" role="status">
+                  {message.text}
+                </p>
+              )}
+              {validationScannedText === null &&
+                importDiagnostics.length === 0 &&
+                relationshipWarnings.length === 0 && (
+                  <p role="status">
+                    אין אבחונים להצגה. אפשר להפעיל סריקת שגיאות מחדש.
+                  </p>
+                )}
+
+              {validationScannedText !== null && (
+                <section
+                  className="diagnostics-panel"
+                  aria-labelledby="validation-title"
+                >
+                  <h2 id="validation-title">תוצאות סריקת שגיאות</h2>
+                  {validationScannedText !== text && (
+                    <p className="message message--error" role="status">
+                      התוכן השתנה מאז הסריקה האחרונה. יש לסרוק מחדש.
+                    </p>
+                  )}
+                  {validationIssues.length > 0 ? (
+                    <ul>
+                      {validationIssues.map((issue, index) => (
+                        <li key={`${issue.path}-${issue.message}-${index}`}>
+                          <code>{issue.path || 'catalog'}</code>:{' '}
+                          {issue.message}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>לא נמצאו שגיאות Schema בסריקה האחרונה.</p>
+                  )}
+                </section>
+              )}
+
+              {importDiagnostics.length > 0 && (
+                <details className="diagnostics-panel" open>
+                  <summary>אבחוני המרה ({importDiagnostics.length})</summary>
+                  <p>
+                    אבחונים פעילים דורשים בדיקה. אבחונים שנפתרו או אינם עדכניים
+                    נשמרים כראיית מקור ואינם מוצגים כאזהרה פעילה.
+                  </p>
+                  <label>
+                    סינון אבחונים
+                    <select
+                      value={diagnosticFilter}
+                      onChange={(event) =>
+                        setDiagnosticFilter(
+                          event.target.value as typeof diagnosticFilter,
+                        )
+                      }
+                    >
+                      <option value="active">פעילים</option>
+                      <option value="resolved">נפתרו</option>
+                      <option value="stale">לא עדכניים</option>
+                      <option value="duplicate">כפולים</option>
+                      <option value="saved">
+                        שמורים לחזרה ({pinnedDiagnosticKeys.size})
+                      </option>
+                      <option value="all">הכול</option>
+                    </select>
+                  </label>
+                  <ul>
+                    {visibleDiagnostics.map(
+                      ({ diagnostic, entity, key, state }) => (
+                        <li
+                          id={`diagnostic-${key}`}
+                          className={`diagnostic diagnostic--${state}`}
+                          key={key}
+                        >
+                          <strong>
+                            {diagnostic.severity === 'error'
+                              ? 'שגיאה'
+                              : diagnostic.severity === 'warning'
+                                ? 'אזהרה'
+                                : 'מידע'}
+                            :
+                          </strong>{' '}
+                          <span className="diagnostic-state">
+                            {diagnosticStateLabels[state]}
+                          </span>{' '}
+                          {diagnostic.message}
+                          <div className="diagnostic-context">
+                            <code>{diagnostic.path.join('.')}</code>
+                            {diagnostic.sourceLocation && (
+                              <span>
+                                {diagnostic.sourceFile ?? 'מסמך מקור'}, שורה{' '}
+                                {diagnostic.sourceLocation.line}
+                              </span>
+                            )}
+                            {diagnostic.sourceExcerpt && (
+                              <q>{diagnostic.sourceExcerpt}</q>
+                            )}
+                          </div>
+                          <button
+                            type="button"
+                            aria-pressed={pinnedDiagnosticKeys.has(key)}
+                            onClick={() =>
+                              setPinnedDiagnosticKeys((current) => {
+                                const next = new Set(current);
+                                if (next.has(key)) next.delete(key);
+                                else next.add(key);
+                                return next;
+                              })
+                            }
+                          >
+                            {pinnedDiagnosticKeys.has(key)
+                              ? 'הסרה מהשמורים'
+                              : 'שמירה לחזרה מאוחרת'}
+                          </button>
+                          {entity && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setLastDiagnosticKey(key);
+                                setActiveTab(entity.tab);
+                                const entityId = entity.id.replace(
+                                  /^(?:course|group|program)-/u,
+                                  '',
+                                );
+                                if (entity.tab === 'courses')
+                                  setSelectedCourseId(entityId);
+                                else if (entity.tab === 'groups')
+                                  setSelectedGroupId(entityId);
+                                else setSelectedProgramId(entityId);
+                                window.setTimeout(
+                                  () =>
+                                    document
+                                      .getElementById(entity.id)
+                                      ?.scrollIntoView({
+                                        behavior: 'smooth',
+                                        block: 'start',
+                                      }),
+                                  0,
+                                );
+                              }}
+                            >
+                              מעבר לישות
+                            </button>
+                          )}
+                        </li>
+                      ),
+                    )}
+                  </ul>
+                  {visibleDiagnostics.length === 0 && (
+                    <p role="status">אין אבחונים התואמים למסנן.</p>
+                  )}
+                </details>
+              )}
+
+              {relationshipWarnings.length > 0 && (
+                <section
+                  className="diagnostics-panel"
+                  aria-labelledby="relations-title"
+                >
+                  <h2 id="relations-title">אזהרות שיוך</h2>
+                  <ul>
+                    {relationshipWarnings.map((warning) => (
+                      <li key={warning}>{warning}</li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+            </section>
+          )}
+
+          {lastDiagnosticKey && (
+            <button
+              className="return-to-diagnostic"
+              type="button"
+              onClick={() => {
+                const diagnosticKey = lastDiagnosticKey;
+                setLastDiagnosticKey(null);
+                setDiagnosticFilter(
+                  pinnedDiagnosticKeys.has(diagnosticKey) ? 'saved' : 'all',
+                );
+                setActiveTab('diagnostics');
+                window.setTimeout(
+                  () =>
+                    document
+                      .getElementById(`diagnostic-${diagnosticKey}`)
+                      ?.scrollIntoView({ behavior: 'smooth', block: 'center' }),
+                  0,
+                );
+              }}
+            >
+              חזרה לאבחון האחרון
+            </button>
+          )}
 
           <section className="tab-workspace">
             {activeTab === 'programs' && (
