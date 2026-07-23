@@ -56,7 +56,7 @@ TASK-034 and subsequent corrective tasks live under `tasks/bug-fix/`.
 - [x] [TASK-037: Split course assignments into program tabs](../tasks/bug-fix/TASK-037-course-program-tabs.md) — Merged in PR #47
 - [ ] [TASK-038: Put registration URLs on their owning cards](../tasks/bug-fix/TASK-038-registration-url-ownership.md) — In review in PR #48
 - [ ] [TASK-039: Move diagnostics into a dedicated editor tab](../tasks/bug-fix/TASK-039-diagnostics-tab.md) — In review in PR #49
-- [ ] [TASK-043: Browse and close diagnostics from entity cards](../tasks/bug-fix/TASK-043-diagnostic-entity-navigation.md) — In review; PR pending
+- [ ] [TASK-043: Browse and close diagnostics from entity cards](../tasks/bug-fix/TASK-043-diagnostic-entity-navigation.md) — In review in PR #54
 
 ## Execution rules
 
