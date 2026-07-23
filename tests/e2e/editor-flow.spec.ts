@@ -33,6 +33,7 @@ test('editor loads approved JSON and validates without writing files', async ({
   await expect(page.getByLabel('קטלוג JSON')).toContainText(
     '"schemaVersion": "1.0"',
   );
+  const jsonEditor = page.getByLabel('קטלוג JSON');
   const objectSelector = page.getByLabel('בחירת אובייקט');
   await objectSelector.selectOption('programs:gifted');
   await expect(page.locator('.json-reference-pane pre')).toContainText(
@@ -45,6 +46,17 @@ test('editor loads approved JSON and validates without writing files', async ({
   await expect(objectSelector).toHaveValue(
     'audienceGroups:gifted-grade-5-mixed',
   );
+  await expect
+    .poll(() =>
+      jsonEditor.evaluate((element) => {
+        const textarea = element as HTMLTextAreaElement;
+        return textarea.value.slice(
+          textarea.selectionStart,
+          textarea.selectionStart + 80,
+        );
+      }),
+    )
+    .toContain('"id": "gifted-grade-5-mixed"');
   await page
     .locator('.json-reference-links')
     .getByRole('button', { name: /שיוך:/u })
@@ -57,6 +69,15 @@ test('editor loads approved JSON and validates without writing files', async ({
     .getByRole('button', { name: /קורס:/u })
     .click();
   await expect(objectSelector).toHaveValue('courses:seed-course');
+  await jsonEditor.evaluate((element) => {
+    const textarea = element as HTMLTextAreaElement;
+    const offset = textarea.value.indexOf('"id": "seed-registration"');
+    textarea.setSelectionRange(offset, offset);
+    textarea.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true }));
+  });
+  await expect(objectSelector).toHaveValue(
+    'registrationTargets:seed-registration',
+  );
   await page.getByRole('button', { name: 'קבוצות' }).click();
   await expect(page.getByRole('heading', { name: 'קבוצות קהל' })).toBeVisible();
   await page.getByRole('button', { name: 'תוכניות' }).click();
@@ -77,7 +98,6 @@ test('editor loads approved JSON and validates without writing files', async ({
   ).toBeVisible();
 
   await page.getByRole('button', { name: 'JSON', exact: true }).click();
-  const jsonEditor = page.getByLabel('קטלוג JSON');
   const invalidCatalog = JSON.parse(await jsonEditor.inputValue()) as {
     academicYear: { label: string };
   };

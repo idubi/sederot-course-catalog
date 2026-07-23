@@ -1,10 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import type { Catalog } from '../../../src/domain/catalog';
 import {
   catalogObjects,
   catalogReferences,
   jsonCollectionLabels,
+  jsonObjectOffset,
+  jsonSelectionAtOffset,
   type JsonCollection,
   type JsonSelection,
 } from './json-references';
@@ -19,6 +21,8 @@ export function JsonReferenceEditor({
   onTextChange: (value: string) => void;
 }) {
   const objects = useMemo(() => catalogObjects(catalog), [catalog]);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const ignoreScrollUntilRef = useRef(0);
   const [selection, setSelection] = useState<JsonSelection>(() => ({
     collection: objects[0]?.collection ?? 'programs',
     id: objects[0]?.id ?? '',
@@ -37,6 +41,33 @@ export function JsonReferenceEditor({
   }, [objects, selected]);
 
   const related = selected ? catalogReferences(catalog, selected) : [];
+  const selections = objects.map(({ collection, id }) => ({ collection, id }));
+
+  const syncSelectionAtOffset = (offset: number) => {
+    const next = jsonSelectionAtOffset(text, selections, offset);
+    if (
+      next &&
+      (next.collection !== selection.collection || next.id !== selection.id)
+    )
+      setSelection(next);
+  };
+
+  const selectAndReveal = (next: JsonSelection) => {
+    setSelection(next);
+    const textarea = textareaRef.current;
+    const offset = jsonObjectOffset(text, next);
+    if (!textarea || offset < 0) return;
+    textarea.focus();
+    textarea.setSelectionRange(offset, offset);
+    ignoreScrollUntilRef.current = performance.now() + 250;
+    const line = text.slice(0, offset).split('\n').length - 1;
+    const lineHeight =
+      Number.parseFloat(getComputedStyle(textarea).lineHeight) || 24;
+    textarea.scrollTop = Math.max(
+      0,
+      line * lineHeight - textarea.clientHeight / 3,
+    );
+  };
 
   return (
     <section className="json-workspace" aria-labelledby="json-workspace-title">
@@ -45,10 +76,34 @@ export function JsonReferenceEditor({
         <label className="json-editor">
           <span>קטלוג JSON</span>
           <textarea
+            ref={textareaRef}
             dir="ltr"
             spellCheck={false}
             value={text}
             onChange={(event) => onTextChange(event.target.value)}
+            onSelect={(event) =>
+              syncSelectionAtOffset(event.currentTarget.selectionStart)
+            }
+            onClick={(event) =>
+              syncSelectionAtOffset(event.currentTarget.selectionStart)
+            }
+            onKeyUp={(event) =>
+              syncSelectionAtOffset(event.currentTarget.selectionStart)
+            }
+            onScroll={(event) => {
+              if (performance.now() < ignoreScrollUntilRef.current) return;
+              const textarea = event.currentTarget;
+              const lineHeight =
+                Number.parseFloat(getComputedStyle(textarea).lineHeight) || 24;
+              const focusLine = Math.floor(
+                (textarea.scrollTop + textarea.clientHeight / 3) / lineHeight,
+              );
+              const offset = text
+                .split('\n')
+                .slice(0, focusLine)
+                .reduce((total, line) => total + line.length + 1, 0);
+              syncSelectionAtOffset(offset);
+            }}
           />
         </label>
       </div>
@@ -62,7 +117,7 @@ export function JsonReferenceEditor({
             value={`${selection.collection}:${selection.id}`}
             onChange={(event) => {
               const [collection, ...id] = event.target.value.split(':');
-              setSelection({
+              selectAndReveal({
                 collection: collection as JsonCollection,
                 id: id.join(':'),
               });
@@ -100,7 +155,7 @@ export function JsonReferenceEditor({
                   <li key={`${reference.collection}:${reference.id}`}>
                     <button
                       type="button"
-                      onClick={() => setSelection(reference)}
+                      onClick={() => selectAndReveal(reference)}
                     >
                       {reference.label}
                     </button>

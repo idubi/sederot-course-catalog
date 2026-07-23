@@ -23,6 +23,7 @@ Move manual JSON editing into a dedicated editor tab and provide a side inspecto
 - [x] Move the raw JSON textarea out of the shared workspace.
 - [x] Show a selected catalog object in a side inspector.
 - [x] Link related programs, groups, courses, offerings, and registration targets.
+- [x] Synchronize raw JSON scroll/caret position with the side inspector in both directions.
 - [x] Preserve raw editing, validation, RTL layout, and narrow-screen behavior.
 - [x] Add focused unit/browser coverage and update documentation.
 - [x] Run relevant tests, production gate, and `git diff --check`.
@@ -33,12 +34,13 @@ Move manual JSON editing into a dedicated editor tab and provide a side inspecto
 - [x] Manual JSON editing appears only in the JSON tab.
 - [x] The side inspector displays the selected object as formatted JSON.
 - [x] Relevant object references are navigable in both directions.
+- [x] Raw JSON navigation selects the corresponding sidebar object, and sidebar navigation focuses the corresponding raw JSON location.
 - [x] All relevant automated checks pass.
 
 ## Completion evidence
 
-- **Implementation:** Complete — raw JSON editing now appears only in a dedicated JSON tab. A responsive side inspector selects and renders one formatted object and provides relationship navigation among programs, groups, courses, offerings, and registration targets.
-- **Tests:** `npm run typecheck` — 83 files with zero diagnostics; focused JSON-reference Vitest — 2/2 passed; focused JSON-tab Chromium flow — passed; `npm run production:gate` — content validation, typecheck, 25 files and 104 tests, five-page build, artifact verification, and 8 Chromium flows passed; `git diff --check` — passed.
+- **Implementation:** Complete — raw JSON editing now appears only in a dedicated JSON tab. A responsive side inspector selects and renders one formatted object and provides relationship navigation among programs, groups, courses, offerings, and registration targets. Caret/scroll movement in raw JSON updates the inspector, while object and relationship selection focuses and scrolls the raw editor to the corresponding `id`.
+- **Tests:** `npm run typecheck` — 83 files with zero diagnostics; focused JSON-reference Vitest — 3/3 passed; focused two-way JSON/sidebar Chromium flow — passed; final `npm run production:gate` — content validation, typecheck, 25 files and 105 tests, five-page build, artifact verification, and 8 Chromium flows passed; `git diff --check` — passed.
 - **Documentation:** Updated `README.md`, `artifacts/content-import.md`, the master task list, and this task record.
 - **Commits:** `bb54860` (implementation, tests, documentation, and initial evidence)
 - **Pull request:** [#51](https://github.com/idubi/sederot-course-catalog/pull/51) targets `main`; awaiting checks and human review.
