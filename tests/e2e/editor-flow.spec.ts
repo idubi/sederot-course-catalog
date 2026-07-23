@@ -35,8 +35,36 @@ test('editor loads approved JSON and validates without writing files', async ({
     page.getByRole('heading', { name: 'תוכניות', exact: true }),
   ).toBeVisible();
 
-  await page.getByRole('button', { name: 'אימות' }).click();
+  await page.getByRole('button', { name: 'סריקת שגיאות מחדש' }).click();
   await expect(page.getByRole('status')).toContainText('התוכן תקין');
+  await expect(
+    page.getByRole('heading', { name: 'תוצאות סריקת שגיאות' }),
+  ).toBeVisible();
+  await expect(
+    page.getByText('לא נמצאו שגיאות Schema בסריקה האחרונה.'),
+  ).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: 'שמירת הישות בטיוטה' }),
+  ).toBeVisible();
+
+  await page.getByText('עריכת JSON גולמי').click();
+  const jsonEditor = page.getByLabel('קטלוג JSON');
+  const invalidCatalog = JSON.parse(await jsonEditor.inputValue()) as {
+    academicYear: { label: string };
+  };
+  invalidCatalog.academicYear.label = '';
+  await jsonEditor.fill(JSON.stringify(invalidCatalog, null, 2));
+  await expect(
+    page.getByText('התוכן השתנה מאז הסריקה האחרונה. יש לסרוק מחדש.'),
+  ).toBeVisible();
+  await page.getByRole('button', { name: 'סריקת שגיאות מחדש' }).click();
+  await expect(page.getByText(/הסריקה מצאה \d+ שגיאות/u)).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'תוצאות סריקת שגיאות' }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole('listitem').filter({ hasText: 'academicYear' }).first(),
+  ).toBeVisible();
 });
 
 test('editor migrates a legacy groups catalog without crashing structured forms', async ({
@@ -164,6 +192,34 @@ test('editor browser pinpoints one entity card at a time', async ({ page }) => {
   await expect(
     page.getByRole('textbox', { name: 'שם', exact: true }),
   ).toHaveValue('תוכנית שנייה');
+  const programUrl = page.getByRole('textbox', {
+    name: 'כתובת סליקה/רישום של התוכנית',
+  });
+  await expect(programUrl).toBeVisible();
+  await programUrl.fill('https://service.example/second-program');
+  await expect(programUrl).toHaveValue(
+    'https://service.example/second-program',
+  );
+  await expect(
+    page.getByText('יעדים ייעודיים לקבוצות', { exact: true }),
+  ).toHaveCount(0);
+
+  await page.getByRole('button', { name: 'קבוצות' }).click();
+  await groupBrowser.getByRole('button', { name: /כיתה ו׳/u }).click();
+  const groupUrl = page.getByRole('textbox', {
+    name: 'כתובת סליקה/רישום ייעודית לקבוצה',
+  });
+  await expect(groupUrl).toHaveValue('');
+  const effectiveUrl = page.locator('bdi[dir="ltr"]');
+  await expect(effectiveUrl).toHaveText(
+    'https://service.example/second-program',
+  );
+  await groupUrl.fill('https://service.example/second-group');
+  await expect(effectiveUrl).toHaveText('https://service.example/second-group');
+  await groupUrl.fill('');
+  await expect(effectiveUrl).toHaveText(
+    'https://service.example/second-program',
+  );
 });
 
 test('editor saves a specific warning and returns to it later', async ({
@@ -188,7 +244,13 @@ test('editor saves a specific warning and returns to it later', async ({
     .locator('.diagnostic')
     .filter({ has: page.getByRole('button', { name: 'מעבר לישות' }) })
     .first();
+  await expect(
+    page.getByRole('button', { name: 'חזרה לאבחון האחרון' }),
+  ).toHaveCount(0);
   await diagnostic.getByRole('button', { name: 'שמירה לחזרה מאוחרת' }).click();
+  await expect(
+    page.getByRole('button', { name: 'חזרה לאבחון האחרון' }),
+  ).toHaveCount(0);
   await expect(
     diagnostic.getByRole('button', { name: 'הסרה מהשמורים' }),
   ).toHaveAttribute('aria-pressed', 'true');
@@ -202,4 +264,7 @@ test('editor saves a specific warning and returns to it later', async ({
   await expect(
     page.getByRole('button', { name: 'הסרה מהשמורים' }),
   ).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: 'חזרה לאבחון האחרון' }),
+  ).toHaveCount(0);
 });

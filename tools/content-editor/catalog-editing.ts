@@ -284,6 +284,105 @@ export function updateRegistrationTarget(
   };
 }
 
+function uniqueRegistrationTargetId(catalog: Catalog, base: string) {
+  if (!catalog.registrationTargets.some(({ id }) => id === base)) return base;
+  let suffix = 2;
+  while (
+    catalog.registrationTargets.some(({ id }) => id === `${base}-${suffix}`)
+  ) {
+    suffix += 1;
+  }
+  return `${base}-${suffix}`;
+}
+
+function registrationTargetReferenceCount(catalog: Catalog, targetId: string) {
+  return (
+    catalog.programs.filter(
+      ({ defaultRegistrationTargetId }) =>
+        defaultRegistrationTargetId === targetId,
+    ).length +
+    catalog.audienceGroups.filter(
+      ({ registrationTargetId }) => registrationTargetId === targetId,
+    ).length
+  );
+}
+
+function registrationTarget(id: string, url: string): RegistrationTarget {
+  return {
+    id,
+    type: 'registration',
+    label: 'להרשמה ותשלום',
+    url,
+    enabled: true,
+  };
+}
+
+export function setProgramRegistrationUrl(
+  catalog: Catalog,
+  programId: string,
+  url: string,
+): Catalog {
+  const program = catalog.programs.find(({ id }) => id === programId);
+  if (!program) return catalog;
+  const targetId = program.defaultRegistrationTargetId;
+  const current = catalog.registrationTargets.find(({ id }) => id === targetId);
+
+  if (!url) {
+    const update = { ...program };
+    delete update.defaultRegistrationTargetId;
+    return updateProgram(catalog, programId, update);
+  }
+  if (current && registrationTargetReferenceCount(catalog, current.id) === 1) {
+    return updateRegistrationTarget(catalog, current.id, { ...current, url });
+  }
+
+  const id = uniqueRegistrationTargetId(catalog, `${programId}-registration`);
+  return {
+    ...catalog,
+    programs: catalog.programs.map((value) =>
+      value.id === programId
+        ? { ...value, defaultRegistrationTargetId: id }
+        : value,
+    ),
+    registrationTargets: [
+      ...catalog.registrationTargets,
+      registrationTarget(id, url),
+    ],
+  };
+}
+
+export function setAudienceGroupRegistrationUrl(
+  catalog: Catalog,
+  groupId: string,
+  url: string,
+): Catalog {
+  const group = catalog.audienceGroups.find(({ id }) => id === groupId);
+  if (!group) return catalog;
+  const targetId = group.registrationTargetId;
+  const current = catalog.registrationTargets.find(({ id }) => id === targetId);
+
+  if (!url) {
+    const update = { ...group };
+    delete update.registrationTargetId;
+    return updateAudienceGroup(catalog, groupId, update);
+  }
+  if (current && registrationTargetReferenceCount(catalog, current.id) === 1) {
+    return updateRegistrationTarget(catalog, current.id, { ...current, url });
+  }
+
+  const id = uniqueRegistrationTargetId(catalog, `${groupId}-registration`);
+  return {
+    ...catalog,
+    audienceGroups: catalog.audienceGroups.map((value) =>
+      value.id === groupId ? { ...value, registrationTargetId: id } : value,
+    ),
+    registrationTargets: [
+      ...catalog.registrationTargets,
+      registrationTarget(id, url),
+    ],
+  };
+}
+
 export function resolveRegistrationTarget(catalog: Catalog, groupId: string) {
   const group = catalog.audienceGroups.find(({ id }) => id === groupId);
   const program = catalog.programs.find(({ id }) => id === group?.programId);
