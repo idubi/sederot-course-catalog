@@ -183,6 +183,15 @@ test('editor browser pinpoints one entity card at a time', async ({ page }) => {
   ).toHaveValue('קורס שני');
   const assignmentTabs = page.getByRole('tablist', { name: 'תוכניות' });
   await expect(assignmentTabs.getByRole('tab')).toHaveCount(2);
+  await expect(assignmentTabs).toHaveCSS('display', 'grid');
+  expect(
+    await assignmentTabs.evaluate(
+      (element) =>
+        getComputedStyle(element)
+          .gridTemplateColumns.split(' ')
+          .filter((width) => Number.parseFloat(width) > 0).length,
+    ),
+  ).toBe(2);
   await assignmentTabs.getByRole('tab').first().press('ArrowLeft');
   await expect(
     assignmentTabs.getByRole('tab', { name: 'תוכנית שנייה' }),
