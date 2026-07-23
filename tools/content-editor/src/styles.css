@@ -108,6 +108,68 @@ select {
   padding: 0.65rem 1rem;
 }
 
+.import-screen {
+  display: grid;
+  gap: 1rem;
+  min-height: 28rem;
+  align-content: center;
+  margin-block: 1.5rem;
+  padding: clamp(1.25rem, 5vw, 4rem);
+  border: 1px solid #8d99af;
+  border-radius: 1.25rem;
+  background: #fff;
+}
+
+.file-drop {
+  display: grid;
+  gap: 0.5rem;
+  font-weight: 700;
+}
+
+.file-drop input {
+  min-height: 3rem;
+  padding: 0.6rem;
+  border: 1px solid #8d99af;
+  border-radius: 0.65rem;
+}
+
+.entity-tabs {
+  position: sticky;
+  z-index: 5;
+  top: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.35rem;
+  padding: 0.4rem;
+  border: 1px solid #8d99af;
+  border-radius: 0.8rem;
+  background: #f4f6fb;
+}
+
+.entity-tabs button {
+  min-height: 2.8rem;
+  border: 1px solid #8d99af;
+  border-radius: 0.55rem;
+  background: #fff;
+  cursor: pointer;
+}
+
+.entity-tabs button.active {
+  border-color: #234d9b;
+  color: #fff;
+  background: #315dba;
+}
+
+.tab-workspace {
+  max-height: 70vh;
+  overflow: auto;
+  padding-inline: 0.25rem;
+}
+
+.json-source {
+  margin-block-start: 1rem;
+}
+
 .message {
   overflow-wrap: anywhere;
   padding: 0.75rem;
@@ -139,6 +201,38 @@ select {
 
 .diagnostics-panel li + li {
   margin-block-start: 0.45rem;
+}
+
+.diagnostic {
+  padding: 0.75rem;
+  border-inline-start: 0.35rem solid #b65050;
+  background: #fff;
+}
+
+.diagnostic--resolved,
+.diagnostic--stale,
+.diagnostic--duplicate {
+  border-inline-start-color: #667085;
+  color: #475467;
+}
+
+.diagnostic-state {
+  display: inline-block;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  background: #f2f4f7;
+  font-weight: 700;
+}
+
+.diagnostic-context {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block: 0.35rem;
+}
+
+.diagnostic-context q {
+  flex-basis: 100%;
 }
 
 .json-editor,

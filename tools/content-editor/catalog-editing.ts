@@ -138,6 +138,101 @@ export function setCourseGroupAssignment(
   };
 }
 
+export function addCourse(catalog: Catalog): Catalog {
+  const suffix = String(catalog.courses.length + 1).padStart(2, '0');
+  return {
+    ...catalog,
+    courses: [
+      ...catalog.courses,
+      {
+        id: `course-new-${suffix}`,
+        name: 'קורס חדש',
+        shortName: 'קורס חדש',
+        descriptionHtml: '<p>יש להזין תיאור</p>',
+        instructors: ['יש להזין מנחה'],
+      },
+    ],
+  };
+}
+
+export function removeCourse(catalog: Catalog, courseId: string): Catalog {
+  return {
+    ...catalog,
+    courses: catalog.courses.filter(({ id }) => id !== courseId),
+    offerings: catalog.offerings.filter(
+      (offering) => offering.courseId !== courseId,
+    ),
+  };
+}
+
+export function addProgram(catalog: Catalog): Catalog {
+  const suffix = String(catalog.programs.length + 1).padStart(2, '0');
+  return {
+    ...catalog,
+    programs: [
+      ...catalog.programs,
+      {
+        id: `program-new-${suffix}`,
+        name: 'תוכנית חדשה',
+        category: 'excellence',
+      },
+    ],
+  };
+}
+
+export function removeProgram(catalog: Catalog, programId: string): Catalog {
+  const groupIds = new Set(
+    catalog.audienceGroups
+      .filter(({ programId: id }) => id === programId)
+      .map(({ id }) => id),
+  );
+  return {
+    ...catalog,
+    programs: catalog.programs.filter(({ id }) => id !== programId),
+    audienceGroups: catalog.audienceGroups.filter(
+      ({ programId: id }) => id !== programId,
+    ),
+    offerings: catalog.offerings.filter(
+      ({ audienceGroupId }) => !groupIds.has(audienceGroupId),
+    ),
+  };
+}
+
+export function addAudienceGroup(catalog: Catalog): Catalog {
+  const programId = catalog.programs[0]?.id ?? 'program-required';
+  const suffix = String(catalog.audienceGroups.length + 1).padStart(2, '0');
+  return {
+    ...catalog,
+    audienceGroups: [
+      ...catalog.audienceGroups,
+      {
+        id: `group-new-${suffix}`,
+        programId,
+        gradeGroupId: `grade-new-${suffix}`,
+        gradeLabels: ['יש להזין שכבה'],
+        gradeValues: ['pending'],
+        gender: 'mixed',
+        day: 'יש להזין יום',
+        startTime: '08:00',
+        endTime: '13:00',
+      },
+    ],
+  };
+}
+
+export function removeAudienceGroup(
+  catalog: Catalog,
+  groupId: string,
+): Catalog {
+  return {
+    ...catalog,
+    audienceGroups: catalog.audienceGroups.filter(({ id }) => id !== groupId),
+    offerings: catalog.offerings.filter(
+      ({ audienceGroupId }) => audienceGroupId !== groupId,
+    ),
+  };
+}
+
 export function reorderOffering(
   catalog: Catalog,
   offeringId: string,

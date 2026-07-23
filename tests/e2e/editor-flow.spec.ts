@@ -10,6 +10,12 @@ test('editor loads approved JSON and validates without writing files', async ({
   await page.reload();
 
   await expect(
+    page.getByRole('heading', { name: 'טעינת פרופיל מקובץ' }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole('navigation', { name: 'ישויות קטלוג' }),
+  ).toHaveCount(0);
+  await expect(
     page.getByRole('heading', { level: 1, name: 'עורך התוכן' }),
   ).toBeVisible();
   await page.getByRole('button', { name: 'טעינת מאושר' }).click();
@@ -17,6 +23,13 @@ test('editor loads approved JSON and validates without writing files', async ({
   await expect(page.getByLabel('קטלוג JSON')).toContainText(
     '"schemaVersion": "1.0"',
   );
+  await expect(
+    page.getByRole('navigation', { name: 'ישויות קטלוג' }),
+  ).toBeVisible();
+  await page.getByRole('button', { name: 'קבוצות' }).click();
+  await expect(page.getByRole('heading', { name: 'קבוצות קהל' })).toBeVisible();
+  await page.getByRole('button', { name: 'תוכניות' }).click();
+  await expect(page.getByRole('heading', { name: 'תוכניות' })).toBeVisible();
 
   await page.getByRole('button', { name: 'אימות' }).click();
   await expect(page.getByRole('status')).toContainText('התוכן תקין');
@@ -31,7 +44,7 @@ test('editor migrates a legacy groups catalog without crashing structured forms'
   await page.goto('/');
   await page.evaluate(() => localStorage.clear());
   await page.reload();
-  await page.getByLabel('מהמחשב או מכונן מסונכרן').setInputFiles({
+  await page.getByLabel('בחירת קובץ').setInputFiles({
     name: 'legacy-catalog.json',
     mimeType: 'application/json',
     buffer: Buffer.from(
@@ -53,7 +66,7 @@ test('editor migrates a legacy groups catalog without crashing structured forms'
   await expect(page.getByLabel('קטלוג JSON')).toContainText('"audienceGroups"');
   await expect(page.getByLabel('קטלוג JSON')).not.toContainText('"groups"');
   await expect(
-    page.getByRole('heading', { name: 'תוכניות וקבוצות קהל' }),
+    page.getByRole('heading', { name: 'קורסים ושיוכים לקבוצות' }),
   ).toBeVisible();
   expect(pageErrors).toEqual([]);
 });

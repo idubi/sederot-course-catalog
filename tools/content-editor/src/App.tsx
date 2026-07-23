@@ -6,23 +6,23 @@ import {
   formatImportedJson,
   isEditableCatalog,
   isLegacyCatalog,
-  validateWebCatalogUrl,
 } from '../catalog-import';
-import {
-  loadEditorText,
-  persistEditorText,
-  resetEditorState,
-} from '../editor-state';
+import { persistEditorText, resetEditorState } from '../editor-state';
 import { CourseOfferingForms } from './CourseOfferingForms';
 import { ProgramGroupForms } from './ProgramGroupForms';
 import { RegistrationForms } from './RegistrationForms';
+import {
+  classifyDiagnostics,
+  type DiagnosticState,
+  type ImportDiagnostic,
+} from './diagnostics';
 
 type Message = { kind: 'error' | 'success'; text: string } | null;
-type ImportDiagnostic = {
-  code: string;
-  message: string;
-  path: PropertyKey[];
-  severity: 'error' | 'warning' | 'info';
+const diagnosticStateLabels: Record<DiagnosticState, string> = {
+  active: 'פעיל',
+  resolved: 'נפתר',
+  stale: 'לא עדכני',
+  duplicate: 'כפול',
 };
 
 async function requestJson(path: string, init?: RequestInit) {
@@ -36,14 +36,19 @@ async function requestJson(path: string, init?: RequestInit) {
 }
 
 export function App() {
-  const [text, setText] = useState(() => loadEditorText(localStorage));
+  const [text, setText] = useState('');
+  const [activeTab, setActiveTab] = useState<'courses' | 'groups' | 'programs'>(
+    'courses',
+  );
   const [message, setMessage] = useState<Message>(null);
   const [acknowledgeWarnings, setAcknowledgeWarnings] = useState(false);
-  const [webCatalogUrl, setWebCatalogUrl] = useState('');
   const [bootstrapFolder, setBootstrapFolder] = useState('');
   const [importDiagnostics, setImportDiagnostics] = useState<
     ImportDiagnostic[]
   >([]);
+  const [diagnosticFilter, setDiagnosticFilter] = useState<
+    'all' | DiagnosticState
+  >('active');
   const parsedJson = useMemo(() => {
     try {
       return JSON.parse(text) as unknown;
@@ -65,6 +70,18 @@ export function App() {
         )
         .map((course) => `הקורס אינו משויך לאף תוכנית או קבוצה: ${course.name}`)
     : [];
+  const classifiedDiagnostics = parsedCatalog
+    ? classifyDiagnostics(importDiagnostics, parsedCatalog)
+    : [];
+  const visibleDiagnostics = classifiedDiagnostics.filter(
+    ({ state }) => diagnosticFilter === 'all' || state === diagnosticFilter,
+  );
+  const activeImportWarnings = classifiedDiagnostics
+    .filter(
+      ({ diagnostic, state }) =>
+        state === 'active' && diagnostic.severity === 'warning',
+    )
+    .map(({ diagnostic }) => diagnostic.message);
 
   useEffect(() => {
     const timer = window.setTimeout(
@@ -126,6 +143,13 @@ export function App() {
     }
   }
 
+  async function loadAnyFile(file: File | undefined) {
+    if (!file) return;
+    if (/\.json$/iu.test(file.name)) await loadFile(file);
+    else await loadDocument(file);
+    setActiveTab('courses');
+  }
+
   async function loadDocument(file: File | undefined) {
     if (!file) return;
     try {
@@ -164,26 +188,6 @@ export function App() {
     }
   }
 
-  async function loadFromWeb() {
-    try {
-      const url = validateWebCatalogUrl(webCatalogUrl.trim());
-      const response = await fetch(url, {
-        headers: { Accept: 'application/json' },
-      });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      setText(formatImportedJson(await response.text()));
-      setMessage({ kind: 'success', text: 'קובץ ה-JSON נטען מהאינטרנט' });
-    } catch (error) {
-      setMessage({
-        kind: 'error',
-        text:
-          error instanceof Error
-            ? `טעינה מהאינטרנט נכשלה: ${error.message}`
-            : 'טעינה מהאינטרנט נכשלה',
-      });
-    }
-  }
-
   async function submit(action: 'draft' | 'export' | 'validate') {
     try {
       const routes = {
@@ -197,7 +201,7 @@ export function App() {
         body: JSON.stringify({
           catalog: catalog(),
           acknowledgeWarnings,
-          warnings: [],
+          warnings: activeImportWarnings,
         }),
       });
       const labels = {
@@ -225,7 +229,7 @@ export function App() {
           acknowledgeWarnings,
           catalog: catalog(),
           folderName: bootstrapFolder.trim(),
-          warnings: importDiagnostics.map(({ message }) => message),
+          warnings: activeImportWarnings,
         }),
       });
       setMessage({
@@ -250,7 +254,6 @@ export function App() {
 
     resetEditorState(localStorage);
     setText('');
-    setWebCatalogUrl('');
     setBootstrapFolder('');
     setAcknowledgeWarnings(false);
     setImportDiagnostics([]);
@@ -279,189 +282,264 @@ export function App() {
         </p>
       </section>
 
-      <div className="toolbar" aria-label="פעולות קובץ">
-        <button type="button" onClick={() => void load('approved')}>
-          טעינת מאושר
-        </button>
-        <button type="button" onClick={() => void load('draft')}>
-          טעינת טיוטה
-        </button>
-        <button type="button" onClick={() => void submit('validate')}>
-          אימות
-        </button>
-        <button type="button" onClick={() => void submit('draft')}>
-          שמירת טיוטה
-        </button>
-        <button
-          className="primary"
-          type="button"
-          onClick={() => void submit('export')}
-        >
-          ייצוא מאושר
-        </button>
-        <button className="danger" type="button" onClick={reset}>
-          איפוס העורך
-        </button>
-      </div>
-
-      <section className="import-panel" aria-labelledby="import-title">
-        <h2 id="import-title">טעינת קובץ JSON</h2>
-        <label>
-          מהמחשב או מכונן מסונכרן
-          <input
-            type="file"
-            accept="application/json,.json"
-            onChange={(event) => void loadFile(event.target.files?.[0])}
-          />
-        </label>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            void loadFromWeb();
-          }}
-        >
-          <label>
-            מכתובת אינטרנט מאובטחת
+      {!parsedCatalog ? (
+        <section className="import-screen" aria-labelledby="import-title">
+          <h2 id="import-title">טעינת פרופיל מקובץ</h2>
+          <p>בחרו מסמך Word, Markdown, טקסט או קובץ JSON כדי להתחיל.</p>
+          <label className="file-drop">
+            <span>בחירת קובץ</span>
             <input
-              dir="ltr"
-              type="url"
-              inputMode="url"
-              required
-              placeholder="https://example.org/catalog.json"
-              value={webCatalogUrl}
-              onChange={(event) => setWebCatalogUrl(event.target.value)}
+              type="file"
+              accept="application/json,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/markdown,text/plain,.json,.docx,.md,.txt"
+              onChange={(event) => void loadAnyFile(event.target.files?.[0])}
             />
           </label>
-          <button type="submit">טעינה מהאינטרנט</button>
-        </form>
-        <p>
-          האתר המארח חייב לאפשר גישת CORS. טעינת הקובץ מחליפה את הטקסט בעורך
-          בלבד; כתיבה לכונן מתבצעת רק בשמירת טיוטה או בייצוא מפורש.
-        </p>
-      </section>
-
-      <section className="import-panel" aria-labelledby="document-title">
-        <h2 id="document-title">יצירת JSON ממסמך</h2>
-        <label>
-          מסמך Word, Markdown או טקסט
-          <input
-            type="file"
-            accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/markdown,text/plain,.docx,.md,.txt"
-            onChange={(event) => void loadDocument(event.target.files?.[0])}
-          />
-        </label>
-        <p>
-          המסמך נקרא בלבד ומומר לטיוטה הקרובה ביותר. תוכן חסר או לא ודאי נשאר
-          כאבחון לעריכה לפני ייצוא; קובץ המקור אינו משתנה.
-        </p>
-      </section>
-
-      <section className="import-panel" aria-labelledby="bootstrap-title">
-        <h2 id="bootstrap-title">ייצוא סביבת Bootstrap</h2>
-        <label>
-          שם תיקייה תחת contents
-          <input
-            dir="ltr"
-            required
-            pattern="[a-z0-9][a-z0-9._-]*"
-            placeholder="school-year-2026-2027"
-            value={bootstrapFolder}
-            onChange={(event) => setBootstrapFolder(event.target.value)}
-          />
-        </label>
-        <button
-          type="button"
-          disabled={!bootstrapFolder.trim()}
-          onClick={() => void exportBootstrap()}
-        >
-          ייצוא contents/&lt;folder&gt;/bootstrap.json
-        </button>
-        <p>הייצוא דורש Schema תקין ואישור אזהרות. הוא אינו משנה תוכן מאושר.</p>
-      </section>
-
-      <label className="warning-check">
-        <input
-          type="checkbox"
-          checked={acknowledgeWarnings}
-          onChange={(event) => setAcknowledgeWarnings(event.target.checked)}
-        />
-        בדקתי ואני מאשר/ת את האזהרות לפני ייצוא
-      </label>
-
-      {message && (
-        <p className={`message message--${message.kind}`} role="status">
-          {message.text}
-        </p>
-      )}
-
-      {shapeMessage && (
-        <p className="message message--error" role="alert">
-          {shapeMessage}
-        </p>
-      )}
-
-      {importDiagnostics.length > 0 && (
-        <details className="diagnostics-panel" open>
-          <summary>אבחוני המרה ({importDiagnostics.length})</summary>
-          <p>יש לפתור את כל השגיאות לפני ייצוא תוכן מאושר.</p>
-          <ul>
-            {importDiagnostics.map((diagnostic, index) => (
-              <li key={`${diagnostic.code}-${index}`}>
-                <strong>
-                  {diagnostic.severity === 'error'
-                    ? 'שגיאה'
-                    : diagnostic.severity === 'warning'
-                      ? 'אזהרה'
-                      : 'מידע'}
-                  :
-                </strong>{' '}
-                {diagnostic.message} <code>{diagnostic.path.join('.')}</code>
-              </li>
-            ))}
-          </ul>
-        </details>
-      )}
-
-      {relationshipWarnings.length > 0 && (
-        <section
-          className="diagnostics-panel"
-          aria-labelledby="relations-title"
-        >
-          <h2 id="relations-title">אזהרות שיוך</h2>
-          <ul>
-            {relationshipWarnings.map((warning) => (
-              <li key={warning}>{warning}</li>
-            ))}
-          </ul>
+          <div className="toolbar">
+            <button type="button" onClick={() => void load('approved')}>
+              טעינת מאושר
+            </button>
+            <button type="button" onClick={() => void load('draft')}>
+              טעינת טיוטה
+            </button>
+          </div>
         </section>
-      )}
-
-      {parsedCatalog && (
+      ) : (
         <>
-          <ProgramGroupForms
-            catalog={parsedCatalog}
-            onChange={(value) => setText(`${JSON.stringify(value, null, 2)}\n`)}
-          />
-          <CourseOfferingForms
-            catalog={parsedCatalog}
-            onChange={(value) => setText(`${JSON.stringify(value, null, 2)}\n`)}
-          />
-          <RegistrationForms
-            catalog={parsedCatalog}
-            onChange={(value) => setText(`${JSON.stringify(value, null, 2)}\n`)}
-          />
+          <div className="toolbar" aria-label="פעולות קובץ">
+            <button type="button" onClick={() => void submit('validate')}>
+              אימות
+            </button>
+            <button type="button" onClick={() => void submit('draft')}>
+              שמירת טיוטה
+            </button>
+            <button
+              className="primary"
+              type="button"
+              onClick={() => void submit('export')}
+            >
+              ייצוא מאושר
+            </button>
+            <button className="danger" type="button" onClick={reset}>
+              איפוס העורך
+            </button>
+          </div>
+
+          <section className="import-panel" aria-labelledby="bootstrap-title">
+            <h2 id="bootstrap-title">ייצוא סביבת Bootstrap</h2>
+            <label>
+              שם תיקייה תחת contents
+              <input
+                dir="ltr"
+                required
+                pattern="[a-z0-9][a-z0-9._-]*"
+                placeholder="school-year-2026-2027"
+                value={bootstrapFolder}
+                onChange={(event) => setBootstrapFolder(event.target.value)}
+              />
+            </label>
+            <button
+              type="button"
+              disabled={!bootstrapFolder.trim()}
+              onClick={() => void exportBootstrap()}
+            >
+              ייצוא contents/&lt;folder&gt;/bootstrap.json
+            </button>
+            <p>
+              הייצוא דורש Schema תקין ואישור אזהרות. הוא אינו משנה תוכן מאושר.
+            </p>
+          </section>
+
+          <label className="warning-check">
+            <input
+              type="checkbox"
+              checked={acknowledgeWarnings}
+              onChange={(event) => setAcknowledgeWarnings(event.target.checked)}
+            />
+            בדקתי ואני מאשר/ת את האזהרות לפני ייצוא
+          </label>
+
+          {message && (
+            <p className={`message message--${message.kind}`} role="status">
+              {message.text}
+            </p>
+          )}
+
+          {shapeMessage && (
+            <p className="message message--error" role="alert">
+              {shapeMessage}
+            </p>
+          )}
+
+          {importDiagnostics.length > 0 && (
+            <details className="diagnostics-panel" open>
+              <summary>אבחוני המרה ({importDiagnostics.length})</summary>
+              <p>
+                אבחונים פעילים דורשים בדיקה. אבחונים שנפתרו או אינם עדכניים
+                נשמרים כראיית מקור ואינם מוצגים כאזהרה פעילה.
+              </p>
+              <label>
+                סינון אבחונים
+                <select
+                  value={diagnosticFilter}
+                  onChange={(event) =>
+                    setDiagnosticFilter(
+                      event.target.value as typeof diagnosticFilter,
+                    )
+                  }
+                >
+                  <option value="active">פעילים</option>
+                  <option value="resolved">נפתרו</option>
+                  <option value="stale">לא עדכניים</option>
+                  <option value="duplicate">כפולים</option>
+                  <option value="all">הכול</option>
+                </select>
+              </label>
+              <ul>
+                {visibleDiagnostics.map(
+                  ({ diagnostic, entity, state }, index) => (
+                    <li
+                      className={`diagnostic diagnostic--${state}`}
+                      key={`${diagnostic.code}-${index}`}
+                    >
+                      <strong>
+                        {diagnostic.severity === 'error'
+                          ? 'שגיאה'
+                          : diagnostic.severity === 'warning'
+                            ? 'אזהרה'
+                            : 'מידע'}
+                        :
+                      </strong>{' '}
+                      <span className="diagnostic-state">
+                        {diagnosticStateLabels[state]}
+                      </span>{' '}
+                      {diagnostic.message}
+                      <div className="diagnostic-context">
+                        <code>{diagnostic.path.join('.')}</code>
+                        {diagnostic.sourceLocation && (
+                          <span>
+                            {diagnostic.sourceFile ?? 'מסמך מקור'}, שורה{' '}
+                            {diagnostic.sourceLocation.line}
+                          </span>
+                        )}
+                        {diagnostic.sourceExcerpt && (
+                          <q>{diagnostic.sourceExcerpt}</q>
+                        )}
+                      </div>
+                      {entity && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setActiveTab(entity.tab);
+                            window.setTimeout(
+                              () =>
+                                document
+                                  .getElementById(entity.id)
+                                  ?.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'start',
+                                  }),
+                              0,
+                            );
+                          }}
+                        >
+                          מעבר לישות
+                        </button>
+                      )}
+                    </li>
+                  ),
+                )}
+              </ul>
+              {visibleDiagnostics.length === 0 && (
+                <p role="status">אין אבחונים התואמים למסנן.</p>
+              )}
+            </details>
+          )}
+
+          {relationshipWarnings.length > 0 && (
+            <section
+              className="diagnostics-panel"
+              aria-labelledby="relations-title"
+            >
+              <h2 id="relations-title">אזהרות שיוך</h2>
+              <ul>
+                {relationshipWarnings.map((warning) => (
+                  <li key={warning}>{warning}</li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          <nav className="entity-tabs" aria-label="ישויות קטלוג">
+            {(
+              [
+                ['courses', 'קורסים'],
+                ['groups', 'קבוצות'],
+                ['programs', 'תוכניות'],
+              ] as const
+            ).map(([id, label]) => (
+              <button
+                key={id}
+                type="button"
+                className={activeTab === id ? 'active' : ''}
+                aria-pressed={activeTab === id}
+                onClick={() => setActiveTab(id)}
+              >
+                {label}
+              </button>
+            ))}
+          </nav>
+
+          <section className="tab-workspace">
+            {activeTab === 'programs' && (
+              <ProgramGroupForms
+                view="programs"
+                catalog={parsedCatalog}
+                onChange={(value) =>
+                  setText(`${JSON.stringify(value, null, 2)}\n`)
+                }
+              />
+            )}
+            {activeTab === 'groups' && (
+              <ProgramGroupForms
+                view="groups"
+                catalog={parsedCatalog}
+                onChange={(value) =>
+                  setText(`${JSON.stringify(value, null, 2)}\n`)
+                }
+              />
+            )}
+            {activeTab === 'courses' && (
+              <CourseOfferingForms
+                catalog={parsedCatalog}
+                onChange={(value) =>
+                  setText(`${JSON.stringify(value, null, 2)}\n`)
+                }
+              />
+            )}
+            {activeTab === 'programs' && (
+              <RegistrationForms
+                catalog={parsedCatalog}
+                onChange={(value) =>
+                  setText(`${JSON.stringify(value, null, 2)}\n`)
+                }
+              />
+            )}
+          </section>
+
+          <details className="json-source">
+            <summary>עריכת JSON גולמי</summary>
+            <label className="json-editor">
+              <span>קטלוג JSON</span>
+              <textarea
+                dir="ltr"
+                spellCheck={false}
+                value={text}
+                onChange={(event) => setText(event.target.value)}
+              />
+            </label>
+          </details>
         </>
       )}
-
-      <label className="json-editor">
-        <span>קטלוג JSON</span>
-        <textarea
-          dir="ltr"
-          spellCheck={false}
-          value={text}
-          onChange={(event) => setText(event.target.value)}
-        />
-      </label>
     </main>
   );
 }

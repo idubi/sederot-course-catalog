@@ -5,9 +5,19 @@ import { parseBlueprint } from '../source-reader/blueprint-reader';
 
 export interface EditorImportDiagnostic {
   code: string;
+  confidence?: number;
+  entityRef?: string;
   message: string;
   path: PropertyKey[];
   severity: 'error' | 'warning' | 'info';
+  sourceExcerpt?: string;
+  sourceFile?: string;
+  sourceLocation?: {
+    line: number;
+    column: number;
+    startOffset: number;
+    endOffset: number;
+  };
 }
 
 export function importBlueprintDocument(
@@ -69,10 +79,23 @@ export function importBlueprintDocument(
   };
 
   const diagnostics: EditorImportDiagnostic[] = artifacts.diagnostics.map(
-    ({ code, message, severity, sourceLocation }) => ({
+    ({
       code,
+      confidence,
+      entityRef,
       message,
       severity,
+      sourceExcerpt,
+      sourceLocation,
+    }) => ({
+      code,
+      confidence,
+      ...(entityRef ? { entityRef } : {}),
+      message,
+      severity,
+      sourceExcerpt,
+      sourceFile: fileName,
+      sourceLocation,
       path: ['source', sourceLocation.line],
     }),
   );

@@ -183,7 +183,14 @@ export const catalogSchema = structuralCatalogSchema.superRefine(
 
     catalog.programs.forEach((program, index) => {
       const targetId = program.defaultRegistrationTargetId;
-      if (!targetId) return;
+      if (!targetId) {
+        context.addIssue({
+          code: 'custom',
+          message: 'Program has no default registration target',
+          path: ['programs', index, 'defaultRegistrationTargetId'],
+        });
+        return;
+      }
 
       const target = targetsById.get(targetId);
       if (!target) {
