@@ -40,6 +40,9 @@ test('registration information precedes the external target and closes to the gr
   await expect(
     page.getByRole('heading', { level: 1, name: 'מידע לפני הרשמה' }),
   ).toBeVisible();
+  await expect(
+    page.getByText('המשך ההרשמה והתשלום מתבצע באתר חיצוני.'),
+  ).toBeVisible();
   const external = page.getByRole('link', {
     name: /המשך לאתר הרישום החיצוני/,
   });

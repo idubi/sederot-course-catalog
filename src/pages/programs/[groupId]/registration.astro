@@ -36,11 +36,10 @@ const groupUrl = `${base}programs/${registration.groupId}/`;
     </p>
     <section aria-labelledby="important-title">
       <h2 id="important-title">חשוב לדעת</h2>
-      <ul>
-        <li>המשך ההרשמה והתשלום מתבצע באתר חיצוני.</li>
-        <li>האתר הנוכחי אינו אוסף או שומר פרטי רישום ותשלום.</li>
-        <li>אפשר לחזור כעת לאשכול הקורסים בלי לעבור לאתר החיצוני.</li>
-      </ul>
+      <div
+        class="registration-information"
+        set:html={registration.registrationInfoHtml}
+      />
     </section>
     <p class="destination">
       היעד המאושר: <strong>{registration.targetLabel}</strong>
@@ -94,7 +93,7 @@ const groupUrl = `${base}programs/${registration.groupId}/`;
   section h2 {
     margin-block-start: 0;
   }
-  li + li {
+  .registration-information :global(li + li) {
     margin-block-start: 0.6rem;
   }
   .destination {

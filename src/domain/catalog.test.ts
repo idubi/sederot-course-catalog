@@ -91,6 +91,8 @@ describe('catalog domain model', () => {
   it('keeps registration ownership off courses and offerings', () => {
     expectTypeOf<Course>().not.toHaveProperty('registrationTargetId');
     expectTypeOf<CourseOffering>().not.toHaveProperty('registrationTargetId');
+    expectTypeOf<Course>().not.toHaveProperty('registrationInfoHtml');
+    expectTypeOf<CourseOffering>().not.toHaveProperty('registrationInfoHtml');
   });
 
   it('supports group targets with a program default fallback', () => {
@@ -101,5 +103,19 @@ describe('catalog domain model', () => {
 
     expect(group.registrationTargetId).toBe('gifted-grade-5-registration');
     expect(program.defaultRegistrationTargetId).toBe('gifted-registration');
+  });
+
+  it('supports registration information on programs and audience groups', () => {
+    const program = {
+      ...catalogFixture.programs[0]!,
+      registrationInfoHtml: '<p>מידע תוכנית</p>',
+    };
+    const group = {
+      ...catalogFixture.audienceGroups[0]!,
+      registrationInfoHtml: '<p>מידע קבוצה</p>',
+    };
+
+    expect(program.registrationInfoHtml).toContain('מידע תוכנית');
+    expect(group.registrationInfoHtml).toContain('מידע קבוצה');
   });
 });
