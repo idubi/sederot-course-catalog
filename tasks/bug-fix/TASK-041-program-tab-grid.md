@@ -1,6 +1,6 @@
 # TASK-041: Arrange course program tabs in a grid
 
-- **Status:** In progress
+- **Status:** In review
 - **Phase:** Content tooling
 - **Category:** Bug fix
 - **Branch:** `task/041-program-course-grid`
@@ -24,7 +24,7 @@ Arrange the program assignment headers inside course cards as a responsive equal
 - [x] Preserve selection, active-panel semantics, and RTL keyboard navigation.
 - [x] Add focused browser coverage and update documentation.
 - [x] Run relevant tests, production gate, and `git diff --check`.
-- [ ] Record evidence, commit, push, and open one reviewed PR to `main`.
+- [x] Record evidence, commit, push, and open one reviewed PR to `main`.
 
 ## Acceptance criteria
 
@@ -38,11 +38,11 @@ Arrange the program assignment headers inside course cards as a responsive equal
 - **Implementation:** Complete — course-card program assignment headers use a responsive equal-width grid matching the primary tab treatment while preserving the active tab and RTL keyboard behavior.
 - **Tests:** `npm run production:gate` — approved content validated; 80 files checked with zero diagnostics; 24 test files and 102 tests passed; five production pages built and verified; 8 Chromium flows passed. `git diff --check` — passed.
 - **Documentation:** Updated `README.md`, `artifacts/content-import.md`, the master list, and this task record.
-- **Commits:** Pending
-- **Pull request:** Pending
+- **Commits:** `4a0ab65`, `72e1e3a`
+- **Pull request:** [#52](https://github.com/idubi/sederot-course-catalog/pull/52)
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Limited to course-card program assignment header layout.
+- **Completed by:** Codex implementation; awaiting human review and approved merge.
+- **Completed at:** Pending approved merge.
+- **Notes:** Limited to course-card program assignment header layout. PR #52 is open against `main` and was not automatically merged.
