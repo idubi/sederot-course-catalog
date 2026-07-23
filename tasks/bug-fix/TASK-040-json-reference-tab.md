@@ -40,9 +40,9 @@ Move manual JSON editing into a dedicated editor tab and provide a side inspecto
 ## Completion evidence
 
 - **Implementation:** Complete — raw JSON editing now appears only in a dedicated JSON tab. A responsive side inspector selects and renders one formatted object and provides relationship navigation among programs, groups, courses, offerings, and registration targets. Caret/scroll movement in raw JSON updates the inspector, while object and relationship selection focuses and scrolls the raw editor to the corresponding `id`.
-- **Tests:** `npm run typecheck` — 83 files with zero diagnostics; focused JSON-reference Vitest — 3/3 passed; focused two-way JSON/sidebar Chromium flow — passed; final `npm run production:gate` — content validation, typecheck, 25 files and 105 tests, five-page build, artifact verification, and 8 Chromium flows passed; `git diff --check` — passed.
+- **Tests:** After refreshing from current `main` at `92986c6` and removing unrelated local files, `npm run production:gate` — approved content validated; 83 files checked with zero diagnostics; 25 test files and 112 tests passed; five production pages built and verified; 9 Chromium flows passed. Focused JSON-reference Vitest — 3/3 passed; focused two-way JSON/sidebar Chromium flow — passed; `git diff --check` — passed.
 - **Documentation:** Updated `README.md`, `artifacts/content-import.md`, the master task list, and this task record.
-- **Commits:** `bb54860` (dedicated JSON reference tab); `c0dc88a` (two-way raw JSON/sidebar synchronization)
+- **Commits:** `bb54860` (dedicated JSON reference tab); `c0dc88a` (two-way raw JSON/sidebar synchronization); `f871b98` (remove unrelated files and resolve the master task list)
 - **Pull request:** [#51](https://github.com/idubi/sederot-course-catalog/pull/51) targets `main`; awaiting checks and human review.
 
 ## Completion record
