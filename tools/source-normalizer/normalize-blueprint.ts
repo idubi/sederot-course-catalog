@@ -61,7 +61,7 @@ export interface NormalizedBlueprintDraft {
 }
 
 const groupPattern =
-  /^כיתה (?<grade>.+?) (?<audience>מעורב|בנות|בנים|בנים \+ בנות) תוכנית (?<program>מחוננים|מצטיינים) לומד(?:ים|ות) ביום (?<day>.+?) בין (?<start>\d{1,2}:\d{2}).*?ל-?(?<end>\d{1,2}:\d{2})/;
+  /^כיתה (?<grade>.+?) (?<audience>מעורב|בנות|בנים|בנים \+ בנות) תוכנית (?<program>מחוננים|מצטיינים) לומד(?:ים|ות) ביום (?<day>.+?) בין (?<start>\d{1,2}\s*:\s*\d{2}).*?ל\s*[-–—]?\s*(?<end>\d{1,2}\s*:\s*\d{2})/;
 
 const gradeValues = new Map([
   ['ג', '3'],
@@ -115,6 +115,11 @@ function genderFromLabel(label: string): NormalizedAudienceGroup['gender'] {
   return 'mixed';
 }
 
+function normalizeTime(value: string): string {
+  const [hour = '', minute = ''] = value.replace(/\s/gu, '').split(':');
+  return `${hour.padStart(2, '0')}:${minute}`;
+}
+
 function normalizeCourseName(raw: string): {
   name: string;
   temporaryName: boolean;
@@ -161,8 +166,8 @@ export function normalizeBlueprint(
         gender,
         rawAudienceLabel: groupMatch.groups.audience ?? '',
         day: groupMatch.groups.day ?? '',
-        startTime: groupMatch.groups.start ?? '',
-        endTime: groupMatch.groups.end ?? '',
+        startTime: normalizeTime(groupMatch.groups.start ?? ''),
+        endTime: normalizeTime(groupMatch.groups.end ?? ''),
         source: evidence(node),
       };
       audienceGroups.push(activeGroup);

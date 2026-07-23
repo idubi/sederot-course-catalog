@@ -15,6 +15,10 @@ describe('editor blueprint document import', () => {
 
     expect(result.catalog.programs).toHaveLength(1);
     expect(result.catalog.audienceGroups).toHaveLength(1);
+    expect(result.catalog.audienceGroups[0]).toMatchObject({
+      startTime: '08:00',
+      endTime: '12:00',
+    });
     expect(result.catalog.courses).toHaveLength(1);
     expect(result.catalog.offerings).toHaveLength(1);
     expect(
