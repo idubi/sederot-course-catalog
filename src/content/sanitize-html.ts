@@ -19,6 +19,20 @@ export function sanitizeDescriptionHtml(value: string): string {
 export function sanitizeCatalogHtml(catalog: Catalog): Catalog {
   return {
     ...catalog,
+    programs: catalog.programs.map((program) => ({
+      ...program,
+      registrationInfoHtml:
+        program.registrationInfoHtml === undefined
+          ? undefined
+          : sanitizeDescriptionHtml(program.registrationInfoHtml),
+    })),
+    audienceGroups: catalog.audienceGroups.map((group) => ({
+      ...group,
+      registrationInfoHtml:
+        group.registrationInfoHtml === undefined
+          ? undefined
+          : sanitizeDescriptionHtml(group.registrationInfoHtml),
+    })),
     courses: catalog.courses.map((course) => ({
       ...course,
       descriptionHtml: sanitizeDescriptionHtml(course.descriptionHtml),

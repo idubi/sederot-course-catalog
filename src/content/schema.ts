@@ -14,6 +14,10 @@ export const catalogIdSchema = z
   .regex(idPattern, 'Must be a lowercase kebab-case ID');
 
 const entityIdSchema = catalogIdSchema;
+const safeHtmlSchema = nonBlankString.refine(
+  (value) => sanitizeDescriptionHtml(value) === value,
+  'Contains unsafe or unsupported HTML',
+);
 
 export const imageAssetSchema = z
   .object({
@@ -43,6 +47,7 @@ export const programSchema = z
     name: nonBlankString,
     category: z.enum(['gifted', 'excellence']),
     defaultRegistrationTargetId: entityIdSchema.optional(),
+    registrationInfoHtml: safeHtmlSchema.optional(),
   })
   .strict();
 
@@ -58,6 +63,7 @@ export const audienceGroupSchema = z
     startTime: z.string().regex(timePattern, 'Must use 24-hour HH:MM format'),
     endTime: z.string().regex(timePattern, 'Must use 24-hour HH:MM format'),
     registrationTargetId: entityIdSchema.optional(),
+    registrationInfoHtml: safeHtmlSchema.optional(),
   })
   .strict();
 
@@ -66,10 +72,7 @@ export const courseSchema = z
     id: entityIdSchema,
     name: nonBlankString,
     shortName: nonBlankString,
-    descriptionHtml: nonBlankString.refine(
-      (value) => sanitizeDescriptionHtml(value) === value,
-      'Contains unsafe or unsupported HTML',
-    ),
+    descriptionHtml: safeHtmlSchema,
     instructors: z.array(nonBlankString).min(1),
     defaultImage: imageAssetSchema.optional(),
   })

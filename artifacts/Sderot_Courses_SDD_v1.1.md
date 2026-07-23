@@ -33,6 +33,12 @@ const targetId =
 
 Only enabled HTTPS targets from approved JSON may be rendered.
 
+Registration-information content follows the same ownership boundary:
+`AudienceGroup.registrationInfoHtml` overrides
+`Program.registrationInfoHtml`. Both fields are optional safe HTML; catalogs
+without either value retain the built-in information notice. Courses and
+offerings do not own registration-information content.
+
 ## Superseding routes
 
 - `/` — program/grade/gender selection

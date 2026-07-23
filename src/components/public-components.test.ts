@@ -152,6 +152,8 @@ describe('public Astro components', () => {
       groupId: group.groupId,
       gradeLabels: group.gradeLabels,
       programName: group.programName,
+      registrationInfoHtml:
+        '<p><strong>נוהל תשלום ייעודי</strong></p><p>פנייה לצוות התוכנית.</p>',
       targetLabel: 'רישום מאושר',
       targetType: 'registration',
       targetUrl: 'https://example.test/register',
@@ -163,6 +165,10 @@ describe('public Astro components', () => {
     expect(html.indexOf('מידע לפני הרשמה')).toBeLessThan(
       html.indexOf('https://example.test/register'),
     );
+    expect(html.indexOf('נוהל תשלום ייעודי')).toBeLessThan(
+      html.indexOf('https://example.test/register'),
+    );
+    expect(html).toContain('פנייה לצוות התוכנית');
     expect(html).toContain('/programs/gifted-grade-5-mixed/');
     expect(html).toContain('rel="noopener noreferrer"');
     expect(html).not.toMatch(/courseId|offeringId/);
