@@ -1,6 +1,6 @@
 # TASK-039: Move diagnostics into a dedicated editor tab
 
-- **Status:** In progress
+- **Status:** In review
 - **Phase:** Content tooling
 - **Category:** Bug fix
 - **Branch:** `task/039-diagnostics-tab`
@@ -25,7 +25,7 @@ Keep errors and warnings out of the active entity workspace by presenting all di
 - [x] Preserve filtering, saved diagnostics, entity navigation, and return navigation.
 - [x] Add focused browser coverage and update documentation.
 - [x] Run relevant tests, production gate, and `git diff --check`.
-- [ ] Record evidence, commit, push, and open one reviewed PR to `main`.
+- [x] Record evidence, commit, push, and open one reviewed PR to `main`.
 
 ## Acceptance criteria
 
@@ -39,8 +39,8 @@ Keep errors and warnings out of the active entity workspace by presenting all di
 - **Implementation:** Complete — added a dedicated Errors and Warnings tab for Schema scan results, importer diagnostics, relationship warnings, and editor operation errors; entity tabs no longer render diagnostic panels above their active card. Rescan, entity navigation, filtering, saved diagnostics, and return navigation switch to the correct tab.
 - **Tests:** `npm run typecheck` — 80 files with zero diagnostics; focused diagnostics Vitest — 4/4 passed; focused Playwright editor flow — 4/4 passed; `npm run production:gate` — content validation, typecheck, 24 files and 101 tests, five-page build, artifact verification, and 8 Chromium flows passed; `git diff --check` — passed.
 - **Documentation:** Updated `README.md`, `artifacts/content-import.md`, the master task list, and this task record.
-- **Commits:** Pending
-- **Pull request:** Pending
+- **Commits:** `7936f20` (implementation, tests, documentation, and initial evidence)
+- **Pull request:** [#49](https://github.com/idubi/sederot-course-catalog/pull/49) targets `main`; awaiting checks and human review.
 
 ## Completion record
 
