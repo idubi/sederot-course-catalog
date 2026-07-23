@@ -118,15 +118,17 @@ export function buildImportArtifacts(
         }),
       );
     }
-    diagnostics.push(
-      diagnostic(firstSource, {
-        severity: 'warning',
-        code: 'COURSE_DETAILS_UNRESOLVED',
-        message: `Course description and instructors are not yet linked: ${course.name}`,
-        confidence: 1,
-        entityRef: course.id,
-      }),
-    );
+    if (!course.descriptionHtml || course.instructors.length === 0) {
+      diagnostics.push(
+        diagnostic(firstSource, {
+          severity: 'warning',
+          code: 'COURSE_DETAILS_UNRESOLVED',
+          message: `Course description and instructors are not yet linked: ${course.name}`,
+          confidence: 1,
+          entityRef: course.id,
+        }),
+      );
+    }
   });
 
   possibleDuplicatePairs(draft.courses).forEach(([first, second]) => {

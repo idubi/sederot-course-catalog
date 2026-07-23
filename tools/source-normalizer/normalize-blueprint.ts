@@ -39,6 +39,8 @@ export interface NormalizedCourse {
   id: string;
   name: string;
   temporaryName: boolean;
+  descriptionHtml: string;
+  instructors: string[];
   sourceNames: SourceEvidence[];
 }
 
@@ -132,6 +134,109 @@ function normalizeCourseName(raw: string): {
   };
 }
 
+function comparisonTokens(value: string): string[] {
+  return value
+    .normalize('NFKC')
+    .toLocaleLowerCase('he')
+    .replace(/n\.l\.?\s*playback/giu, 'nlp פלייבק')
+    .replace(/nlp(?=פלייבק)/giu, 'nlp ')
+    .replace(/3d/giu, 'תלת מימד')
+    .replace(/[^\p{L}\p{N}]+/gu, ' ')
+    .trim()
+    .split(/\s+/u)
+    .filter(
+      (token) =>
+        token.length > 1 &&
+        !['את', 'של', 'עם', 'קורס', 'מסע', 'שם', 'זמני'].includes(token),
+    );
+}
+
+function detailMatchesCourse(title: string, courseName: string): boolean {
+  const titleTokens = new Set(comparisonTokens(title));
+  const courseTokens = comparisonTokens(courseName.split('/')[0] ?? courseName);
+  if (courseTokens.length === 0) return false;
+  const matches = courseTokens.filter((token) => titleTokens.has(token)).length;
+  return (
+    matches === courseTokens.length || matches / courseTokens.length >= 0.6
+  );
+}
+
+function instructorNames(value: string): string[] {
+  const cleaned = value
+    .replace(/\*\*/gu, '')
+    .replace(/^\s*(?:בהנחיית|המורה|מורה)\s*:?[\s-]*/u, '')
+    .trim();
+  const conjunction = cleaned.lastIndexOf(' ו');
+  const before = cleaned.slice(0, conjunction).trim();
+  const after = cleaned.slice(conjunction + 2).trim();
+  return conjunction > 0 && before.split(/\s+/u).length >= 2 && after
+    ? [before, after]
+    : [cleaned].filter(Boolean);
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/gu, '&amp;')
+    .replace(/</gu, '&lt;')
+    .replace(/>/gu, '&gt;')
+    .replace(/"/gu, '&quot;')
+    .replace(/'/gu, '&#39;');
+}
+
+function linkCourseDetails(
+  document: BlueprintDocument,
+  courses: Map<string, NormalizedCourse>,
+): void {
+  const nodes = document.nodes;
+  for (let index = 0; index < nodes.length; index += 1) {
+    const instructorNode = nodes[index];
+    if (
+      !instructorNode ||
+      !/^\s*(?:בהנחיית|המורה|מורה)\s*:?/u.test(
+        instructorNode.text.replace(/\*\*/gu, ''),
+      )
+    ) {
+      continue;
+    }
+    let titleIndex = index - 1;
+    while (titleIndex >= 0 && nodes[titleIndex]?.kind === 'blank')
+      titleIndex -= 1;
+    const titleNode = nodes[titleIndex];
+    if (!titleNode) continue;
+    let matches = [...courses.values()].filter((course) =>
+      detailMatchesCourse(titleNode.text, course.name),
+    );
+    if (/הקוד הסודי של החיים/u.test(titleNode.text)) {
+      matches = [...courses.values()].filter(({ name }) =>
+        /^גנטיקה\s*\//u.test(name),
+      );
+    } else if (/^מעצבי העתיד$/u.test(titleNode.text.trim())) {
+      matches = [...courses.values()].filter(({ name }) => name === 'פיתוח VR');
+    }
+    if (matches.length === 0) continue;
+
+    const paragraphs: string[] = [];
+    for (
+      let detailIndex = index + 1;
+      detailIndex < nodes.length;
+      detailIndex += 1
+    ) {
+      const node = nodes[detailIndex];
+      if (!node) break;
+      if (/הקורס מופיע בעמודים/u.test(node.text)) break;
+      if (node.kind === 'paragraph' && node.text.trim()) {
+        paragraphs.push(node.text.trim());
+      }
+    }
+    for (const course of matches) {
+      course.instructors = instructorNames(instructorNode.text);
+      course.descriptionHtml = paragraphs
+        .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
+        .join('');
+    }
+  }
+}
+
 export function normalizeBlueprint(
   document: BlueprintDocument,
 ): NormalizedBlueprintDraft {
@@ -188,7 +293,9 @@ export function normalizeBlueprint(
       existingCourse.sourceNames.push(evidence(node));
     } else {
       courses.set(courseKey, {
+        descriptionHtml: '',
         id: courseId,
+        instructors: [],
         name: normalized.name,
         temporaryName: normalized.temporaryName,
         sourceNames: [evidence(node)],
@@ -206,6 +313,8 @@ export function normalizeBlueprint(
     displayOrder += 1;
     consumedNodeIndexes.add(nodeIndex);
   });
+
+  linkCourseDetails(document, courses);
 
   return {
     source: { path: document.path, sha256: document.sha256 },

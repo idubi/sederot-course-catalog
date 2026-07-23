@@ -90,4 +90,27 @@ describe('blueprint normalization', () => {
       ),
     ).toBe(true);
   });
+
+  it('links course descriptions and instructor names from detail sections', async () => {
+    const draft = normalizeBlueprint(await readApprovedBlueprint());
+    const disney = draft.courses.find(({ name }) => name === 'האקדמיה לדיסני');
+    const microcode = draft.courses.find(({ name }) => name === 'מיקרוקוד');
+
+    expect(disney?.instructors).toEqual(['לבנת שלזינגר', 'רוני כהן']);
+    expect(microcode?.instructors).toEqual(['אלכס גולוד']);
+    expect(microcode?.descriptionHtml).toContain('<p>תכנות הוא');
+    expect(
+      draft.courses.find(({ name }) => name === 'תעלומות במוזיאון')
+        ?.instructors,
+    ).toEqual(['ענת וינשטיין ברקוביץ', 'אולגה אסיפוב']);
+    expect(
+      draft.courses.find(({ name }) => name === 'NLPפלייבק')?.instructors,
+    ).toEqual(['ימית הוסטר']);
+    expect(
+      draft.courses.find(({ name }) => name === 'גנטיקה/שירלי')?.instructors,
+    ).toEqual([`ד"ר שירלי גזית`]);
+    expect(
+      draft.courses.find(({ name }) => name === 'פיתוח VR')?.instructors,
+    ).toEqual(['LoginVR']);
+  });
 });

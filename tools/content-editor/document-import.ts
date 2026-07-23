@@ -46,13 +46,15 @@ export function importBlueprintDocument(
         endTime,
       }),
     ),
-    courses: artifacts.draft.courses.map(({ id, name }) => ({
-      id,
-      name,
-      shortName: name,
-      descriptionHtml: '',
-      instructors: [],
-    })),
+    courses: artifacts.draft.courses.map(
+      ({ descriptionHtml, id, instructors, name }) => ({
+        id,
+        name,
+        shortName: name,
+        descriptionHtml,
+        instructors,
+      }),
+    ),
     offerings: artifacts.draft.offerings.map(
       ({ id, courseId, audienceGroupId, semester, displayOrder }) => ({
         id,
