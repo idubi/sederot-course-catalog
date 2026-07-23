@@ -40,6 +40,7 @@ export interface NormalizedCourse {
   name: string;
   temporaryName: boolean;
   descriptionHtml: string;
+  declaredAudienceLabels: string[];
   instructors: string[];
   sourceNames: SourceEvidence[];
 }
@@ -216,6 +217,8 @@ function linkCourseDetails(
     if (matches.length === 0) continue;
 
     const paragraphs: string[] = [];
+    const declaredAudienceLabels: string[] = [];
+    let assignmentTable = false;
     for (
       let detailIndex = index + 1;
       detailIndex < nodes.length;
@@ -223,13 +226,29 @@ function linkCourseDetails(
     ) {
       const node = nodes[detailIndex];
       if (!node) break;
-      if (/הקורס מופיע בעמודים/u.test(node.text)) break;
-      if (node.kind === 'paragraph' && node.text.trim()) {
+      if (/הקורס מופיע בעמודים/u.test(node.text)) {
+        assignmentTable = true;
+        continue;
+      }
+      if (assignmentTable && node.kind === 'heading') break;
+      if (assignmentTable && node.kind === 'table-row') {
+        declaredAudienceLabels.push(
+          ...node.text
+            .split('|')
+            .map((cell) => cell.trim())
+            .filter((cell) => cell.length > 0 && !/^[-: ]+$/u.test(cell)),
+        );
+      } else if (
+        !assignmentTable &&
+        node.kind === 'paragraph' &&
+        node.text.trim()
+      ) {
         paragraphs.push(node.text.trim());
       }
     }
     for (const course of matches) {
       course.instructors = instructorNames(instructorNode.text);
+      course.declaredAudienceLabels = [...new Set(declaredAudienceLabels)];
       course.descriptionHtml = paragraphs
         .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
         .join('');
@@ -293,6 +312,7 @@ export function normalizeBlueprint(
       existingCourse.sourceNames.push(evidence(node));
     } else {
       courses.set(courseKey, {
+        declaredAudienceLabels: [],
         descriptionHtml: '',
         id: courseId,
         instructors: [],

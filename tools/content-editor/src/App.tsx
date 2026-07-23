@@ -55,6 +55,16 @@ export function App() {
     ? parsedJson
     : null;
   const shapeMessage = parsedJson ? catalogShapeMessage(parsedJson) : null;
+  const relationshipWarnings = parsedCatalog
+    ? parsedCatalog.courses
+        .filter(
+          (course) =>
+            !parsedCatalog.offerings.some(
+              ({ courseId }) => courseId === course.id,
+            ),
+        )
+        .map((course) => `הקורס אינו משויך לאף תוכנית או קבוצה: ${course.name}`)
+    : [];
 
   useEffect(() => {
     const timer = window.setTimeout(
@@ -410,6 +420,20 @@ export function App() {
             ))}
           </ul>
         </details>
+      )}
+
+      {relationshipWarnings.length > 0 && (
+        <section
+          className="diagnostics-panel"
+          aria-labelledby="relations-title"
+        >
+          <h2 id="relations-title">אזהרות שיוך</h2>
+          <ul>
+            {relationshipWarnings.map((warning) => (
+              <li key={warning}>{warning}</li>
+            ))}
+          </ul>
+        </section>
       )}
 
       {parsedCatalog && (

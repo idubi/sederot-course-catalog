@@ -53,6 +53,14 @@ function duplicateComparisonName(name: string): string {
     .replace(/[\s\-–—:.,/'״׳"]/g, '');
 }
 
+function assignmentKey(value: string): string {
+  return value
+    .normalize('NFKC')
+    .replace(/מעורב/u, 'בנים בנות')
+    .replace(/תוכנית/gu, '')
+    .replace(/[^\p{L}\p{N}]+/gu, '');
+}
+
 function editDistance(left: string, right: string): number {
   const previous = Array.from(
     { length: right.length + 1 },
@@ -143,6 +151,76 @@ export function buildImportArtifacts(
         entityRef: `${first.id}|${second.id}`,
       }),
     );
+  });
+
+  const groupKeys = new Map(
+    draft.audienceGroups.map((group) => {
+      const program = draft.programs.find(({ id }) => id === group.programId);
+      const gender =
+        group.gender === 'boys'
+          ? 'בנים'
+          : group.gender === 'girls'
+            ? 'בנות'
+            : 'בנים בנות';
+      return [
+        assignmentKey(
+          `${group.gradeLabels.join('-')} ${gender} ${program?.name ?? group.programId}`,
+        ),
+        group,
+      ] as const;
+    }),
+  );
+
+  draft.courses.forEach((course) => {
+    const source = course.sourceNames[0];
+    if (!source) return;
+    const offeringGroupIds = new Set(
+      draft.offerings
+        .filter(({ courseId }) => courseId === course.id)
+        .map(({ audienceGroupId }) => audienceGroupId),
+    );
+    if (offeringGroupIds.size === 0) {
+      diagnostics.push(
+        diagnostic(source, {
+          severity: 'warning',
+          code: 'COURSE_WITHOUT_PROGRAM',
+          message: `Course is not attached to any program/group: ${course.name}`,
+          confidence: 1,
+          entityRef: course.id,
+        }),
+      );
+    }
+    if (course.declaredAudienceLabels.length === 0) return;
+    const declaredGroupIds = new Set<string>();
+    course.declaredAudienceLabels.forEach((label) => {
+      const group = groupKeys.get(assignmentKey(label));
+      if (!group) return;
+      declaredGroupIds.add(group.id);
+      if (!offeringGroupIds.has(group.id)) {
+        diagnostics.push(
+          diagnostic(source, {
+            severity: 'warning',
+            code: 'COURSE_TABLE_ASSIGNMENT_MISSING',
+            message: `Course table lists a group that does not list the course: ${course.name} — ${label}`,
+            confidence: 1,
+            entityRef: `${course.id}|${group.id}`,
+          }),
+        );
+      }
+    });
+    offeringGroupIds.forEach((groupId) => {
+      if (!declaredGroupIds.has(groupId)) {
+        diagnostics.push(
+          diagnostic(source, {
+            severity: 'warning',
+            code: 'PROGRAM_LIST_ASSIGNMENT_MISSING_FROM_COURSE_TABLE',
+            message: `Program/group lists a course that is absent from the course table: ${course.name}`,
+            confidence: 1,
+            entityRef: `${course.id}|${groupId}`,
+          }),
+        );
+      }
+    });
   });
 
   draft.unmatchedNodes

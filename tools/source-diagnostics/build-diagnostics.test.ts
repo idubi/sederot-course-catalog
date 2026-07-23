@@ -46,7 +46,9 @@ describe('import draft diagnostics', () => {
       new Set([
         'TEMPORARY_COURSE_NAME',
         'COURSE_DETAILS_UNRESOLVED',
+        'COURSE_TABLE_ASSIGNMENT_MISSING',
         'POSSIBLE_DUPLICATE_COURSE',
+        'PROGRAM_LIST_ASSIGNMENT_MISSING_FROM_COURSE_TABLE',
         'UNMATCHED_SOURCE_NODE',
       ]),
     );
@@ -56,6 +58,17 @@ describe('import draft diagnostics', () => {
           code === 'POSSIBLE_DUPLICATE_COURSE' &&
           message.includes('תעלומות במוזיאון') &&
           message.includes('תעלומות המוזיאון'),
+      ),
+    ).toBe(true);
+    expect(
+      diagnostics.some(
+        ({ code }) => code === 'COURSE_TABLE_ASSIGNMENT_MISSING',
+      ),
+    ).toBe(true);
+    expect(
+      diagnostics.some(
+        ({ code }) =>
+          code === 'PROGRAM_LIST_ASSIGNMENT_MISSING_FROM_COURSE_TABLE',
       ),
     ).toBe(true);
   });

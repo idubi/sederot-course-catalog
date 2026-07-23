@@ -60,6 +60,26 @@ export function ProgramGroupForms({
               <option value="excellence">מצטיינים</option>
             </select>
           </label>
+          <div>
+            <strong>קורסים בתוכנית</strong>
+            <ul>
+              {catalog.courses
+                .filter((course) =>
+                  catalog.offerings.some(
+                    (offering) =>
+                      offering.courseId === course.id &&
+                      catalog.audienceGroups.some(
+                        (groupValue) =>
+                          groupValue.id === offering.audienceGroupId &&
+                          groupValue.programId === value.id,
+                      ),
+                  ),
+                )
+                .map((course) => (
+                  <li key={course.id}>{course.name}</li>
+                ))}
+            </ul>
+          </div>
         </fieldset>
       ))}
       {catalog.audienceGroups.map((value, index) => (
@@ -137,6 +157,20 @@ export function ProgramGroupForms({
               onChange={(e) => group(value.id, { endTime: e.target.value })}
             />
           </label>
+          <div>
+            <strong>קורסים המשויכים לקבוצה</strong>
+            <ul>
+              {catalog.offerings
+                .filter(({ audienceGroupId }) => audienceGroupId === value.id)
+                .sort((left, right) => left.displayOrder - right.displayOrder)
+                .map((offering) => (
+                  <li key={offering.id}>
+                    {catalog.courses.find(({ id }) => id === offering.courseId)
+                      ?.name ?? offering.courseId}
+                  </li>
+                ))}
+            </ul>
+          </div>
           <div>
             <button
               type="button"

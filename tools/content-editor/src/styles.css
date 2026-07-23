@@ -240,6 +240,22 @@ select {
   gap: 0.5rem;
 }
 
+.structured-editor .assignment-checklist > div {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.structured-editor .assignment-checklist label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 400;
+}
+
+.structured-editor .assignment-checklist input {
+  min-height: auto;
+}
+
 .editor-header h1 {
   margin-block: 0.2rem;
   font-size: clamp(2rem, 8vw, 3.5rem);

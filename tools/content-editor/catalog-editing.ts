@@ -95,6 +95,49 @@ export function updateOffering(
   };
 }
 
+export function setCourseGroupAssignment(
+  catalog: Catalog,
+  courseId: string,
+  audienceGroupId: string,
+  assigned: boolean,
+): Catalog {
+  const existing = catalog.offerings.filter(
+    (offering) =>
+      offering.courseId === courseId &&
+      offering.audienceGroupId === audienceGroupId,
+  );
+  if (!assigned) {
+    return existing.length === 0
+      ? catalog
+      : {
+          ...catalog,
+          offerings: catalog.offerings.filter(
+            (offering) => !existing.includes(offering),
+          ),
+        };
+  }
+  if (existing.length > 0) return catalog;
+  const displayOrder = catalog.offerings
+    .filter((offering) => offering.audienceGroupId === audienceGroupId)
+    .reduce(
+      (highest, offering) => Math.max(highest, offering.displayOrder),
+      -1,
+    );
+  return {
+    ...catalog,
+    offerings: [
+      ...catalog.offerings,
+      {
+        id: `offering-${courseId}-${audienceGroupId}`,
+        courseId,
+        audienceGroupId,
+        semester: 'annual',
+        displayOrder: displayOrder + 1,
+      },
+    ],
+  };
+}
+
 export function reorderOffering(
   catalog: Catalog,
   offeringId: string,
