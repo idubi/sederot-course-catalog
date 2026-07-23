@@ -23,7 +23,7 @@ Arrange the program assignment headers inside course cards as a responsive equal
 - [x] Match the main editor tab-header visual treatment.
 - [x] Preserve selection, active-panel semantics, and RTL keyboard navigation.
 - [x] Add focused browser coverage and update documentation.
-- [ ] Run relevant tests, production gate, and `git diff --check`.
+- [x] Run relevant tests, production gate, and `git diff --check`.
 - [ ] Record evidence, commit, push, and open one reviewed PR to `main`.
 
 ## Acceptance criteria
@@ -31,12 +31,12 @@ Arrange the program assignment headers inside course cards as a responsive equal
 - [x] Multiple program headers render in grid columns within a course card.
 - [x] The active program remains visually and semantically selected.
 - [x] Narrow layouts wrap safely without horizontal scrolling.
-- [ ] All relevant automated checks pass.
+- [x] All relevant automated checks pass.
 
 ## Completion evidence
 
 - **Implementation:** Complete — course-card program assignment headers use a responsive equal-width grid matching the primary tab treatment while preserving the active tab and RTL keyboard behavior.
-- **Tests:** `npm run typecheck` — 80 files with zero diagnostics; focused Chromium grid and keyboard flow — passed; full production gate pending before PR publication.
+- **Tests:** `npm run production:gate` — approved content validated; 80 files checked with zero diagnostics; 24 test files and 102 tests passed; five production pages built and verified; 8 Chromium flows passed. `git diff --check` — passed.
 - **Documentation:** Updated `README.md`, `artifacts/content-import.md`, the master list, and this task record.
 - **Commits:** Pending
 - **Pull request:** Pending
