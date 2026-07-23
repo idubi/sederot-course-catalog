@@ -313,3 +313,60 @@ test('editor saves a specific warning and returns to it later', async ({
       .filter({ hasText: 'Course description and instructors' }),
   ).toBeVisible();
 });
+
+test('editor browses and closes entity diagnostics from the entity toolbar', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+  await page.getByLabel('בחירת קובץ').setInputFiles({
+    name: 'two-warning-courses.md',
+    mimeType: 'text/markdown',
+    buffer: Buffer.from(
+      [
+        '# קטלוג',
+        "- כיתה ג' מעורב תוכנית מחוננים לומדים ביום ראשון בין 08:00 ל-12:00",
+        '- קורס ראשון',
+        '- קורס שני',
+      ].join('\n'),
+    ),
+  });
+  await expect(page.getByRole('status')).toContainText('הומר לטיוטת JSON עם');
+  await page.getByRole('button', { name: 'שגיאות ואזהרות' }).click();
+
+  const linkedDiagnostics = page
+    .locator('.diagnostic')
+    .filter({ has: page.getByRole('button', { name: 'מעבר לישות' }) });
+  await expect(linkedDiagnostics).toHaveCount(2);
+  await linkedDiagnostics
+    .first()
+    .getByRole('button', {
+      name: 'מעבר לישות',
+    })
+    .click();
+
+  const selectedCourseName = page.getByRole('textbox', {
+    name: 'שם',
+    exact: true,
+  });
+  const firstCourseName = await selectedCourseName.inputValue();
+  await expect(page.getByRole('button', { name: 'אבחון קודם' })).toBeDisabled();
+  await page.getByRole('button', { name: 'אבחון הבא' }).click();
+  await expect(selectedCourseName).not.toHaveValue(firstCourseName);
+  await expect(page.getByRole('button', { name: 'אבחון הבא' })).toBeDisabled();
+
+  await page.getByRole('button', { name: 'סגירת אבחון' }).click();
+  await expect(selectedCourseName).toHaveValue(firstCourseName);
+  await page.getByRole('button', { name: 'סגירת אבחון' }).click();
+  await expect(
+    page.getByRole('heading', { name: 'כל השגיאות והאזהרות' }),
+  ).toBeVisible();
+
+  await page.getByLabel('סינון אבחונים').selectOption('approved');
+  await expect(page.locator('.diagnostic--approved')).toHaveCount(2);
+  await expect(page.locator('.diagnostic--approved').first()).toHaveCSS(
+    'text-decoration-line',
+    'line-through',
+  );
+});
