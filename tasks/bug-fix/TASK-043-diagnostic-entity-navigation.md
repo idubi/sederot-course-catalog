@@ -39,7 +39,7 @@ Allow editors who opened an entity from a diagnostic to close that diagnostic or
 ## Completion evidence
 
 - **Implementation:** Added a sticky entity diagnostic toolbar beside the existing return action. Previous/next navigation is limited to active diagnostics with resolvable entity links. Closing persists approval, removes any saved-return pin, advances next then previous, and returns to the active diagnostics overview when none remain. Approved history remains visible in gray with a line through each row.
-- **Tests:** Focused diagnostics Vitest — 5/5 passed. Focused Playwright entity-toolbar flow — 1/1 passed. `npm run production:gate` — approved content validated; 80 files checked with zero diagnostics; 24 test files and 102 tests passed; five production pages built and verified; 9 Chromium flows passed. `git diff --check` — passed.
+- **Tests:** Focused diagnostics Vitest — 5/5 passed. Focused Playwright entity-toolbar flow — 1/1 passed. After merging current `main` at `b50ed23`, `npm run production:gate` — approved content validated; 80 files checked with zero diagnostics; 24 test files and 109 tests passed; five production pages built and verified; 9 Chromium flows passed. `git diff --check` — passed.
 - **Documentation:** Updated `README.md`, `artifacts/content-import.md`, the master task list, and this task record.
 - **Commits:** `b89586b` (`fix(editor): browse diagnostics from entity cards`)
 - **Pull request:** [#54](https://github.com/idubi/sederot-course-catalog/pull/54)
