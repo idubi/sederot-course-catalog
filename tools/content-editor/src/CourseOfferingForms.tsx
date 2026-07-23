@@ -4,6 +4,8 @@ import type {
   CourseOffering,
 } from '../../../src/domain/catalog';
 import {
+  addCourse,
+  removeCourse,
   reorderOffering,
   resolveOfferingImage,
   setCourseGroupAssignment,
@@ -80,7 +82,7 @@ export function CourseOfferingForms({
     <section className="structured-editor">
       <h2>קורסים ושיוכים לקבוצות</h2>
       {catalog.courses.map((value) => (
-        <fieldset key={value.id}>
+        <fieldset key={value.id} id={`course-${value.id}`}>
           <legend>{value.name}</legend>
           <label>
             מזהה
@@ -240,177 +242,200 @@ export function CourseOfferingForms({
               }
             />
           </label>
+          {value.defaultImage?.src && (
+            <figure className="image-preview">
+              <img src={value.defaultImage.src} alt={value.defaultImage.alt} />
+              <figcaption>{value.defaultImage.alt || 'תמונת הקורס'}</figcaption>
+            </figure>
+          )}
+          <button
+            className="danger"
+            type="button"
+            onClick={() => onChange(removeCourse(catalog, value.id))}
+          >
+            מחיקת קורס
+          </button>
         </fieldset>
       ))}
-      {catalog.offerings.map((value) => (
-        <fieldset key={value.id}>
-          <legend>
-            שיוך:{' '}
-            {catalog.courses.find(({ id }) => id === value.courseId)?.name ??
-              value.courseId}
-          </legend>
-          <label>
-            מזהה
-            <input
-              dir="ltr"
-              value={value.id}
-              onChange={(e) => offering(value.id, { id: e.target.value })}
-            />
-          </label>
-          <label>
-            קורס
-            <select
-              value={value.courseId}
-              onChange={(e) => offering(value.id, { courseId: e.target.value })}
-            >
-              {catalog.courses.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            קבוצת קהל
-            <select
-              value={value.audienceGroupId}
-              onChange={(e) =>
-                offering(value.id, { audienceGroupId: e.target.value })
-              }
-            >
-              {catalog.audienceGroups.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.gradeLabels.join(', ')} — {item.gender}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            מחצית
-            <select
-              value={value.semester}
-              onChange={(e) =>
-                offering(value.id, {
-                  semester: e.target.value as CourseOffering['semester'],
-                })
-              }
-            >
-              <option value="annual">שנתי</option>
-              <option value="first">מחצית א׳</option>
-              <option value="second">מחצית ב׳</option>
-            </select>
-          </label>
-          <label>
-            סדר
-            <input
-              type="number"
-              min="0"
-              value={value.displayOrder}
-              onChange={(e) =>
-                offering(value.id, { displayOrder: Number(e.target.value) })
-              }
-            />
-          </label>
-          <label>
-            נתיב תמונה חלופית לשיוך
-            <input
-              dir="ltr"
-              value={value.imageOverride?.src ?? ''}
-              onChange={(e) =>
-                onChange(
-                  updateOffering(
-                    catalog,
-                    value.id,
-                    offeringImage(
-                      value,
-                      e.target.value,
-                      value.imageOverride?.alt ?? '',
-                    ),
-                  ),
-                )
-              }
-            />
-          </label>
-          <label>
-            העלאת תמונה חלופית לשיוך
-            <input
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
-              onChange={(event) =>
-                void uploadImage(event.target.files?.[0], value.id, 'offering')
-                  .then((src) => {
-                    if (src)
-                      onChange(
-                        updateOffering(
-                          catalog,
-                          value.id,
-                          offeringImage(
-                            value,
-                            src,
-                            value.imageOverride?.alt ?? '',
-                          ),
-                        ),
-                      );
+      <button type="button" onClick={() => onChange(addCourse(catalog))}>
+        + הוספת קורס
+      </button>
+      {false &&
+        catalog.offerings.map((value) => (
+          <fieldset key={value.id}>
+            <legend>
+              שיוך:{' '}
+              {catalog.courses.find(({ id }) => id === value.courseId)?.name ??
+                value.courseId}
+            </legend>
+            <label>
+              מזהה
+              <input
+                dir="ltr"
+                value={value.id}
+                onChange={(e) => offering(value.id, { id: e.target.value })}
+              />
+            </label>
+            <label>
+              קורס
+              <select
+                value={value.courseId}
+                onChange={(e) =>
+                  offering(value.id, { courseId: e.target.value })
+                }
+              >
+                {catalog.courses.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              קבוצת קהל
+              <select
+                value={value.audienceGroupId}
+                onChange={(e) =>
+                  offering(value.id, { audienceGroupId: e.target.value })
+                }
+              >
+                {catalog.audienceGroups.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.gradeLabels.join(', ')} — {item.gender}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              מחצית
+              <select
+                value={value.semester}
+                onChange={(e) =>
+                  offering(value.id, {
+                    semester: e.target.value as CourseOffering['semester'],
                   })
-                  .catch((error: Error) => window.alert(error.message))
-              }
-            />
-          </label>
-          <label>
-            טקסט חלופי לתמונה החלופית
-            <input
-              value={value.imageOverride?.alt ?? ''}
-              onChange={(e) =>
-                onChange(
-                  updateOffering(
-                    catalog,
-                    value.id,
-                    offeringImage(
-                      value,
-                      value.imageOverride?.src ?? '',
-                      e.target.value,
+                }
+              >
+                <option value="annual">שנתי</option>
+                <option value="first">מחצית א׳</option>
+                <option value="second">מחצית ב׳</option>
+              </select>
+            </label>
+            <label>
+              סדר
+              <input
+                type="number"
+                min="0"
+                value={value.displayOrder}
+                onChange={(e) =>
+                  offering(value.id, { displayOrder: Number(e.target.value) })
+                }
+              />
+            </label>
+            <label>
+              נתיב תמונה חלופית לשיוך
+              <input
+                dir="ltr"
+                value={value.imageOverride?.src ?? ''}
+                onChange={(e) =>
+                  onChange(
+                    updateOffering(
+                      catalog,
+                      value.id,
+                      offeringImage(
+                        value,
+                        e.target.value,
+                        value.imageOverride?.alt ?? '',
+                      ),
                     ),
-                  ),
-                )
-              }
-            />
-          </label>
-          {(() => {
-            const course = catalog.courses.find(
-              ({ id }) => id === value.courseId,
-            );
-            const image = course
-              ? resolveOfferingImage(course, value)
-              : undefined;
-            return image ? (
-              <figure className="image-preview">
-                <img src={image.src} alt={image.alt} />
-                <figcaption>
-                  {value.imageOverride
-                    ? 'תמונה ייעודית לשיוך'
-                    : 'תמונת ברירת המחדל של הקורס'}
-                </figcaption>
-              </figure>
-            ) : (
-              <p>אין תמונה — זהו מצב תקין.</p>
-            );
-          })()}
-          <div>
-            <button
-              type="button"
-              onClick={() => onChange(reorderOffering(catalog, value.id, -1))}
-            >
-              למעלה בקבוצה
-            </button>
-            <button
-              type="button"
-              onClick={() => onChange(reorderOffering(catalog, value.id, 1))}
-            >
-              למטה בקבוצה
-            </button>
-          </div>
-        </fieldset>
-      ))}
+                  )
+                }
+              />
+            </label>
+            <label>
+              העלאת תמונה חלופית לשיוך
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                onChange={(event) =>
+                  void uploadImage(
+                    event.target.files?.[0],
+                    value.id,
+                    'offering',
+                  )
+                    .then((src) => {
+                      if (src)
+                        onChange(
+                          updateOffering(
+                            catalog,
+                            value.id,
+                            offeringImage(
+                              value,
+                              src,
+                              value.imageOverride?.alt ?? '',
+                            ),
+                          ),
+                        );
+                    })
+                    .catch((error: Error) => window.alert(error.message))
+                }
+              />
+            </label>
+            <label>
+              טקסט חלופי לתמונה החלופית
+              <input
+                value={value.imageOverride?.alt ?? ''}
+                onChange={(e) =>
+                  onChange(
+                    updateOffering(
+                      catalog,
+                      value.id,
+                      offeringImage(
+                        value,
+                        value.imageOverride?.src ?? '',
+                        e.target.value,
+                      ),
+                    ),
+                  )
+                }
+              />
+            </label>
+            {(() => {
+              const course = catalog.courses.find(
+                ({ id }) => id === value.courseId,
+              );
+              const image = course
+                ? resolveOfferingImage(course, value)
+                : undefined;
+              return image ? (
+                <figure className="image-preview">
+                  <img src={image.src} alt={image.alt} />
+                  <figcaption>
+                    {value.imageOverride
+                      ? 'תמונה ייעודית לשיוך'
+                      : 'תמונת ברירת המחדל של הקורס'}
+                  </figcaption>
+                </figure>
+              ) : (
+                <p>אין תמונה — זהו מצב תקין.</p>
+              );
+            })()}
+            <div>
+              <button
+                type="button"
+                onClick={() => onChange(reorderOffering(catalog, value.id, -1))}
+              >
+                למעלה בקבוצה
+              </button>
+              <button
+                type="button"
+                onClick={() => onChange(reorderOffering(catalog, value.id, 1))}
+              >
+                למטה בקבוצה
+              </button>
+            </div>
+          </fieldset>
+        ))}
     </section>
   );
 }
