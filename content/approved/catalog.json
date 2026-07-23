@@ -17,12 +17,8 @@
       "id": "gifted-grade-5-mixed",
       "programId": "gifted",
       "gradeGroupId": "grade-5",
-      "gradeLabels": [
-        "כיתה ה׳"
-      ],
-      "gradeValues": [
-        "5"
-      ],
+      "gradeLabels": ["כיתה ה׳"],
+      "gradeValues": ["5"],
       "gender": "mixed",
       "day": "sunday",
       "startTime": "08:15",
@@ -35,9 +31,7 @@
       "name": "קורס הדגמה",
       "shortName": "הדגמה",
       "descriptionHtml": "<p>רשומת בדיקה טכנית בלבד. אין לפרסם כתוכן אמיתי.</p>",
-      "instructors": [
-        "מנחה לדוגמה"
-      ]
+      "instructors": ["מנחה לדוגמה"]
     }
   ],
   "offerings": [
