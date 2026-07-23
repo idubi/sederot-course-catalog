@@ -213,14 +213,16 @@ select {
 }
 
 .diagnostic--approved {
-  border-inline-start-color: #25834a;
-  color: #185c35;
-  background: #effbf3;
+  border-inline-start-color: #667085;
+  color: #667085;
+  background: #f2f4f7;
+  text-decoration: line-through;
 }
 
 .diagnostic--approved .diagnostic-state {
-  color: #185c35;
-  background: #d8f5e2;
+  color: #344054;
+  background: #e4e7ec;
+  text-decoration: none;
 }
 
 .diagnostic-state {
@@ -255,6 +257,21 @@ select {
   color: #163a82;
   background: #eaf0ff;
   box-shadow: 0 0.3rem 0.8rem rgb(34 50 84 / 16%);
+}
+
+.diagnostic-entity-toolbar {
+  position: sticky;
+  z-index: 2;
+  top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block: 0.5rem;
+}
+
+.diagnostic-entity-toolbar .return-to-diagnostic {
+  position: static;
+  margin: 0;
 }
 
 .json-editor,
@@ -475,14 +492,17 @@ select {
 }
 
 .structured-editor .program-assignment-tabs {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
   gap: 0.35rem;
-  padding-block-end: 0.4rem;
-  overflow-x: auto;
+  padding: 0.4rem;
+  border: 1px solid #c7d0e0;
+  border-radius: 0.65rem;
+  background: #f4f6fb;
 }
 
 .program-assignment-tabs [role='tab'] {
-  flex: 0 0 auto;
+  width: 100%;
   border-color: #c7d0e0;
   color: #344054;
   background: #f7f9fc;

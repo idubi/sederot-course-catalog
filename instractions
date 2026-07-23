@@ -1,0 +1,151 @@
+Environment: local
+ 
+
+### Run locally
+
+  From the repository directory:
+
+  npm install
+  npm run dev
+
+  Open:
+
+  http://127.0.0.1:4321/
+
+  To test the production build:
+
+  npm run build
+  npm run preview
+
+
+  ---
+
+
+  Then open the URL shown by Astro, normally:
+
+  http://127.0.0.1:4321/
+
+  You can also open dist/index.html directly after building. The current single-page shell supports this, though future nested pages will require the local server.
+
+  ### GitHub Pages build
+
+  Build using the repository subpath:
+
+  PUBLIC_BASE_PATH=/sederot-course-catalog/ 
+  npm run build
+
+  The deployable output will be in:
+
+  dist/
+
+  GitHub Pages deployment automation is not configured yet. Selecting main directly in GitHub Pages will serve repository files—not the generated dist/ site.
+
+  For proper GitHub Pages deployment, we need a GitHub Actions workflow that:
+
+  1. Runs npm ci.
+  2. Runs the Pages build command above.
+  3. Uploads dist/.
+  4. Deploys it to GitHub Pages.
+
+  After deployment, the expected address is:
+
+  https://idubi.github.io/sederot-course-catalog/
+
+  This deployment workflow belongs to a later deployment task; I can add it now only if you want to expand TASK-003’s scope.
+
+
+
+ 
+  ---
+
+  
+  Generate the blueprint draft:
+
+  npm install
+  npm run content:import-draft
+
+  This creates:
+
+  - content/draft/import/draft-catalog.json
+  - content/diagnostics/import-report.json
+
+  Open the local content editor:
+
+  npm run editor
+
+  Then open the localhost address Vite prints. Currently, “טעינת טיוטה” reads content/draft/editor/catalog.json, not the imported blueprint draft. “טעינת מאושר” loads the small
+  approved seed catalog.
+
+  To view the current public shell:
+
+  npm run dev
+
+  Open the localhost URL shown by Astro.
+
+  The eventual full workflow will be:
+
+  blueprint
+  → npm run content:import-draft
+  → correct imported content in the local editor
+  → export validated content/approved/catalog.json
+  → npm run dev
+  → view the complete catalog
+---
+ From the repository root, run:
+
+  npm test
+
+  For the complete quality gate:
+
+  npm run check
+
+  For watch mode during development:
+
+  npx vitest
+
+  ---
+
+    production-gates    pass    58s    https://github.com/idubi/sederot-course-catalog/actions/runs/29881620729/job/88803548647
+    
+  ---
+  npm run deployment:smoke -- https://idubi.github.io/sederot-course-catalog/
+  
+
+
+  ---
+
+
+
+  
+• Test the complete flow like this:
+
+  1. Start the editor:
+
+  npm run editor
+
+  2. Open:
+
+  http://127.0.0.1:4333
+
+  3. In the editor:
+
+  - Load your JSON file, or load a Markdown/text Blueprint document.
+  - Edit and resolve validation errors.
+  - Under “ייצוא סביבת Bootstrap”, enter a folder name such as:
+
+  catalog-2026-2027
+
+  - Click “ייצוא contents/<folder>/bootstrap.json”.
+  - If warnings exist, acknowledge them before exporting.
+
+  4. Confirm this file was created:
+
+  contents/catalog-2026-2027/bootstrap.json
+
+  5. Stop the editor with Ctrl+C, or open another terminal. Start the public site using that Bootstrap:
+
+  npm run dev -- --data=./contents/catalog-2026-2027
+
+  6. Open:
+
+  http://127.0.0.1:4321

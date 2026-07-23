@@ -140,6 +140,22 @@ export function App() {
         state === 'active' && diagnostic.severity === 'warning',
     )
     .map(({ diagnostic }) => diagnostic.message);
+  const currentDiagnosticIndex = classifiedDiagnostics.findIndex(
+    ({ key }) => key === lastDiagnosticKey,
+  );
+  const previousDiagnostic =
+    currentDiagnosticIndex > 0
+      ? classifiedDiagnostics
+          .slice(0, currentDiagnosticIndex)
+          .reverse()
+          .find(({ entity, state }) => entity && state === 'active')
+      : undefined;
+  const nextDiagnostic =
+    currentDiagnosticIndex >= 0
+      ? classifiedDiagnostics
+          .slice(currentDiagnosticIndex + 1)
+          .find(({ entity, state }) => entity && state === 'active')
+      : undefined;
 
   useEffect(() => {
     const timer = window.setTimeout(
@@ -175,6 +191,48 @@ export function App() {
 
   function catalog() {
     return JSON.parse(text) as unknown;
+  }
+
+  function openDiagnosticEntity(
+    item: (typeof classifiedDiagnostics)[number] | undefined,
+  ) {
+    if (!item?.entity) return;
+    const { entity, key } = item;
+    setLastDiagnosticKey(key);
+    setActiveTab(entity.tab);
+    const entityId = entity.id.replace(/^(?:course|group|program)-/u, '');
+    if (entity.tab === 'courses') setSelectedCourseId(entityId);
+    else if (entity.tab === 'groups') setSelectedGroupId(entityId);
+    else setSelectedProgramId(entityId);
+    window.setTimeout(
+      () =>
+        document
+          .getElementById(entity.id)
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+      0,
+    );
+  }
+
+  function closeCurrentDiagnostic() {
+    if (!lastDiagnosticKey) return;
+    const closedKey = lastDiagnosticKey;
+    setApprovedDiagnosticKeys((current) => {
+      const next = new Set(current);
+      next.add(closedKey);
+      return next;
+    });
+    setPinnedDiagnosticKeys((current) => {
+      const next = new Set(current);
+      next.delete(closedKey);
+      return next;
+    });
+    const target = nextDiagnostic ?? previousDiagnostic;
+    if (target) openDiagnosticEntity(target);
+    else {
+      setLastDiagnosticKey(null);
+      setDiagnosticFilter('active');
+      setActiveTab('diagnostics');
+    }
   }
 
   function clearValidationScan() {
@@ -666,29 +724,14 @@ export function App() {
                           {entity && (
                             <button
                               type="button"
-                              onClick={() => {
-                                setLastDiagnosticKey(key);
-                                setActiveTab(entity.tab);
-                                const entityId = entity.id.replace(
-                                  /^(?:course|group|program)-/u,
-                                  '',
-                                );
-                                if (entity.tab === 'courses')
-                                  setSelectedCourseId(entityId);
-                                else if (entity.tab === 'groups')
-                                  setSelectedGroupId(entityId);
-                                else setSelectedProgramId(entityId);
-                                window.setTimeout(
-                                  () =>
-                                    document
-                                      .getElementById(entity.id)
-                                      ?.scrollIntoView({
-                                        behavior: 'smooth',
-                                        block: 'start',
-                                      }),
-                                  0,
-                                );
-                              }}
+                              onClick={() =>
+                                openDiagnosticEntity({
+                                  diagnostic,
+                                  entity,
+                                  key,
+                                  state,
+                                })
+                              }
                             >
                               מעבר לישות
                             </button>
@@ -720,27 +763,52 @@ export function App() {
           )}
 
           {lastDiagnosticKey && (
-            <button
-              className="return-to-diagnostic"
-              type="button"
-              onClick={() => {
-                const diagnosticKey = lastDiagnosticKey;
-                setLastDiagnosticKey(null);
-                setDiagnosticFilter(
-                  pinnedDiagnosticKeys.has(diagnosticKey) ? 'saved' : 'all',
-                );
-                setActiveTab('diagnostics');
-                window.setTimeout(
-                  () =>
-                    document
-                      .getElementById(`diagnostic-${diagnosticKey}`)
-                      ?.scrollIntoView({ behavior: 'smooth', block: 'center' }),
-                  0,
-                );
-              }}
+            <div
+              className="diagnostic-entity-toolbar"
+              aria-label="ניווט אבחונים"
             >
-              חזרה לאבחון האחרון
-            </button>
+              <button
+                className="return-to-diagnostic"
+                type="button"
+                onClick={() => {
+                  const diagnosticKey = lastDiagnosticKey;
+                  setLastDiagnosticKey(null);
+                  setDiagnosticFilter(
+                    pinnedDiagnosticKeys.has(diagnosticKey) ? 'saved' : 'all',
+                  );
+                  setActiveTab('diagnostics');
+                  window.setTimeout(
+                    () =>
+                      document
+                        .getElementById(`diagnostic-${diagnosticKey}`)
+                        ?.scrollIntoView({
+                          behavior: 'smooth',
+                          block: 'center',
+                        }),
+                    0,
+                  );
+                }}
+              >
+                חזרה לאבחון האחרון
+              </button>
+              <button type="button" onClick={closeCurrentDiagnostic}>
+                סגירת אבחון
+              </button>
+              <button
+                type="button"
+                disabled={!previousDiagnostic}
+                onClick={() => openDiagnosticEntity(previousDiagnostic)}
+              >
+                אבחון קודם
+              </button>
+              <button
+                type="button"
+                disabled={!nextDiagnostic}
+                onClick={() => openDiagnosticEntity(nextDiagnostic)}
+              >
+                אבחון הבא
+              </button>
+            </div>
           )}
 
           <section className="tab-workspace">

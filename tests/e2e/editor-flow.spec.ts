@@ -84,6 +84,17 @@ test('editor loads approved JSON and validates without writing files', async ({
   await expect(
     page.getByRole('heading', { name: 'תוכניות', exact: true }),
   ).toBeVisible();
+  await expect(page.getByLabel('מידע לפני רישום (HTML)')).toBeVisible();
+  await page
+    .getByLabel('מידע לפני רישום (HTML)')
+    .fill('<p>נוהל תשלום ופנייה לצוות</p>');
+  await page.getByRole('button', { name: 'קבוצות' }).click();
+  await expect(
+    page.getByLabel('מידע ייעודי לפני רישום לקבוצה (HTML)'),
+  ).toBeVisible();
+  await expect(
+    page.getByText('השדה ריק ולכן יוצג המידע של תוכנית האם.'),
+  ).toBeVisible();
 
   await page.getByRole('button', { name: 'סריקת שגיאות מחדש' }).click();
   await expect(page.getByRole('status')).toContainText('התוכן תקין');
@@ -227,6 +238,15 @@ test('editor browser pinpoints one entity card at a time', async ({ page }) => {
   ).toHaveValue('קורס שני');
   const assignmentTabs = page.getByRole('tablist', { name: 'תוכניות' });
   await expect(assignmentTabs.getByRole('tab')).toHaveCount(2);
+  await expect(assignmentTabs).toHaveCSS('display', 'grid');
+  expect(
+    await assignmentTabs.evaluate(
+      (element) =>
+        getComputedStyle(element)
+          .gridTemplateColumns.split(' ')
+          .filter((width) => Number.parseFloat(width) > 0).length,
+    ),
+  ).toBe(2);
   await assignmentTabs.getByRole('tab').first().press('ArrowLeft');
   await expect(
     assignmentTabs.getByRole('tab', { name: 'תוכנית שנייה' }),
@@ -367,4 +387,61 @@ test('editor saves a specific warning and returns to it later', async ({
       .locator('.diagnostic--approved')
       .filter({ hasText: 'Course description and instructors' }),
   ).toBeVisible();
+});
+
+test('editor browses and closes entity diagnostics from the entity toolbar', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+  await page.getByLabel('בחירת קובץ').setInputFiles({
+    name: 'two-warning-courses.md',
+    mimeType: 'text/markdown',
+    buffer: Buffer.from(
+      [
+        '# קטלוג',
+        "- כיתה ג' מעורב תוכנית מחוננים לומדים ביום ראשון בין 08:00 ל-12:00",
+        '- קורס ראשון',
+        '- קורס שני',
+      ].join('\n'),
+    ),
+  });
+  await expect(page.getByRole('status')).toContainText('הומר לטיוטת JSON עם');
+  await page.getByRole('button', { name: 'שגיאות ואזהרות' }).click();
+
+  const linkedDiagnostics = page
+    .locator('.diagnostic')
+    .filter({ has: page.getByRole('button', { name: 'מעבר לישות' }) });
+  await expect(linkedDiagnostics).toHaveCount(2);
+  await linkedDiagnostics
+    .first()
+    .getByRole('button', {
+      name: 'מעבר לישות',
+    })
+    .click();
+
+  const selectedCourseName = page.getByRole('textbox', {
+    name: 'שם',
+    exact: true,
+  });
+  const firstCourseName = await selectedCourseName.inputValue();
+  await expect(page.getByRole('button', { name: 'אבחון קודם' })).toBeDisabled();
+  await page.getByRole('button', { name: 'אבחון הבא' }).click();
+  await expect(selectedCourseName).not.toHaveValue(firstCourseName);
+  await expect(page.getByRole('button', { name: 'אבחון הבא' })).toBeDisabled();
+
+  await page.getByRole('button', { name: 'סגירת אבחון' }).click();
+  await expect(selectedCourseName).toHaveValue(firstCourseName);
+  await page.getByRole('button', { name: 'סגירת אבחון' }).click();
+  await expect(
+    page.getByRole('heading', { name: 'כל השגיאות והאזהרות' }),
+  ).toBeVisible();
+
+  await page.getByLabel('סינון אבחונים').selectOption('approved');
+  await expect(page.locator('.diagnostic--approved')).toHaveCount(2);
+  await expect(page.locator('.diagnostic--approved').first()).toHaveCSS(
+    'text-decoration-line',
+    'line-through',
+  );
 });

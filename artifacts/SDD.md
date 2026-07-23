@@ -105,6 +105,9 @@ Key relations:
 - `CourseOffering.courseId -> Course.id`
 - `AudienceGroup.registrationTargetId? -> RegistrationTarget.id`
 - `Program.defaultRegistrationTargetId? -> RegistrationTarget.id`
+- `AudienceGroup.registrationInfoHtml?` overrides
+  `Program.registrationInfoHtml?` for the internal registration-information
+  page.
 
 An offering does not own a registration target.
 
@@ -112,6 +115,9 @@ Canonical TypeScript/JSON field names for the v1 contract are:
 
 - `Catalog`: `schemaVersion`, structured `academicYear`, `programs`, `audienceGroups`, `courses`, `offerings`, `registrationTargets`, and `contacts`.
 - `AudienceGroup`: `programId`, stable `gradeGroupId`, `gradeLabels`, `gradeValues`, `gender`, schedule fields, and optional `registrationTargetId`.
+- `Program` and `AudienceGroup` may contain safe `registrationInfoHtml`.
+  Audience-group content wins, program content is the parent fallback, and
+  legacy catalogs without either field use the built-in safety notice.
 - `Course`: shared content and optional `defaultImage`; `CourseOffering`: `courseId`, `audienceGroupId`, semester/order, and optional `imageOverride`.
 - `ImageAsset` uses `src` and `alt`, with optional dimensions and source note.
 - `RegistrationTarget.type` is an opaque classification string until an approved value set exists; validation must not invent an enum.
@@ -152,6 +158,8 @@ The editor under `tools/content-editor` must:
 - load imported draft or approved JSON;
 - edit programs, audience groups, courses, offerings, contacts, and registration information;
 - associate registration targets with groups/program defaults, never offerings;
+- edit safe pre-registration HTML on programs and optional audience-group
+  overrides, showing the parent-program inheritance behavior;
 - preview selection, program, course, and registration-information screens;
 - manage course images and offering overrides;
 - expose importer diagnostics and source text;
