@@ -38,10 +38,14 @@ export interface RegistrationViewModel {
   groupId: string;
   gradeLabels: string[];
   programName: string;
+  registrationInfoHtml: string;
   targetLabel: string;
   targetType: string;
   targetUrl: string;
 }
+
+export const DEFAULT_REGISTRATION_INFO_HTML =
+  '<ul><li>המשך ההרשמה והתשלום מתבצע באתר חיצוני.</li><li>האתר הנוכחי אינו אוסף או שומר פרטי רישום ותשלום.</li><li>אפשר לחזור כעת לאשכול הקורסים בלי לעבור לאתר החיצוני.</li></ul>';
 
 export function buildRegistrationPages(
   catalog: Catalog,
@@ -63,6 +67,10 @@ export function buildRegistrationPages(
       groupId: group.id,
       gradeLabels: group.gradeLabels,
       programName: program.name,
+      registrationInfoHtml:
+        group.registrationInfoHtml ??
+        program.registrationInfoHtml ??
+        DEFAULT_REGISTRATION_INFO_HTML,
       targetLabel: target.label,
       targetType: target.type,
       targetUrl: target.url,

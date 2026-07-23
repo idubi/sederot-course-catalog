@@ -135,6 +135,22 @@ export function ProgramGroupForms({
                     אפשר להזין כתובת HTTPS של כל שירות חיצוני. ללא כתובת, האימות
                     והייצוא ייחסמו.
                   </small>
+                  <label>
+                    מידע לפני רישום (HTML)
+                    <textarea
+                      rows={8}
+                      placeholder="<p>תנאי קבלה, נוהל תשלום ופרטי צוות...</p>"
+                      value={value.registrationInfoHtml ?? ''}
+                      onChange={(event) =>
+                        program(value.id, {
+                          registrationInfoHtml: event.target.value || undefined,
+                        })
+                      }
+                    />
+                  </label>
+                  <small>
+                    המידע יוצג לפני המעבר לשירות הרישום או הסליקה החיצוני.
+                  </small>
                   <div>
                     <strong>קורסים בתוכנית</strong>
                     <p>
@@ -310,6 +326,29 @@ export function ProgramGroupForms({
                         {resolveRegistrationTarget(catalog, value.id)?.url ??
                           'חסרה'}
                       </bdi>
+                    </small>
+                    <label>
+                      מידע ייעודי לפני רישום לקבוצה (HTML)
+                      <textarea
+                        rows={8}
+                        placeholder="שדה ריק יורש את מידע התוכנית"
+                        value={value.registrationInfoHtml ?? ''}
+                        onChange={(event) =>
+                          group(value.id, {
+                            registrationInfoHtml:
+                              event.target.value || undefined,
+                          })
+                        }
+                      />
+                    </label>
+                    <small>
+                      {value.registrationInfoHtml
+                        ? 'הקבוצה משתמשת במידע הייעודי שלה.'
+                        : catalog.programs.find(
+                              ({ id }) => id === value.programId,
+                            )?.registrationInfoHtml
+                          ? 'השדה ריק ולכן יוצג המידע של תוכנית האם.'
+                          : 'השדה והתוכנית ריקים ולכן יוצג נוסח הבטיחות המובנה.'}
                     </small>
                     <div>
                       <strong>קורסים המשויכים לקבוצה</strong>

@@ -29,6 +29,7 @@ export interface Program {
   name: string;
   category: ProgramCategory;
   defaultRegistrationTargetId?: RegistrationTargetId | undefined;
+  registrationInfoHtml?: string | undefined;
 }
 
 export interface AudienceGroup {
@@ -42,6 +43,7 @@ export interface AudienceGroup {
   startTime: string;
   endTime: string;
   registrationTargetId?: RegistrationTargetId | undefined;
+  registrationInfoHtml?: string | undefined;
 }
 
 export interface Course {
