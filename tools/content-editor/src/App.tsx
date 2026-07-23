@@ -17,6 +17,7 @@ import {
 } from './diagnostics';
 
 type Message = { kind: 'error' | 'success'; text: string } | null;
+type ValidationIssue = { message: string; path: string };
 const diagnosticStateLabels: Record<DiagnosticState, string> = {
   active: 'פעיל',
   resolved: 'נפתר',
@@ -73,6 +74,12 @@ export function App() {
   const [lastDiagnosticKey, setLastDiagnosticKey] = useState<string | null>(
     null,
   );
+  const [validationIssues, setValidationIssues] = useState<ValidationIssue[]>(
+    [],
+  );
+  const [validationScannedText, setValidationScannedText] = useState<
+    string | null
+  >(null);
   const parsedJson = useMemo(() => {
     try {
       return JSON.parse(text) as unknown;
@@ -140,10 +147,17 @@ export function App() {
     return JSON.parse(text) as unknown;
   }
 
+  function clearValidationScan() {
+    setValidationIssues([]);
+    setValidationScannedText(null);
+  }
+
   async function load(source: 'approved' | 'draft') {
     try {
       const result = await requestJson(`/api/catalog?source=${source}`);
       setText(`${JSON.stringify(result.catalog, null, 2)}\n`);
+      setLastDiagnosticKey(null);
+      clearValidationScan();
       setMessage({
         kind: 'success',
         text: source === 'draft' ? 'הטיוטה נטענה' : 'התוכן המאושר נטען',
@@ -171,6 +185,8 @@ export function App() {
           : [];
         setText(`${JSON.stringify(result.catalog, null, 2)}\n`);
         setImportDiagnostics(diagnostics);
+        setLastDiagnosticKey(null);
+        clearValidationScan();
         setMessage({
           kind: 'success',
           text: `הקובץ ${file.name} הומר לטיוטת הסכמה עם ${diagnostics.length} אבחונים`,
@@ -178,6 +194,8 @@ export function App() {
       } else {
         setText(formatImportedJson(source));
         setImportDiagnostics([]);
+        setLastDiagnosticKey(null);
+        clearValidationScan();
         setMessage({
           kind: 'success',
           text: `הקובץ ${file.name} נטען מהכונן`,
@@ -221,6 +239,8 @@ export function App() {
         : [];
       setText(`${JSON.stringify(result.catalog, null, 2)}\n`);
       setImportDiagnostics(diagnostics);
+      setLastDiagnosticKey(null);
+      clearValidationScan();
       setMessage({
         kind: 'success',
         text: `${file.name} הומר לטיוטת JSON עם ${diagnostics.length} אבחונים`,
@@ -233,10 +253,10 @@ export function App() {
     }
   }
 
-  async function submit(action: 'draft' | 'export' | 'validate') {
+  async function submit(action: 'entity' | 'export' | 'validate') {
     try {
       const routes = {
-        draft: ['/api/catalog/draft', 'PUT'],
+        entity: ['/api/catalog/draft', 'PUT'],
         export: ['/api/catalog/export', 'POST'],
         validate: ['/api/validate', 'POST'],
       } as const;
@@ -249,10 +269,32 @@ export function App() {
           warnings: activeImportWarnings,
         }),
       });
+      if (action === 'validate') {
+        const errors = Array.isArray(result.errors)
+          ? result.errors.filter(
+              (issue): issue is ValidationIssue =>
+                typeof issue === 'object' &&
+                issue !== null &&
+                typeof (issue as ValidationIssue).message === 'string' &&
+                typeof (issue as ValidationIssue).path === 'string',
+            )
+          : [];
+        setValidationIssues(errors);
+        setValidationScannedText(text);
+        setDiagnosticFilter('active');
+        setLastDiagnosticKey(null);
+        if (result.valid !== true) {
+          setMessage({
+            kind: 'error',
+            text: `הסריקה מצאה ${errors.length} שגיאות. יש לתקן ולסרוק מחדש.`,
+          });
+          return;
+        }
+      }
       const labels = {
-        draft: 'הטיוטה נשמרה',
+        entity: 'שינויי הישות נשמרו בטיוטה',
         export: 'התוכן המאושר יוצא',
-        validate: 'התוכן תקין',
+        validate: 'סריקת השגיאות הסתיימה: התוכן תקין',
       };
       setMessage({
         kind: 'success',
@@ -302,6 +344,9 @@ export function App() {
     setBootstrapFolder('');
     setAcknowledgeWarnings(false);
     setImportDiagnostics([]);
+    setLastDiagnosticKey(null);
+    setValidationIssues([]);
+    setValidationScannedText(null);
     setMessage({
       kind: 'success',
       text: 'העורך אופס. קובצי הטיוטה והתוכן המאושר בכונן לא שונו.',
@@ -352,10 +397,10 @@ export function App() {
         <>
           <div className="toolbar" aria-label="פעולות קובץ">
             <button type="button" onClick={() => void submit('validate')}>
-              אימות
+              סריקת שגיאות מחדש
             </button>
-            <button type="button" onClick={() => void submit('draft')}>
-              שמירת טיוטה
+            <button type="button" onClick={() => void submit('entity')}>
+              שמירת הישות בטיוטה
             </button>
             <button
               className="primary"
@@ -413,6 +458,31 @@ export function App() {
             <p className="message message--error" role="alert">
               {shapeMessage}
             </p>
+          )}
+
+          {validationScannedText !== null && (
+            <section
+              className="diagnostics-panel"
+              aria-labelledby="validation-title"
+            >
+              <h2 id="validation-title">תוצאות סריקת שגיאות</h2>
+              {validationScannedText !== text && (
+                <p className="message message--error" role="status">
+                  התוכן השתנה מאז הסריקה האחרונה. יש לסרוק מחדש.
+                </p>
+              )}
+              {validationIssues.length > 0 ? (
+                <ul>
+                  {validationIssues.map((issue, index) => (
+                    <li key={`${issue.path}-${issue.message}-${index}`}>
+                      <code>{issue.path || 'catalog'}</code>: {issue.message}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>לא נמצאו שגיאות Schema בסריקה האחרונה.</p>
+              )}
+            </section>
           )}
 
           {importDiagnostics.length > 0 && (
@@ -549,13 +619,15 @@ export function App() {
               className="return-to-diagnostic"
               type="button"
               onClick={() => {
+                const diagnosticKey = lastDiagnosticKey;
+                setLastDiagnosticKey(null);
                 setDiagnosticFilter(
-                  pinnedDiagnosticKeys.has(lastDiagnosticKey) ? 'saved' : 'all',
+                  pinnedDiagnosticKeys.has(diagnosticKey) ? 'saved' : 'all',
                 );
                 window.setTimeout(
                   () =>
                     document
-                      .getElementById(`diagnostic-${lastDiagnosticKey}`)
+                      .getElementById(`diagnostic-${diagnosticKey}`)
                       ?.scrollIntoView({ behavior: 'smooth', block: 'center' }),
                   0,
                 );
