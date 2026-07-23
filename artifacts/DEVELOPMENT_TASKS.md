@@ -55,7 +55,8 @@ TASK-034 and subsequent corrective tasks live under `tasks/bug-fix/`.
 - [ ] [TASK-036: Add single-entity editor browser](../tasks/bug-fix/TASK-036-entity-browser.md) — In review in PR #46
 - [x] [TASK-037: Split course assignments into program tabs](../tasks/bug-fix/TASK-037-course-program-tabs.md) — Merged in PR #47
 - [ ] [TASK-038: Put registration URLs on their owning cards](../tasks/bug-fix/TASK-038-registration-url-ownership.md) — In review in PR #48
-- [ ] [TASK-039: Move diagnostics into a dedicated editor tab](../tasks/bug-fix/TASK-039-diagnostics-tab.md) — In review in PR #49
+- [x] [TASK-039: Move diagnostics into a dedicated editor tab](../tasks/bug-fix/TASK-039-diagnostics-tab.md) — Merged in PR #49; post-merge navigation follow-up in PR #50
+- [ ] [TASK-040: Add a JSON reference browser tab](../tasks/bug-fix/TASK-040-json-reference-tab.md) — In progress
 
 ## Execution rules
 
