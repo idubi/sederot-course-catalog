@@ -119,11 +119,22 @@ export function App() {
   async function loadDocument(file: File | undefined) {
     if (!file) return;
     try {
+      const isDocx = file.name.toLowerCase().endsWith('.docx');
+      const dataBase64 = isDocx
+        ? await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onerror = () => reject(new Error('קריאת קובץ Word נכשלה'));
+            reader.onload = () =>
+              resolve(String(reader.result).split(',', 2)[1] ?? '');
+            reader.readAsDataURL(file);
+          })
+        : undefined;
       const result = await requestJson('/api/import-document', {
         method: 'POST',
         body: JSON.stringify({
+          dataBase64,
           fileName: file.name,
-          source: await file.text(),
+          source: isDocx ? undefined : await file.text(),
         }),
       });
       const diagnostics = Array.isArray(result.diagnostics)
@@ -320,18 +331,18 @@ export function App() {
       </section>
 
       <section className="import-panel" aria-labelledby="document-title">
-        <h2 id="document-title">יצירת JSON ממסמך Blueprint</h2>
+        <h2 id="document-title">יצירת JSON ממסמך</h2>
         <label>
-          מסמך Markdown או טקסט
+          מסמך Word, Markdown או טקסט
           <input
             type="file"
-            accept="text/markdown,text/plain,.md,.txt"
+            accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/markdown,text/plain,.docx,.md,.txt"
             onChange={(event) => void loadDocument(event.target.files?.[0])}
           />
         </label>
         <p>
-          הטקסט מומר לטיוטה הקרובה ביותר. תוכן חסר או לא ודאי נשאר כאבחון לעריכה
-          לפני ייצוא.
+          המסמך נקרא בלבד ומומר לטיוטה הקרובה ביותר. תוכן חסר או לא ודאי נשאר
+          כאבחון לעריכה לפני ייצוא; קובץ המקור אינו משתנה.
         </p>
       </section>
 

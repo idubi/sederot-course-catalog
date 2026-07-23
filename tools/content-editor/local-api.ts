@@ -2,6 +2,7 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 
 import { sanitizeDescriptionHtml } from '../../src/content/sanitize-html';
 import { migrateBaselineCatalog } from '../baseline-migrator/migrate-baseline';
+import { extractDocxBlueprint } from './docx-import';
 import { importBlueprintDocument } from './document-import';
 
 import {
@@ -14,7 +15,7 @@ import {
 import { saveImageUpload, type ImageUpload } from './image-files';
 
 export const EDITOR_API_PREFIX = '/api/';
-const MAX_BODY_BYTES = 5 * 1024 * 1024;
+const MAX_BODY_BYTES = 40 * 1024 * 1024;
 
 interface CatalogRequest {
   acknowledgeWarnings?: boolean;
@@ -24,6 +25,7 @@ interface CatalogRequest {
   folderName?: string;
   fileName?: string;
   source?: string;
+  dataBase64?: string;
 }
 
 type EditorRequest = CatalogRequest & Partial<ImageUpload>;
@@ -90,15 +92,33 @@ export async function handleLocalApi(
 
     if (request.method === 'POST' && url.pathname === '/api/import-document') {
       const body = await readJson(request);
-      if (typeof body.source !== 'string' || typeof body.fileName !== 'string')
-        throw new Error('Missing document source or filename');
-      if (!/\.(?:md|txt)$/iu.test(body.fileName))
-        throw new Error('Only Markdown or text blueprint files are supported');
-      writeJson(
-        response,
-        200,
-        importBlueprintDocument(body.source, body.fileName),
+      if (typeof body.fileName !== 'string')
+        throw new Error('Missing document filename');
+      let source = body.source;
+      let extractionMessages: string[] = [];
+      if (/\.docx$/iu.test(body.fileName)) {
+        if (typeof body.dataBase64 !== 'string')
+          throw new Error('Missing DOCX content');
+        const extracted = await extractDocxBlueprint(
+          Buffer.from(body.dataBase64, 'base64'),
+        );
+        source = extracted.source;
+        extractionMessages = extracted.messages;
+      } else if (!/\.(?:md|txt)$/iu.test(body.fileName)) {
+        throw new Error('Only DOCX, Markdown, or text documents are supported');
+      }
+      if (typeof source !== 'string')
+        throw new Error('Missing document source');
+      const imported = importBlueprintDocument(source, body.fileName);
+      imported.diagnostics.unshift(
+        ...extractionMessages.map((message) => ({
+          code: 'docx-extraction',
+          message,
+          path: ['source'],
+          severity: 'info' as const,
+        })),
       );
+      writeJson(response, 200, imported);
       return true;
     }
 
