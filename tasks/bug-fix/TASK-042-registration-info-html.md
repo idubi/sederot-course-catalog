@@ -1,6 +1,6 @@
 # TASK-042: Add inherited pre-registration information HTML
 
-- **Status:** In progress
+- **Status:** In review
 - **Phase:** Content model, editor, and public registration flow
 - **Category:** Bug fix
 - **Branch:** `task/042-registration-info-html`
@@ -26,7 +26,7 @@ Allow each program and audience group to provide safe HTML shown before the exte
 - [x] Add schema, resolver, component, editor, and browser regression coverage.
 - [x] Update authoritative documentation.
 - [x] Run the production gate and `git diff --check`.
-- [ ] Record evidence, commit, push, and open one reviewed PR to `main`.
+- [x] Record evidence, commit, push, and open one reviewed PR to `main`.
 
 ## Acceptance criteria
 
@@ -43,11 +43,11 @@ Allow each program and audience group to provide safe HTML shown before the exte
 - **Implementation:** Program and audience-group entities accept optional safe `registrationInfoHtml`; registration pages resolve group → program → built-in notice and render it before the external action. Editor cards provide separate HTML text boxes with inheritance guidance.
 - **Tests:** `npm run production:gate` — approved content validated; 80 files checked with zero diagnostics; 24 test files and 109 tests passed; five production pages built and verified; 8 Chromium flows passed. Focused regression suite: 5 files and 46 tests passed. `git diff --check` — passed.
 - **Documentation:** Updated `README.md`, the consolidated and extension SDDs, detailed design, use-case specification, content-import guide, master task list, and this record.
-- **Commits:** Pending
-- **Pull request:** Pending
+- **Commits:** `961ad84`, `f2009d6`
+- **Pull request:** [#53](https://github.com/idubi/sederot-course-catalog/pull/53)
 
 ## Completion record
 
-- **Completed by:** Pending
-- **Completed at:** Pending
-- **Notes:** Registration ownership remains at program/audience-group level.
+- **Completed by:** Codex implementation; awaiting human review and approved merge.
+- **Completed at:** Pending approved merge.
+- **Notes:** Registration ownership remains at program/audience-group level. PR #53 is open against `main` and was not automatically merged.
