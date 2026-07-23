@@ -54,7 +54,7 @@ TASK-034 and subsequent corrective tasks live under `tasks/bug-fix/`.
 - [ ] [TASK-035: Fine-tune the local content editor](../tasks/bug-fix/TASK-035-editor-fine-tuning.md) — In review in owner-authorized follow-up PR #45
 - [ ] [TASK-036: Add single-entity editor browser](../tasks/bug-fix/TASK-036-entity-browser.md) — In review in PR #46
 - [x] [TASK-037: Split course assignments into program tabs](../tasks/bug-fix/TASK-037-course-program-tabs.md) — Merged in PR #47
-- [ ] [TASK-038: Put registration URLs on their owning cards](../tasks/bug-fix/TASK-038-registration-url-ownership.md) — In progress
+- [ ] [TASK-038: Put registration URLs on their owning cards](../tasks/bug-fix/TASK-038-registration-url-ownership.md) — In review in PR #48
 
 ## Execution rules
 
