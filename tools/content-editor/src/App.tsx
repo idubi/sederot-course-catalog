@@ -40,6 +40,11 @@ export function App() {
   const [activeTab, setActiveTab] = useState<'courses' | 'groups' | 'programs'>(
     'courses',
   );
+  const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
+  const [selectedGroupId, setSelectedGroupId] = useState<string | null>(null);
+  const [selectedProgramId, setSelectedProgramId] = useState<string | null>(
+    null,
+  );
   const [message, setMessage] = useState<Message>(null);
   const [acknowledgeWarnings, setAcknowledgeWarnings] = useState(false);
   const [bootstrapFolder, setBootstrapFolder] = useState('');
@@ -90,6 +95,16 @@ export function App() {
     );
     return () => window.clearTimeout(timer);
   }, [text]);
+
+  useEffect(() => {
+    if (!parsedCatalog) return;
+    if (!parsedCatalog.courses.some(({ id }) => id === selectedCourseId))
+      setSelectedCourseId(parsedCatalog.courses[0]?.id ?? null);
+    if (!parsedCatalog.audienceGroups.some(({ id }) => id === selectedGroupId))
+      setSelectedGroupId(parsedCatalog.audienceGroups[0]?.id ?? null);
+    if (!parsedCatalog.programs.some(({ id }) => id === selectedProgramId))
+      setSelectedProgramId(parsedCatalog.programs[0]?.id ?? null);
+  }, [parsedCatalog, selectedCourseId, selectedGroupId, selectedProgramId]);
 
   function catalog() {
     return JSON.parse(text) as unknown;
@@ -430,6 +445,15 @@ export function App() {
                           type="button"
                           onClick={() => {
                             setActiveTab(entity.tab);
+                            const entityId = entity.id.replace(
+                              /^(?:course|group|program)-/u,
+                              '',
+                            );
+                            if (entity.tab === 'courses')
+                              setSelectedCourseId(entityId);
+                            else if (entity.tab === 'groups')
+                              setSelectedGroupId(entityId);
+                            else setSelectedProgramId(entityId);
                             window.setTimeout(
                               () =>
                                 document
@@ -494,6 +518,8 @@ export function App() {
               <ProgramGroupForms
                 view="programs"
                 catalog={parsedCatalog}
+                selectedId={selectedProgramId}
+                onSelect={setSelectedProgramId}
                 onChange={(value) =>
                   setText(`${JSON.stringify(value, null, 2)}\n`)
                 }
@@ -503,6 +529,8 @@ export function App() {
               <ProgramGroupForms
                 view="groups"
                 catalog={parsedCatalog}
+                selectedId={selectedGroupId}
+                onSelect={setSelectedGroupId}
                 onChange={(value) =>
                   setText(`${JSON.stringify(value, null, 2)}\n`)
                 }
@@ -511,6 +539,8 @@ export function App() {
             {activeTab === 'courses' && (
               <CourseOfferingForms
                 catalog={parsedCatalog}
+                selectedId={selectedCourseId}
+                onSelect={setSelectedCourseId}
                 onChange={(value) =>
                   setText(`${JSON.stringify(value, null, 2)}\n`)
                 }

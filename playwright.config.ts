@@ -24,8 +24,8 @@ export default defineConfig({
       timeout: 30_000,
     },
     {
-      command: 'npm run editor',
-      url: 'http://127.0.0.1:4333/api/health',
+      command: 'npm run editor -- --port 4334',
+      url: 'http://127.0.0.1:4334/api/health',
       reuseExistingServer: !process.env.CI,
       timeout: 30_000,
     },

@@ -329,6 +329,68 @@ select {
   border-radius: 0.4rem;
   resize: vertical;
 }
+
+.entity-master-detail {
+  display: grid;
+  gap: 1rem;
+  align-items: start;
+}
+
+.entity-browser {
+  padding: 0.85rem;
+  border: 1px solid #c7d0e0;
+  border-radius: 0.8rem;
+  background: #f7f9fc;
+}
+
+.entity-browser h3,
+.entity-browser p {
+  margin-block: 0 0.5rem;
+}
+
+.entity-browser ul {
+  display: grid;
+  gap: 0.4rem;
+  max-height: 18rem;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.entity-browser button {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid transparent;
+  border-radius: 0.55rem;
+  color: #17223a;
+  background: #fff;
+  text-align: start;
+}
+
+.entity-browser button span,
+.entity-browser button small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.entity-browser button small {
+  margin-block-start: 0.2rem;
+  color: #59677f;
+}
+
+.entity-browser button[aria-current='true'] {
+  border-color: #315dba;
+  color: #163a82;
+  background: #eaf0ff;
+  box-shadow: inset 0.25rem 0 0 #315dba;
+}
+
+.entity-detail {
+  min-width: 0;
+}
+
 .structured-editor fieldset div {
   display: flex;
   gap: 0.5rem;
@@ -429,5 +491,18 @@ select {
 
   .section-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .entity-master-detail {
+    grid-template-columns: minmax(12rem, 0.32fr) minmax(0, 1fr);
+  }
+
+  .entity-browser {
+    position: sticky;
+    top: 1rem;
+  }
+
+  .entity-browser ul {
+    max-height: calc(100vh - 11rem);
   }
 }
