@@ -58,6 +58,7 @@ TASK-034 and subsequent corrective tasks live under `tasks/bug-fix/`.
 - [ ] [TASK-039: Move diagnostics into a dedicated editor tab](../tasks/bug-fix/TASK-039-diagnostics-tab.md) — In review in PR #49
 - [ ] [TASK-041: Arrange course program tabs in a grid](../tasks/bug-fix/TASK-041-program-tab-grid.md) — In review in PR #52
 - [ ] [TASK-042: Add inherited pre-registration information HTML](../tasks/bug-fix/TASK-042-registration-info-html.md) — In review in PR #53
+- [ ] [TASK-043: Browse and close diagnostics from entity cards](../tasks/bug-fix/TASK-043-diagnostic-entity-navigation.md) — In review in PR #54
 
 ## Execution rules
 
