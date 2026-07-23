@@ -20,11 +20,13 @@ type Message = { kind: 'error' | 'success'; text: string } | null;
 type ValidationIssue = { message: string; path: string };
 const diagnosticStateLabels: Record<DiagnosticState, string> = {
   active: 'פעיל',
+  approved: 'אושר',
   resolved: 'נפתר',
   stale: 'לא עדכני',
   duplicate: 'כפול',
 };
 const PINNED_DIAGNOSTICS_KEY = 'sderot-editor-pinned-diagnostics';
+const APPROVED_DIAGNOSTICS_KEY = 'sderot-editor-approved-diagnostics';
 
 async function requestJson(path: string, init?: RequestInit) {
   const response = await fetch(path, {
@@ -71,6 +73,22 @@ export function App() {
       }
     },
   );
+  const [approvedDiagnosticKeys, setApprovedDiagnosticKeys] = useState<
+    Set<string>
+  >(() => {
+    try {
+      const value = JSON.parse(
+        localStorage.getItem(APPROVED_DIAGNOSTICS_KEY) ?? '[]',
+      ) as unknown;
+      return new Set(
+        Array.isArray(value)
+          ? value.filter((item): item is string => typeof item === 'string')
+          : [],
+      );
+    } catch {
+      return new Set();
+    }
+  });
   const [lastDiagnosticKey, setLastDiagnosticKey] = useState<string | null>(
     null,
   );
@@ -102,7 +120,11 @@ export function App() {
         .map((course) => `הקורס אינו משויך לאף תוכנית או קבוצה: ${course.name}`)
     : [];
   const classifiedDiagnostics = parsedCatalog
-    ? classifyDiagnostics(importDiagnostics, parsedCatalog)
+    ? classifyDiagnostics(
+        importDiagnostics,
+        parsedCatalog,
+        approvedDiagnosticKeys,
+      )
     : [];
   const visibleDiagnostics = classifiedDiagnostics.filter(
     ({ key, state }) =>
@@ -142,6 +164,13 @@ export function App() {
       JSON.stringify([...pinnedDiagnosticKeys]),
     );
   }, [pinnedDiagnosticKeys]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      APPROVED_DIAGNOSTICS_KEY,
+      JSON.stringify([...approvedDiagnosticKeys]),
+    );
+  }, [approvedDiagnosticKeys]);
 
   function catalog() {
     return JSON.parse(text) as unknown;
@@ -545,6 +574,9 @@ export function App() {
                       }
                     >
                       <option value="active">פעילים</option>
+                      <option value="approved">
+                        אושרו ({approvedDiagnosticKeys.size})
+                      </option>
                       <option value="resolved">נפתרו</option>
                       <option value="stale">לא עדכניים</option>
                       <option value="duplicate">כפולים</option>
@@ -586,21 +618,48 @@ export function App() {
                               <q>{diagnostic.sourceExcerpt}</q>
                             )}
                           </div>
+                          {state !== 'approved' && (
+                            <button
+                              type="button"
+                              aria-pressed={pinnedDiagnosticKeys.has(key)}
+                              onClick={() =>
+                                setPinnedDiagnosticKeys((current) => {
+                                  const next = new Set(current);
+                                  if (next.has(key)) next.delete(key);
+                                  else next.add(key);
+                                  return next;
+                                })
+                              }
+                            >
+                              {pinnedDiagnosticKeys.has(key)
+                                ? 'הסרה מהשמורים'
+                                : 'שמירה לחזרה מאוחרת'}
+                            </button>
+                          )}
                           <button
                             type="button"
-                            aria-pressed={pinnedDiagnosticKeys.has(key)}
-                            onClick={() =>
-                              setPinnedDiagnosticKeys((current) => {
+                            aria-pressed={state === 'approved'}
+                            onClick={() => {
+                              setApprovedDiagnosticKeys((current) => {
                                 const next = new Set(current);
                                 if (next.has(key)) next.delete(key);
                                 else next.add(key);
                                 return next;
-                              })
-                            }
+                              });
+                              if (state !== 'approved') {
+                                setPinnedDiagnosticKeys((current) => {
+                                  const next = new Set(current);
+                                  next.delete(key);
+                                  return next;
+                                });
+                                if (lastDiagnosticKey === key)
+                                  setLastDiagnosticKey(null);
+                              }
+                            }}
                           >
-                            {pinnedDiagnosticKeys.has(key)
-                              ? 'הסרה מהשמורים'
-                              : 'שמירה לחזרה מאוחרת'}
+                            {state === 'approved'
+                              ? 'ביטול אישור'
+                              : 'אישור וסגירת אבחון'}
                           </button>
                           {entity && (
                             <button

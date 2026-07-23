@@ -62,6 +62,8 @@ Imported diagnostics retain their source file, line, excerpt, confidence, and en
 
 The editor renders Schema scan results, relationship warnings, and imported diagnostics only inside its dedicated Errors and Warnings tab. Entity tabs do not render diagnostic panels above their active card. A rescan opens the diagnostics tab automatically; entity navigation leaves it for the referenced card, and the return action reopens the tab at the originating diagnostic.
 
+Any imported error, warning, or informational diagnostic can be explicitly approved and closed. Approval is stored in browser Local Storage by the diagnostic's deterministic identity, removes it from active-warning acknowledgement and saved-return state, and survives reloading and importing the same source again. Approved diagnostics use a green presentation in the Approved/all filters and can be reopened by cancelling approval.
+
 For an isolated development dataset, the editor can explicitly export a schema-valid catalog to `contents/<folder-name>/bootstrap.json`. Run it with `npm run dev -- --data=./contents/<folder-name>`. The development launcher accepts only a folder beneath this repository's `contents/` directory, requires the exact `bootstrap.json` filename, and rejects path traversal and symlink escape. This export never changes approved content. The override is forbidden when `NODE_ENV=production`; normal builds continue to consume approved JSON only.
 
 The approved JSON, not the DOCX, is the direct input to the Astro build.
