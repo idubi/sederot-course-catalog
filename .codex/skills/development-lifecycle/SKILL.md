@@ -1,6 +1,6 @@
 ---
 name: development-lifecycle
-description: Run repository development tasks from selection through a reviewed task-branch pull request directly to main, with tests, documentation, evidence, and checklist closure.
+description: Run categorized repository construction and bug-fix tasks from selection through a reviewed task-branch pull request directly to main, with tests, documentation, evidence, and checklist closure.
 ---
 
 # Development Lifecycle
@@ -9,9 +9,15 @@ description: Run repository development tasks from selection through a reviewed 
 
 Use this skill for every implementation task in this repository.
 
+## Task categories
+
+- Treat TASK-001 through TASK-033 as the historical construction series and keep their records under `tasks/construction/`.
+- Treat TASK-034 and later corrective tasks as bug fixes and keep their records under `tasks/bug-fix/`, unless a future task explicitly establishes a new category.
+- Keep `artifacts/DEVELOPMENT_TASKS.md` grouped into matching Construction and Bug fixes sections. Never flatten categorized task files back into `tasks/`.
+
 ## Workflow
 
-1. Select one unchecked task from `artifacts/DEVELOPMENT_TASKS.md`; open its task file.
+1. Select one unchecked task from the applicable category in `artifacts/DEVELOPMENT_TASKS.md`; open its categorized task file.
 2. Verify all dependency task evidence and merged status. Stop and record any unmet dependency.
 3. Confirm the worktree is understood, update local `main`, then create the task’s specified branch from `main`. Direct application work on `main` is prohibited.
 4. Mark only “In progress” in both checklists and record assumptions or blockers.

@@ -1,0 +1,1387 @@
+{
+  "schemaVersion": "1.0",
+  "academicYear": "2026-2027",
+  "programs": [
+    {
+      "id": "gifted",
+      "name": "מחוננים",
+      "category": "gifted",
+      "registrationMode": "DIRECT_REGISTRATION"
+    },
+    {
+      "id": "excellence",
+      "name": "מצטיינים",
+      "category": "excellence",
+      "registrationMode": "DIRECT_REGISTRATION"
+    }
+  ],
+  "groups": [
+    {
+      "id": "gifted-grade-3-mixed",
+      "programId": "gifted",
+      "gradeLabel": "ג'",
+      "gradeValues": [
+        3
+      ],
+      "gender": "mixed",
+      "day": "monday",
+      "startTime": "08:15",
+      "endTime": "13:15"
+    },
+    {
+      "id": "gifted-grade-3-girls",
+      "programId": "gifted",
+      "gradeLabel": "ג'",
+      "gradeValues": [
+        3
+      ],
+      "gender": "girls",
+      "day": "monday",
+      "startTime": "08:15",
+      "endTime": "13:15"
+    },
+    {
+      "id": "gifted-grade-3-boys",
+      "programId": "gifted",
+      "gradeLabel": "ג'",
+      "gradeValues": [
+        3
+      ],
+      "gender": "boys",
+      "day": "monday",
+      "startTime": "08:15",
+      "endTime": "13:15"
+    },
+    {
+      "id": "gifted-grade-4-mixed",
+      "programId": "gifted",
+      "gradeLabel": "ד'",
+      "gradeValues": [
+        4
+      ],
+      "gender": "mixed",
+      "day": "monday",
+      "startTime": "08:15",
+      "endTime": "13:15"
+    },
+    {
+      "id": "gifted-grade-4-girls",
+      "programId": "gifted",
+      "gradeLabel": "ד'",
+      "gradeValues": [
+        4
+      ],
+      "gender": "girls",
+      "day": "monday",
+      "startTime": "08:15",
+      "endTime": "13:15"
+    },
+    {
+      "id": "gifted-grade-4-boys",
+      "programId": "gifted",
+      "gradeLabel": "ד'",
+      "gradeValues": [
+        4
+      ],
+      "gender": "boys",
+      "day": "monday",
+      "startTime": "08:15",
+      "endTime": "13:15"
+    },
+    {
+      "id": "gifted-grade-5-mixed",
+      "programId": "gifted",
+      "gradeLabel": "ה'",
+      "gradeValues": [
+        5
+      ],
+      "gender": "mixed",
+      "day": "sunday",
+      "startTime": "08:15",
+      "endTime": "13:15"
+    },
+    {
+      "id": "gifted-grade-5-girls",
+      "programId": "gifted",
+      "gradeLabel": "ה'",
+      "gradeValues": [
+        5
+      ],
+      "gender": "girls",
+      "day": "sunday",
+      "startTime": "08:15",
+      "endTime": "13:15"
+    },
+    {
+      "id": "gifted-grade-5-boys",
+      "programId": "gifted",
+      "gradeLabel": "ה'",
+      "gradeValues": [
+        5
+      ],
+      "gender": "boys",
+      "day": "sunday",
+      "startTime": "08:15",
+      "endTime": "13:15"
+    },
+    {
+      "id": "gifted-grade-6-mixed",
+      "programId": "gifted",
+      "gradeLabel": "ו'",
+      "gradeValues": [
+        6
+      ],
+      "gender": "mixed",
+      "day": "sunday",
+      "startTime": "08:15",
+      "endTime": "13:15"
+    },
+    {
+      "id": "gifted-grade-6-girls",
+      "programId": "gifted",
+      "gradeLabel": "ו'",
+      "gradeValues": [
+        6
+      ],
+      "gender": "girls",
+      "day": "sunday",
+      "startTime": "08:15",
+      "endTime": "13:15"
+    },
+    {
+      "id": "gifted-grade-6-boys",
+      "programId": "gifted",
+      "gradeLabel": "ו'",
+      "gradeValues": [
+        6
+      ],
+      "gender": "boys",
+      "day": "sunday",
+      "startTime": "08:15",
+      "endTime": "13:15"
+    },
+    {
+      "id": "gifted-grade-7-mixed",
+      "programId": "gifted",
+      "gradeLabel": "ז'",
+      "gradeValues": [
+        7
+      ],
+      "gender": "mixed",
+      "day": "sunday",
+      "startTime": "14:00",
+      "endTime": "18:15"
+    },
+    {
+      "id": "gifted-grades-8-9-mixed",
+      "programId": "gifted",
+      "gradeLabel": "ח'-ט'",
+      "gradeValues": [
+        8,
+        9
+      ],
+      "gender": "mixed",
+      "day": "friday",
+      "startTime": "08:15",
+      "endTime": "12:50"
+    },
+    {
+      "id": "excellence-grade-3-mixed",
+      "programId": "excellence",
+      "gradeLabel": "ג'",
+      "gradeValues": [
+        3
+      ],
+      "gender": "mixed",
+      "day": "monday",
+      "startTime": "14:00",
+      "endTime": "17:00"
+    },
+    {
+      "id": "excellence-grade-3-girls",
+      "programId": "excellence",
+      "gradeLabel": "ג'",
+      "gradeValues": [
+        3
+      ],
+      "gender": "girls",
+      "day": "monday",
+      "startTime": "14:00",
+      "endTime": "17:00"
+    },
+    {
+      "id": "excellence-grade-3-boys",
+      "programId": "excellence",
+      "gradeLabel": "ג'",
+      "gradeValues": [
+        3
+      ],
+      "gender": "boys",
+      "day": "monday",
+      "startTime": "14:00",
+      "endTime": "17:00"
+    },
+    {
+      "id": "excellence-grade-4-mixed",
+      "programId": "excellence",
+      "gradeLabel": "ד'",
+      "gradeValues": [
+        4
+      ],
+      "gender": "mixed",
+      "day": "monday",
+      "startTime": "14:00",
+      "endTime": "17:00"
+    },
+    {
+      "id": "excellence-grade-4-girls",
+      "programId": "excellence",
+      "gradeLabel": "ד'",
+      "gradeValues": [
+        4
+      ],
+      "gender": "girls",
+      "day": "monday",
+      "startTime": "14:00",
+      "endTime": "17:00"
+    },
+    {
+      "id": "excellence-grade-4-boys",
+      "programId": "excellence",
+      "gradeLabel": "ד'",
+      "gradeValues": [
+        4
+      ],
+      "gender": "boys",
+      "day": "monday",
+      "startTime": "14:00",
+      "endTime": "17:00"
+    },
+    {
+      "id": "excellence-grade-5-mixed",
+      "programId": "excellence",
+      "gradeLabel": "ה'",
+      "gradeValues": [
+        5
+      ],
+      "gender": "mixed",
+      "day": "sunday",
+      "startTime": "14:00",
+      "endTime": "17:00"
+    },
+    {
+      "id": "excellence-grade-5-girls",
+      "programId": "excellence",
+      "gradeLabel": "ה'",
+      "gradeValues": [
+        5
+      ],
+      "gender": "girls",
+      "day": "sunday",
+      "startTime": "14:00",
+      "endTime": "17:00"
+    },
+    {
+      "id": "excellence-grade-5-boys",
+      "programId": "excellence",
+      "gradeLabel": "ה'",
+      "gradeValues": [
+        5
+      ],
+      "gender": "boys",
+      "day": "sunday",
+      "startTime": "14:00",
+      "endTime": "17:00"
+    },
+    {
+      "id": "excellence-grade-6-mixed",
+      "programId": "excellence",
+      "gradeLabel": "ו'",
+      "gradeValues": [
+        6
+      ],
+      "gender": "mixed",
+      "day": "sunday",
+      "startTime": "14:00",
+      "endTime": "17:00"
+    },
+    {
+      "id": "excellence-grade-6-girls",
+      "programId": "excellence",
+      "gradeLabel": "ו'",
+      "gradeValues": [
+        6
+      ],
+      "gender": "girls",
+      "day": "sunday",
+      "startTime": "14:00",
+      "endTime": "17:00"
+    },
+    {
+      "id": "excellence-grade-6-boys",
+      "programId": "excellence",
+      "gradeLabel": "ו'",
+      "gradeValues": [
+        6
+      ],
+      "gender": "boys",
+      "day": "sunday",
+      "startTime": "14:00",
+      "endTime": "17:00"
+    }
+  ],
+  "courses": [
+    {
+      "id": "course-001",
+      "name": "סדנת 3D - עיצוב ומידול בהדפסת תלת מימד",
+      "shortName": "סדנת 3D",
+      "descriptionHtml": "<p>אם אתה יכול לדמיין את זה - אתה יכול ליצור את זה, כך נהוג לומר על חדשנות ויצירתיות.</p><p>הקורס לעיצוב ומידול בהדפסת תלת מימד משלב יצירתיות, דמיון וטכנולוגיה. בקורס נכיר את יסודות המידול וההדפסה בתלת מימד ונהפוך למעצבים, מתכננים ויצרנים לרגע אחד. נלמד כיצד תכנון שנעשה במחשב, בעולם הווירטואלי, הופך למוצר ממשי בעולם האמיתי - ובדרך נגלה איך הגיאומטריה מקיפה אותנו בחיי היומיום והופכת לחלק בלתי נפרד מהעיצובים שלנו. נחקור, נחפש פתרונות, ונהפוך רעיון למוצר.</p>",
+      "instructors": [
+        "אילה ברדיאן"
+      ]
+    },
+    {
+      "id": "course-002",
+      "name": "האקדמיה לדיסני",
+      "shortName": "האקדמיה לדיסני",
+      "descriptionHtml": "",
+      "instructors": [
+        "לבנת שלזינגר ורוני כהן"
+      ]
+    },
+    {
+      "id": "course-003",
+      "name": "המשימה: ליישב את מאדים",
+      "shortName": "המשימה",
+      "descriptionHtml": "<p>האם אי פעם הבטתם בשמי הלילה ותהיתם כיצד ייראו החיים על כוכב לכת אחר?</p><p>בקורס &quot;המשימה: ליישב את מאדים&quot; נצא למסע מרתק מעבר לגבולות האטמוספירה, במטרה לפצח את אחד האתגרים הגדולים של המאה ה-21: הקמת המושבה האנושית הראשונה על הכוכב האדום. נהפוך למדענים, אדריכלי חלל ומהנדסים, ונתמודד עם שאלות אמיתיות - איך יוצאים לחלל ומגיעים למאדים, איך מפיקים חמצן לנשימה ומים לשתייה מאטמוספירה דקה ואדמה רעילה, ואיך בונים מבנים שיגנו עלינו מפני קרינה וסופות אבק. נחקור, נתכנן וניצור - נבנה דגמים הנדסיים, ננסח את הכרזת העצמאות של מתיישבי מאדים, ובסיום נציג את המושבה שלנו בכנס החלל הבינלאומי של הכיתה. המסע מתחיל עכשיו.</p>",
+      "instructors": [
+        "איתמר זולברג"
+      ]
+    },
+    {
+      "id": "course-004",
+      "name": "מיקרוקוד: תכנות משחקים",
+      "shortName": "מיקרוקוד",
+      "descriptionHtml": "<p>תכנות הוא המיומנות הבסיסית של המאה ה-21 - לא רק כלי לפתרון בעיות טכנולוגיות, אלא גם דרך לפתח חשיבה לוגית, ולתכנן ולבצע תהליך מסודר של הוראות, תוך קבלת משוב, תיקון ושיפור מתמיד. בקורס נצלול לתוכנת &quot;makecode&quot; ונלמד על משתנים ולולאות, ניצור דמויות ומפות למשחקים משלנו, ונגדיר תנאי הפסד וניצחון. בדרך נגלה גם מושגים מפיזיקה ומתמטיקה, כמו כוח כבידה ומערכת צירים, ונעשיר אגב כך גם את אוצר המילים שלנו באנגלית. קורס שמפתח מיומנויות תכנות לצד חשיבה מחשובית ומתמטית - ומוכיח שמאחורי כל משחק מסתתר עולם שלם של לוגיקה ויצירתיות.</p>",
+      "instructors": [
+        "אלכס גולוד"
+      ]
+    },
+    {
+      "id": "course-005",
+      "name": "צלילי הפיזיקה",
+      "shortName": "צלילי הפיזיקה",
+      "descriptionHtml": "<p>בואו לגלות איך העולם שלנו רוקד! הקורס מזמין את התלמידים למסע חווייתי שבו נחקור את הקשר שבין מוזיקה, תנועה ופיזיקה - דרך משחקי קרקס, ניסויים ופעילויות חווייתיות. נלמד כיצד צלילים נוצרים וכיצד גלי הקול נעים ומתנהגים במרחבים שונים, ונגלה איך פיזיקה מלווה אותנו בכל תנועה - מהכדור המתגלגל ועד לריקוד באוויר. נבין מהו כוח הכבידה ואיך הוא משפיע על כלי קרקס, ונחווה על בשרנו את אפקט הדופלר המפורסם. כך ניצור חיבור בין עולם המדע לעולם הקרקס - נתנסה בכלים מוזיקליים וקרקסיים, נבצע ניסויים פשוטים, ונגלה כיצד המדע הופך למופע מרתק מלא קצב, תנועה וקסם. מעבדה של סקרנות, תנועה ויצירתיות - בקורס נצית את הדמיון, נפתח חשיבה מדעית, ונחווה את הפיזיקה דרך הגוף, הצליל והמשחק, בדרך חווייתית, מהנה ומעוררת השראה.</p>",
+      "instructors": [
+        "רוני כהן ואלכס גולוד"
+      ]
+    },
+    {
+      "id": "course-006",
+      "name": "אשנב למדע",
+      "shortName": "אשנב למדע",
+      "descriptionHtml": "<p>מה קורה כשעיניים ואוזניים &quot;משקרות&quot; לנו? איך גילו מדענים שחיים לא נוצרים משום מקום? ולמה בדיוק אסור לערבב מים ושמן?</p><p>הקורס ייקח את התלמידים למסע בין ענפי מדע שונים בצורה חווייתית ומרתקת. זהו קורס רב-תחומי שנועד להפגיש את התלמידים עם מגוון תופעות מתחומי מדעי הטבע השונים, ולהקנות להם את כלי החשיבה המדעית - לשאול, לפקפק, לבדוק ולהוכיח. נחשוף אשליות חושיות ותעלומות מסתוריות, נחקור בתחומי הכימיה עם אינדיקטורים צבעוניים ותגובות מפתיעות, ונצפה בתופעות ביולוגיות ופיזיקליות מרהיבות - מעולם החיידקים והחיסון ועד לסודות האור והצבע. ולסיום... נלמד כיצד מציגים ממצא מדעי בביטחון ובבהירות, לקראת השתתפות בכנס הפרויקטים השנתי של המרכז.</p>",
+      "instructors": [
+        "ליבת ישר"
+      ]
+    },
+    {
+      "id": "course-007",
+      "name": "קסם הפיזיקה",
+      "shortName": "קסם הפיזיקה",
+      "descriptionHtml": "<p>מה גורם לבלון להתפוצץ? איך מטוס מצליח להתרומם באוויר? האם אפשר לנוע מהר יותר ממהירות האור? ומה באמת קורה במעמקי החור השחור?</p><p>בקורס &quot;קסם הפיזיקה&quot; נצא למסע מרתק בעקבות חוקי היקום - מהחלקיק הזעיר ביותר ועד למרחבי החלל האינסופיים, ונהפוך לחוקרים צעירים שלא מפחדים לשאול את השאלות הגדולות ביותר על העולם סביבנו. נערוך ניסויים מפתיעים, נפתור חידות מדעיות מאתגרות, ונחקור תופעות טבע מסקרנות באמצעות מתקני ניסוי ייחודיים. נגלה יחד את סודות הגרביטציה, האור, התנועה והאנרגיה, נצלול לעקרונות הבליסטיקה ולמאיצי חלקיקים, נבנה דגמים מדעיים בעצמנו, וננהל דיונים סוערים על התגליות ששינו את פני ההיסטוריה.</p><p>הקורס משלב פיזיקה, כימיה, מתמטיקה ומדעי החיים בדרך חווייתית שתפתח חשיבה ביקורתית ויצירתית - ותגלו שהפיזיקה אינה רק מדע מורכב, אלא חלון קסום להבנת היקום כולו.</p>",
+      "instructors": [
+        "ד\"ר אריה מלמד כץ"
+      ]
+    },
+    {
+      "id": "course-008",
+      "name": "מעבדת הקרקס",
+      "shortName": "מעבדת הקרקס",
+      "descriptionHtml": "<p>בקורס &quot;מעבדת הקרקס&quot; נצא למסע מרתק בין עולם הקרקס לעולם המדע. דרך תנועה, משחק והתנסות מעשית נגלה כיצד חוקי הפיזיקה פועלים סביבנו בכל רגע, ונחווה אותם דרך הגוף - שיווי משקל, כוח, תנועה וזריקה. נלמד להשתמש במגוון כלי קרקס, נתרגל להטוטים פשוטים ומורכבים, ונעבוד הן באופן אישי והן בשיתופי פעולה קבוצתיים - תוך כדי חקר מקור המושגים הפיזיקליים המרכזיים שמאחורי כל תרגיל. ההתנסות המעשית מפתחת קואורדינציה, מיומנויות מוטוריות וחברתיות, יצירתיות, וחשיבה גמישה מול אתגרים - תוך פיתוח ביטחון עצמי ואומץ להתמודד עם טעויות וכישלונות ולנסות שוב. הקורס מזמין את הילדים לחשוב כמו מדענים, להתנסות כמו אמני קרקס, ולגלות את הקסם שנוצר במפגש שבין פיזיקה, תנועה ויצירתיות.</p>",
+      "instructors": [
+        "רוני כהן"
+      ]
+    },
+    {
+      "id": "course-009",
+      "name": "אקו-גיים",
+      "shortName": "אקו",
+      "descriptionHtml": "<p>מחפשים דרך ללמוד מדע בצורה אחרת לגמרי? בקורס הזה נגלה את העולם המרתק של האקולוגיה, ונבין איך כל היצורים החיים קשורים זה לזה בתוך מארג המזון - מי הם היצרנים, הצרכנים והמפרקים, ואיך שינוי קטן אצל אחד מהם יכול לגרום לשרשרת שלמה של תגובות. נבנה מודלים ונחשוב יחד על פתרונות יצירתיים, כדי להבין את חוקי הטבע בצורה חיה ומהנה. בחלק השני של הקורס נעבור לעולם המשחקים: נבחן משחקים מוכרים, נשאל מה הופך משחק לטוב, כיפי ומאתגר, ואיך חוקים פשוטים יוצרים חוויה גדולה. ואז נצא להרפתקה יצירתית - נעבוד בצוותים, נבנה משחק קלפים אקולוגי משלנו, ונשלב בו את הידע שלמדנו. בסוף הקורס לא רק שתכירו טוב יותר את עולם האקולוגיה, אלא גם תצאו עם משחק אמיתי שבניתם בעצמכם - שילוב של מדע, דמיון והרבה כיף משותף.</p>",
+      "instructors": [
+        "יובל גרוס"
+      ]
+    },
+    {
+      "id": "course-010",
+      "name": "מסע אל בטן האדמה: תעלומת המערות",
+      "shortName": "מסע אל בטן האדמה",
+      "descriptionHtml": "<p>מה יש שם, במעמקי האדמה, במקום שהאור לא מגיע?</p><p>בקורס הזה נצא למסע מרתק אל תוך העולם הנסתר של המערות - מהרגע הראשון שבו טיפת מים ממיסה סלע, ועד ליצור מוזר שהתפתח לחיות בחושך מוחלט בלי עיניים.</p><p>נגלה שיש לא מערה אחת אלא כמה סוגים לגמרי שונים - מערות שנוצרות ממים, מלבה בוערת, מקרח נמס ומגלי ים - ונבנה מודלים אמיתיים של כל אחת מהן. נחקור מי חי במערות ואיך הוא מסתדר בלי אור, נגלה מה מצאו ארכיאולוגים במערות בישראל ובעולם, ונחפור (ממש) אחר ממצאים מוסתרים בניסוי חפירה מדומה.</p><p>נבקר גם בעולם הפילוסופיה - עם משל המערה המפורסם של אפלטון - ונבין למה בני אדם התיישבו במערות, חצבו אותן, והשתמשו בהן במשך אלפי שנים. קורס שמשלב גיאולוגיה, ביולוגיה, ארכיאולוגיה ופילוסופיה - וכל הזמן שואל: מה עוד מסתתר שם, במקום שאף אחד לא רואה?</p>",
+      "instructors": [
+        "ד\"ר שירלי גזית"
+      ]
+    },
+    {
+      "id": "course-011",
+      "name": "N.L.Playback",
+      "shortName": "N.L.Playback",
+      "descriptionHtml": "<p>איך אפשר לשנות דפוס מחשבה שתקוע אצלנו, ואיך אפשר לספר סיפור שכולם בחדר מרגישים אותו כאילו הוא שלהם? בקורס הזה נשלב בין שתי שיטות עוצמתיות: NLP - כלים לזיהוי דפוסי חשיבה אוטומטיים וללמידה איך לשנות אותם - ותיאטרון פלייבק, שבו נספר את הסיפורים שלנו, של הקבוצה, ושל כולנו כבני אדם, דרך אלתור תיאטרלי. ניצור יחד מרחב בטוח שמבוסס על אמון, פתיחות והקשבה, ונתרגל להיות גם מספרי סיפורים וגם שחקנים שממחישים את הסיפור של מישהו אחר בזמן אמת. דרך השילוב בין השיטות נפתח מודעות עצמית, ביטחון, אמפתיה ויכולת תקשורת - ונתרגל להתמודד עם קונפליקטים, לקבל החלטות, ולהכיר את מה שמייחד כל אחד ואחת מאיתנו.</p>",
+      "instructors": [
+        "ימית הוסטר"
+      ]
+    },
+    {
+      "id": "course-012",
+      "name": "המוציאים לאור",
+      "shortName": "המוציאים לאור",
+      "descriptionHtml": "<p>דמיינו שבסוף השנה מחזיקים בידיים ספר שירה אמיתי - עם השם שלכם עליו כמחברים. בקורס &quot;המוציאים לאור&quot; לא רק נלמד לכתוב שירה - נהפוך בעצמנו לצוות הפקה שמוציא ספר מההתחלה ועד הסוף. נצלול לשאלה המסקרנת: מהי שירה, ומה הופך טקסט רגיל לשיר? נגלה איך שירים שוזרים במילים קצרות אמירות מורכבות, נלמד ממיטב המשוררים הגדולים איך לשכלל רעיון עד למיצוי מילולי, ונחשוף את האומנות שמאחורי כל מחיקה, תיקון ושיפור. נכתוב שירים משלנו - נביע רגשות, מחשבות וחלומות במילים שיהיו רק שלנו - ולקראת סיום הקורס נערוך ונכין את הכתבים שלנו לקראת הוצאה לאור אמיתית: נבחר את השירים הטובים ביותר, נחליט על סדר וסגנון, ונראה את המילים שלנו הופכות לספר של ממש.</p>",
+      "instructors": [
+        "לירון צדקה"
+      ]
+    },
+    {
+      "id": "course-013",
+      "name": "הזדמנות שנייה: מהנדסים את המציאות מחדש במעבדת המייקרים!",
+      "shortName": "הזדמנות שנייה",
+      "descriptionHtml": "<p>האם אי פעם הסתכלתם על חפץ יומיומי וראיתם בו משהו אחר לגמרי, או תהיתם איך נראה העולם דרך &quot;עיני חייזר&quot;? ברוכים הבאים לקורס מולטי-דיסציפלינרי שכולו יצירה, פירוק ובנייה מחדש. בקורס זה נהפוך למייקרים ויזמים סביבתיים: נצלול לעולם ה-Upcycling ונעניק חיים חדשים לחומרים מהטבע ומהבית, נלמד להביע מסרים ואופי דרך חפצים בעקבות האמן חנוך פיבן, ונפצח את סודות ה&quot;הנדסה ההפוכה&quot; (Reverse Engineering) כשנפרק לגורמים צעצועים ומכשירים מקולקלים כדי ליצור מהם המצאות חדשות. שיאו של הקורס בחממת יזמות טכנולוגית בסגנון &quot;הכרישים&quot;, שבה נבצע הכלאה בין עולמות מנוגדים ונבנה אבות-טיפוס למוצרים מהפכניים משלנו. נחקור בעזרת הידיים, נחשוב מחוץ לקופסה, ונהפוך רעיונות מטורפים למציאות.</p>",
+      "instructors": [
+        "אולגה אוספוב"
+      ]
+    },
+    {
+      "id": "course-014",
+      "name": "כימיה מולקולרית - הסודות שמאחורי החומרים",
+      "shortName": "כימיה מולקולרית",
+      "descriptionHtml": "<p>הגיע הזמן לחקור ולהעמיק אל העולם המופלא של הכימיה המולקולרית! בקורס נצלול למסע מרתק בעקבות המולקולות שמרכיבות את עולמנו - במעבדה, בטבע, ובחיי היומיום. נחקור מה קורה כשחומרים שונים נפגשים, נבין כיצד נוצרים חומרים חדשים, ונגלה את הכוחות שמחזיקים את הכל יחד.</p><p>נלמד על תגובות כימיות מרתקות, נבנה דגמים של מולקולות, ונבצע במעבדה שלנו ניסויים מפתיעים - חלקם אכילים, וחלקם פשוט מדהימים. נכיר את עולם הפולימרים, נעמיק בחומצות ובסיסים, ונחקור תגובות דרמטיות - שינויי צבע, יצירת גזים, ואפילו יצירת חומרים עם תכונות מיוחדות משלנו, ממש כמו מדענים אמיתיים. הקורס מזמין אתכם לחשוב, לשאול, להתנסות ולגלות שהכימיה נמצאת בכל מקום ושהעולם המולקולרי הרבה יותר קרוב (ומגניב!) ממה שחשבתם.</p>",
+      "instructors": [
+        "ד\"ר מאיה פולק גאגולאשוילי"
+      ]
+    },
+    {
+      "id": "course-015",
+      "name": "תעלומות על ציר הזמן",
+      "shortName": "תעלומות על ציר הזמן",
+      "descriptionHtml": "<p>למה בני האדם הפסיקו לנדוד? מי באמת המציא את הזמן? איך קרה שבכל העולם משתמשים בשטרות נייר, כשכולנו יודעים שהנייר עצמו לא שווה כמעט כלום? ואיך זה שהביוב הזורם - אחת ההמצאות החשובות בתולדות האנושות - פשוט נעלם מהעולם למשך אלף שנה? בקורס &quot;תעלומות על ציר הזמן&quot; נצא למסע חקר בלשי מהעבר הרחוק ועד ההווה, ואפילו נציץ אל העתיד, בעקבות שאלות מוזרות ומסקרנות שהאנושות שואלת את עצמה כבר אלפי שנים. לא נחפש תשובות חד-משמעיות, אלא נלמד לשאול שאלות גדולות, לפתח חשיבה חוקרת, ולהיכנס לעולמות של תרבויות, המצאות ואגדות שהפכו אותנו למה שאנחנו היום. נעבור על ציר הזמן האנושי - מהמעבר מציידים-לקטים לחקלאים, דרך הקמת הכפר, העיר, המדינה, הכתב, החוק והכסף, ועד להיעלמותן של תרבויות ואימפריות שלמות - ונגלה איך כל תעלומה היא פרק בסיפור הגדול של ההיסטוריה, שלנו וגם של ארץ ישראל. אם אנחנו אוהבים לחשוב, לדמיין ולפענח - זהו מסע שמתחיל לפני עשרות אלפי שנים, ומי יודע היכן ייגמר.</p>",
+      "instructors": [
+        "ענת וינשטיין - ברקוביץ"
+      ]
+    },
+    {
+      "id": "course-016",
+      "name": "תעלומות במוזיאון - מסע בלשי בעקבות גדולי האמנים",
+      "shortName": "תעלומות במוזיאון",
+      "descriptionHtml": "<p>מה עושה אסלה במוזיאון? למה אותו אדם מופיע כמה פעמים באותו ציור? איך פסל שמעולם לא הושלם הפך לאחת מיצירות האמנות המפורסמות בעולם? בקורס הזה נהפוך לחוקרי אמנות. בכל מפגש נפתח &quot;תיק חקירה&quot; חדש, נתבונן ביצירת מופת, נאסוף ראיות, נעלה השערות וננסה לפתור תעלומה אמיתית מעולם האמנות. בדרך נפגוש את מיכלאנג&#x27;לו, רמברנדט, רודן, הוקוסאי, הילמה אף קלינט, מאטיס, פרידה קאלו ואמנים נוספים - ונגלה שהיצירות הגדולות מספרות הרבה יותר ממה שנראה במבט ראשון. לאחר כל חקירה נתנסה בעצמנו בטכניקות העבודה של האמנים - הדפס, פיסול, אור וצל, מגזרות נייר, ציור אקרילי, יצירה דיגיטלית ועוד - ונחווה כיצד רעיון הופך ליצירת אמנות. הקורס מפתח סקרנות, חשיבה ביקורתית, אוריינות חזותית ויכולת לבסס טענות על ראיות - מיומנויות חיוניות בעולם שמוקף תמונות ומידע מכל עבר.</p>",
+      "instructors": [
+        "ענת וינשטיין ברקוביץ ואולגה אסיפוב"
+      ]
+    },
+    {
+      "id": "course-017",
+      "name": "מדע העתיד",
+      "shortName": "מדע העתיד",
+      "descriptionHtml": "<p>אילו המצאות ותגליות מחכות לנו מעבר לפינה? קורס &quot;מדע העתיד&quot; הוא קורס חווייתי ומעמיק, שבו בכל שיעור נשאל את עצמנו לאן מוביל אותנו המחקר המדעי החדיש ביותר, ובעזרת ניסויים נחקור בעצמנו את כיווני המחקר שצצים כרגע בעולם. נכיר את העולם המסתורי של תורת הקוונטים, ונבין כיצד פיתוחים קוונטיים חדשניים ישתלבו בחיי היומיום שלנו בעתיד. נחקור חומרים חמים מאוד וקרים מאוד - קרוב לאפס המוחלט - ונגלה איך הקור משפיע על חוש הטעם, באמצעות הכנת מאכלים מיוחדים. נערוך ניסויים מתקדמים באופטיקה ונלמד על מכשיר הלייזר, ולבסוף - נחקור לעומק את מושג הבעירה, ונבין מתי בעירה רגילה הופכת לתגובה עוצמתית ובלתי נשלטת.</p>",
+      "instructors": [
+        "ד\"ר ג'ודי מלמד-כץ"
+      ]
+    },
+    {
+      "id": "course-018",
+      "name": "הקוד הסודי של החיים",
+      "shortName": "הקוד הסודי של החיים",
+      "descriptionHtml": "<p>האם אי פעם רציתם לפצח את הצופן שמאחורי כל מה שחי ונושם? הצטרפו אלינו לקורס מרתק אל תוך עולמם המסתורי של התאים, הגנים והחיים עצמם. נצלול אל תוך העולם המופלא של המיקרוסקופ - הכלי שפתח בפני האנושות דלת לעולמות נסתרים. נגלה איך הומצא המיקרוסקופ, איך הוא שינה את הדרך שבה אנחנו מבינים את החיים, ואיך הוא ממשיך לגלות לנו סודות חדשים עד היום. נחקור את מבנה התא, נגלה איך תאים זעירים מרכיבים את כל היצורים החיים, ונעמיק בהבנה איך הם פועלים בהרמוניה מושלמת. נלמד על תורשה וגנטיקה - איך המידע עובר מדור לדור, ומהו הצופן הגנטי שמאחורי כל יצור חי. אם אתם אוהבים לחשוב, לחקור, ולהבין איך העולם באמת עובד - הקורס הזה הוא בשבילכם.</p>",
+      "instructors": [
+        "ד\"ר שירלי גזית"
+      ]
+    },
+    {
+      "id": "course-019",
+      "name": "מגמת מדעי כדור הארץ - 5 יח\"ל לבגרות",
+      "shortName": "מגמת מדעי כדור הארץ",
+      "descriptionHtml": "<p>מה באמת קורה מתחת לרגליים שלנו? איך נוצרו ההרים, הימים והאגמים? מה גורם לרעידות אדמה, התפרצויות הרי געש ושינויי אקלים? במגמת &quot;מדעי כדור הארץ&quot; נצא למסע מרתק אל תוך הלב של כדור הארץ, נגלה את המערכות המורכבות שמרכיבות את עולמנו, ונבין איך הכל קשור - מהאטמוספירה ועד הקרקע, מהאוקיינוסים ועד הגרעין. נחקור גיאולוגיה, אקלים, אוקיינוסים, סביבה ואסטרונומיה, נבין תהליכים עוצמתיים כמו רעידות אדמה, צונאמי ותנועת לוחות טקטוניים, ונשלב עקרונות פיזיקה וכימיה להבנת תופעות טבע. הלמידה חווייתית - ניסויים במעבדה, סיורי שטח, עבודה עם מפות ונתונים לוויניים - ותכלול גם עבודת חקר עצמאית, שבה כל אחד ואחת מאיתנו בוחר נושא מסקרן וחוקר אותו כמו מדען אמיתי. זו מגמה שמשלבת מדע, טבע וטכנולוגיה, ומתאימה לכל מי שרוצה להבין לעומק איך העולם באמת פועל - ואולי גם להשפיע על עתידו.</p>",
+      "instructors": [
+        "ד\"ר שירלי גזית"
+      ]
+    },
+    {
+      "id": "social-skills",
+      "name": "הרצועה החברתית (שם זמני)",
+      "shortName": "הרצועה החברתית",
+      "descriptionHtml": "<p>לתלמידים מחוננים ומצטיינים יש יכולות וכישרונות בולטים, אך גם הם זקוקים להכוונה כדי לפתח את היכולות והכישרונות הללו לכדי כלים ממשיים לחיים. תוכנית &quot;הרצועה החברתית&quot; (שם זמני) באה לענות על צורך זה באמצעות שיעור שבועי קבוע, המהווה חלק אינטגרלי מתוכנית הלימודים במרכז. את השיעורים מובילים מורים שהופכים עבור הילדים לדמות משמעותית ולאיש או אשת קשר קבועים במרכז.</p><p>אנו מאמינים כי כדי לעודד את הילדים להתמדה ולהשקעה בתהליכים הלימודיים במרכז, חשוב לטפח לא רק את הצד הלימודי אלא גם את הצד החברתי - ליצור תחושה של קבוצה מגובשת, תחושת שייכות לכיתה ולמרכז, ולייצר משמעות דרך עשייה. במסגרת &quot;הרצועה החברתית&quot; התלמידים שותפים בתכנון ובהובלה של הפסקות פעילות, ימי שיא ואירועים במרכז, ויכולים ליזום בעצמם פעילויות מגוונות נוספות.</p><p>ב&quot;רצועה החברתית&quot; התלמידים לומדים, בין השאר, יכולות ניהול עצמי, כלים בוויסות רגשי וביכולת קבלת החלטות, יכולת ניהול זמן ותיעדוף, הצבת יעדים, עבודה עצמאית ועבודת צוות, כלים בתקשורת, ועמידה מול קהל.</p><p>זוהי תוכנית רב-שנתית, המתקיימת בכל השכבות.</p>",
+      "instructors": []
+    },
+    {
+      "id": "future-designers",
+      "name": "מעצבי העתיד",
+      "shortName": "מעצבי העתיד",
+      "descriptionHtml": "<p>בוגרי הקורס &quot;מעצבי המציאות&quot; מוזמנים לעלות שלב:</p><p>עכשיו שלמדנו את היסודות, הגיע הזמן לקחת את זה צעד אחד קדימה. בקורס &quot;מעצבי העתיד&quot; נמשיך לבנות חוויות במציאות מדומה - הפעם ברמת מורכבות ושאפתנות גבוהה יותר, ועדיין באמצעות תכנות ויזואלי לגמרי, בעברית, בלי צורך בשפת תכנות מורכבת. נעמיק בכלים ובציוד המתקדמים ביותר שקיימים היום בתחום, ונבנה חוויות אינטראקטיביות מורכבות ומקוריות משלנו - הפעם עם יותר עצמאות ויותר מרחב ליצירתיות אישית. נקבל טעימה אמיתית ממקצועות העתיד שמתפתחים ממש בימים אלה, לצד כישורים וידע שילוו אותנו הרבה מעבר לקורס עצמו - תכנון מערכתי, פתרון בעיות, וחשיבה טכנולוגית יצירתית.</p>",
+      "instructors": [
+        "LoginVR"
+      ]
+    }
+  ],
+  "offerings": [
+    {
+      "id": "course-001-gifted-grade-3-boys",
+      "courseId": "course-001",
+      "groupId": "gifted-grade-3-boys",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-001-gifted-grade-4-boys",
+      "courseId": "course-001",
+      "groupId": "gifted-grade-4-boys",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-001-excellence-grade-3-boys",
+      "courseId": "course-001",
+      "groupId": "excellence-grade-3-boys",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-001-gifted-grade-3-girls",
+      "courseId": "course-001",
+      "groupId": "gifted-grade-3-girls",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-001-gifted-grade-4-girls",
+      "courseId": "course-001",
+      "groupId": "gifted-grade-4-girls",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-001-excellence-grade-3-girls",
+      "courseId": "course-001",
+      "groupId": "excellence-grade-3-girls",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-001-gifted-grade-3-mixed",
+      "courseId": "course-001",
+      "groupId": "gifted-grade-3-mixed",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-001-gifted-grade-4-mixed",
+      "courseId": "course-001",
+      "groupId": "gifted-grade-4-mixed",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-001-excellence-grade-3-mixed",
+      "courseId": "course-001",
+      "groupId": "excellence-grade-3-mixed",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-002-gifted-grade-3-boys",
+      "courseId": "course-002",
+      "groupId": "gifted-grade-3-boys",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-002-gifted-grade-4-boys",
+      "courseId": "course-002",
+      "groupId": "gifted-grade-4-boys",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-002-gifted-grade-3-girls",
+      "courseId": "course-002",
+      "groupId": "gifted-grade-3-girls",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-002-gifted-grade-4-girls",
+      "courseId": "course-002",
+      "groupId": "gifted-grade-4-girls",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-002-gifted-grade-3-mixed",
+      "courseId": "course-002",
+      "groupId": "gifted-grade-3-mixed",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-002-gifted-grade-4-mixed",
+      "courseId": "course-002",
+      "groupId": "gifted-grade-4-mixed",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-003-gifted-grade-3-boys",
+      "courseId": "course-003",
+      "groupId": "gifted-grade-3-boys",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-003-gifted-grade-4-boys",
+      "courseId": "course-003",
+      "groupId": "gifted-grade-4-boys",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-003-gifted-grade-3-girls",
+      "courseId": "course-003",
+      "groupId": "gifted-grade-3-girls",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-003-gifted-grade-4-girls",
+      "courseId": "course-003",
+      "groupId": "gifted-grade-4-girls",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-003-gifted-grade-3-mixed",
+      "courseId": "course-003",
+      "groupId": "gifted-grade-3-mixed",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-003-gifted-grade-4-mixed",
+      "courseId": "course-003",
+      "groupId": "gifted-grade-4-mixed",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-004-gifted-grade-3-boys",
+      "courseId": "course-004",
+      "groupId": "gifted-grade-3-boys",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "course-004-gifted-grade-4-boys",
+      "courseId": "course-004",
+      "groupId": "gifted-grade-4-boys",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "course-004-excellence-grade-3-girls",
+      "courseId": "course-004",
+      "groupId": "excellence-grade-3-girls",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-004-gifted-grade-3-girls",
+      "courseId": "course-004",
+      "groupId": "gifted-grade-3-girls",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "course-004-gifted-grade-4-girls",
+      "courseId": "course-004",
+      "groupId": "gifted-grade-4-girls",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "course-004-excellence-grade-4-boys",
+      "courseId": "course-004",
+      "groupId": "excellence-grade-4-boys",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-004-gifted-grade-3-mixed",
+      "courseId": "course-004",
+      "groupId": "gifted-grade-3-mixed",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "course-004-gifted-grade-4-mixed",
+      "courseId": "course-004",
+      "groupId": "gifted-grade-4-mixed",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "course-005-gifted-grade-3-mixed",
+      "courseId": "course-005",
+      "groupId": "gifted-grade-3-mixed",
+      "semester": "annual",
+      "displayOrder": 5
+    },
+    {
+      "id": "course-006-gifted-grade-3-boys",
+      "courseId": "course-006",
+      "groupId": "gifted-grade-3-boys",
+      "semester": "annual",
+      "displayOrder": 5
+    },
+    {
+      "id": "course-006-excellence-grade-3-boys",
+      "courseId": "course-006",
+      "groupId": "excellence-grade-3-boys",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-006-gifted-grade-3-girls",
+      "courseId": "course-006",
+      "groupId": "gifted-grade-3-girls",
+      "semester": "annual",
+      "displayOrder": 5
+    },
+    {
+      "id": "course-006-excellence-grade-3-girls",
+      "courseId": "course-006",
+      "groupId": "excellence-grade-3-girls",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-006-gifted-grade-3-mixed",
+      "courseId": "course-006",
+      "groupId": "gifted-grade-3-mixed",
+      "semester": "annual",
+      "displayOrder": 6
+    },
+    {
+      "id": "course-006-excellence-grade-3-mixed",
+      "courseId": "course-006",
+      "groupId": "excellence-grade-3-mixed",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-007-gifted-grade-3-boys",
+      "courseId": "course-007",
+      "groupId": "gifted-grade-3-boys",
+      "semester": "annual",
+      "displayOrder": 6
+    },
+    {
+      "id": "course-007-gifted-grade-4-boys",
+      "courseId": "course-007",
+      "groupId": "gifted-grade-4-boys",
+      "semester": "annual",
+      "displayOrder": 5
+    },
+    {
+      "id": "course-007-excellence-grade-4-girls",
+      "courseId": "course-007",
+      "groupId": "excellence-grade-4-girls",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-007-gifted-grade-3-girls",
+      "courseId": "course-007",
+      "groupId": "gifted-grade-3-girls",
+      "semester": "annual",
+      "displayOrder": 6
+    },
+    {
+      "id": "course-007-gifted-grade-4-girls",
+      "courseId": "course-007",
+      "groupId": "gifted-grade-4-girls",
+      "semester": "annual",
+      "displayOrder": 5
+    },
+    {
+      "id": "course-007-excellence-grade-4-mixed",
+      "courseId": "course-007",
+      "groupId": "excellence-grade-4-mixed",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-007-gifted-grade-4-mixed",
+      "courseId": "course-007",
+      "groupId": "gifted-grade-4-mixed",
+      "semester": "annual",
+      "displayOrder": 5
+    },
+    {
+      "id": "course-008-excellence-grade-3-boys",
+      "courseId": "course-008",
+      "groupId": "excellence-grade-3-boys",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-008-excellence-grade-3-girls",
+      "courseId": "course-008",
+      "groupId": "excellence-grade-3-girls",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "course-008-excellence-grade-3-mixed",
+      "courseId": "course-008",
+      "groupId": "excellence-grade-3-mixed",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-009-excellence-grade-4-boys",
+      "courseId": "course-009",
+      "groupId": "excellence-grade-4-boys",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-009-excellence-grade-4-girls",
+      "courseId": "course-009",
+      "groupId": "excellence-grade-4-girls",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-010-gifted-grade-4-mixed",
+      "courseId": "course-010",
+      "groupId": "gifted-grade-4-mixed",
+      "semester": "annual",
+      "displayOrder": 6
+    },
+    {
+      "id": "course-010-excellence-grade-4-girls",
+      "courseId": "course-010",
+      "groupId": "excellence-grade-4-girls",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-010-excellence-grade-4-boys",
+      "courseId": "course-010",
+      "groupId": "excellence-grade-4-boys",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-010-excellence-grade-4-mixed",
+      "courseId": "course-010",
+      "groupId": "excellence-grade-4-mixed",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-011-excellence-grade-4-mixed",
+      "courseId": "course-011",
+      "groupId": "excellence-grade-4-mixed",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-011-excellence-grade-5-boys",
+      "courseId": "course-011",
+      "groupId": "excellence-grade-5-boys",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-011-excellence-grade-5-mixed",
+      "courseId": "course-011",
+      "groupId": "excellence-grade-5-mixed",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-011-excellence-grade-4-girls",
+      "courseId": "course-011",
+      "groupId": "excellence-grade-4-girls",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "course-011-excellence-grade-6-boys",
+      "courseId": "course-011",
+      "groupId": "excellence-grade-6-boys",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-011-excellence-grade-6-mixed",
+      "courseId": "course-011",
+      "groupId": "excellence-grade-6-mixed",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-012-gifted-grade-5-boys",
+      "courseId": "course-012",
+      "groupId": "gifted-grade-5-boys",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-012-gifted-grade-6-boys",
+      "courseId": "course-012",
+      "groupId": "gifted-grade-6-boys",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-012-gifted-grade-5-girls",
+      "courseId": "course-012",
+      "groupId": "gifted-grade-5-girls",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-012-gifted-grade-6-girls",
+      "courseId": "course-012",
+      "groupId": "gifted-grade-6-girls",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-012-gifted-grade-5-mixed",
+      "courseId": "course-012",
+      "groupId": "gifted-grade-5-mixed",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-012-gifted-grade-6-mixed",
+      "courseId": "course-012",
+      "groupId": "gifted-grade-6-mixed",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-013-excellence-grade-5-boys",
+      "courseId": "course-013",
+      "groupId": "excellence-grade-5-boys",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-013-excellence-grade-6-boys",
+      "courseId": "course-013",
+      "groupId": "excellence-grade-6-boys",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-013-excellence-grade-5-girls",
+      "courseId": "course-013",
+      "groupId": "excellence-grade-5-girls",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-013-excellence-grade-6-girls",
+      "courseId": "course-013",
+      "groupId": "excellence-grade-6-girls",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "course-014-gifted-grade-5-boys",
+      "courseId": "course-014",
+      "groupId": "gifted-grade-5-boys",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-014-gifted-grade-6-mixed",
+      "courseId": "course-014",
+      "groupId": "gifted-grade-6-mixed",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-014-gifted-grade-5-girls",
+      "courseId": "course-014",
+      "groupId": "gifted-grade-5-girls",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-014-gifted-grade-5-mixed",
+      "courseId": "course-014",
+      "groupId": "gifted-grade-5-mixed",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-015-excellence-grade-5-boys",
+      "courseId": "course-015",
+      "groupId": "excellence-grade-5-boys",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-015-excellence-grade-6-boys",
+      "courseId": "course-015",
+      "groupId": "excellence-grade-6-boys",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-015-excellence-grade-5-girls",
+      "courseId": "course-015",
+      "groupId": "excellence-grade-5-girls",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-015-excellence-grade-6-girls",
+      "courseId": "course-015",
+      "groupId": "excellence-grade-6-girls",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-015-gifted-grade-5-mixed",
+      "courseId": "course-015",
+      "groupId": "gifted-grade-5-mixed",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-015-excellence-grade-5-mixed",
+      "courseId": "course-015",
+      "groupId": "excellence-grade-5-mixed",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-015-excellence-grade-6-mixed",
+      "courseId": "course-015",
+      "groupId": "excellence-grade-6-mixed",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-016-gifted-grade-5-boys",
+      "courseId": "course-016",
+      "groupId": "gifted-grade-5-boys",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-016-gifted-grade-6-boys",
+      "courseId": "course-016",
+      "groupId": "gifted-grade-6-boys",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-016-gifted-grade-5-girls",
+      "courseId": "course-016",
+      "groupId": "gifted-grade-5-girls",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-016-gifted-grade-6-girls",
+      "courseId": "course-016",
+      "groupId": "gifted-grade-6-girls",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "course-016-gifted-grade-5-mixed",
+      "courseId": "course-016",
+      "groupId": "gifted-grade-5-mixed",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "course-017-gifted-grade-6-boys",
+      "courseId": "course-017",
+      "groupId": "gifted-grade-6-boys",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-017-excellence-grade-5-girls",
+      "courseId": "course-017",
+      "groupId": "excellence-grade-5-girls",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-017-excellence-grade-6-girls",
+      "courseId": "course-017",
+      "groupId": "excellence-grade-6-girls",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-017-gifted-grade-6-girls",
+      "courseId": "course-017",
+      "groupId": "gifted-grade-6-girls",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-017-excellence-grade-5-mixed",
+      "courseId": "course-017",
+      "groupId": "excellence-grade-5-mixed",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-017-excellence-grade-6-mixed",
+      "courseId": "course-017",
+      "groupId": "excellence-grade-6-mixed",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-017-gifted-grade-6-mixed",
+      "courseId": "course-017",
+      "groupId": "gifted-grade-6-mixed",
+      "semester": "annual",
+      "displayOrder": 3
+    },
+    {
+      "id": "course-018-gifted-grade-5-boys",
+      "courseId": "course-018",
+      "groupId": "gifted-grade-5-boys",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "course-018-gifted-grade-6-boys",
+      "courseId": "course-018",
+      "groupId": "gifted-grade-6-boys",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "course-018-gifted-grade-6-girls",
+      "courseId": "course-018",
+      "groupId": "gifted-grade-6-girls",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "course-018-gifted-grade-6-mixed",
+      "courseId": "course-018",
+      "groupId": "gifted-grade-6-mixed",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "course-019-gifted-grades-8-9-mixed",
+      "courseId": "course-019",
+      "groupId": "gifted-grades-8-9-mixed",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "social-skills-gifted-grade-3-mixed",
+      "courseId": "social-skills",
+      "groupId": "gifted-grade-3-mixed",
+      "semester": "annual",
+      "displayOrder": 7
+    },
+    {
+      "id": "social-skills-gifted-grade-3-girls",
+      "courseId": "social-skills",
+      "groupId": "gifted-grade-3-girls",
+      "semester": "annual",
+      "displayOrder": 7
+    },
+    {
+      "id": "social-skills-gifted-grade-3-boys",
+      "courseId": "social-skills",
+      "groupId": "gifted-grade-3-boys",
+      "semester": "annual",
+      "displayOrder": 7
+    },
+    {
+      "id": "social-skills-gifted-grade-4-mixed",
+      "courseId": "social-skills",
+      "groupId": "gifted-grade-4-mixed",
+      "semester": "annual",
+      "displayOrder": 7
+    },
+    {
+      "id": "social-skills-gifted-grade-4-girls",
+      "courseId": "social-skills",
+      "groupId": "gifted-grade-4-girls",
+      "semester": "annual",
+      "displayOrder": 6
+    },
+    {
+      "id": "social-skills-gifted-grade-4-boys",
+      "courseId": "social-skills",
+      "groupId": "gifted-grade-4-boys",
+      "semester": "annual",
+      "displayOrder": 6
+    },
+    {
+      "id": "social-skills-gifted-grade-5-mixed",
+      "courseId": "social-skills",
+      "groupId": "gifted-grade-5-mixed",
+      "semester": "annual",
+      "displayOrder": 5
+    },
+    {
+      "id": "social-skills-gifted-grade-5-girls",
+      "courseId": "social-skills",
+      "groupId": "gifted-grade-5-girls",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "social-skills-gifted-grade-5-boys",
+      "courseId": "social-skills",
+      "groupId": "gifted-grade-5-boys",
+      "semester": "annual",
+      "displayOrder": 5
+    },
+    {
+      "id": "social-skills-gifted-grade-6-mixed",
+      "courseId": "social-skills",
+      "groupId": "gifted-grade-6-mixed",
+      "semester": "annual",
+      "displayOrder": 5
+    },
+    {
+      "id": "social-skills-gifted-grade-6-girls",
+      "courseId": "social-skills",
+      "groupId": "gifted-grade-6-girls",
+      "semester": "annual",
+      "displayOrder": 5
+    },
+    {
+      "id": "social-skills-gifted-grade-6-boys",
+      "courseId": "social-skills",
+      "groupId": "gifted-grade-6-boys",
+      "semester": "annual",
+      "displayOrder": 5
+    },
+    {
+      "id": "social-skills-gifted-grade-7-mixed",
+      "courseId": "social-skills",
+      "groupId": "gifted-grade-7-mixed",
+      "semester": "annual",
+      "displayOrder": 1
+    },
+    {
+      "id": "social-skills-gifted-grades-8-9-mixed",
+      "courseId": "social-skills",
+      "groupId": "gifted-grades-8-9-mixed",
+      "semester": "annual",
+      "displayOrder": 2
+    },
+    {
+      "id": "social-skills-excellence-grade-3-mixed",
+      "courseId": "social-skills",
+      "groupId": "excellence-grade-3-mixed",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "social-skills-excellence-grade-3-girls",
+      "courseId": "social-skills",
+      "groupId": "excellence-grade-3-girls",
+      "semester": "annual",
+      "displayOrder": 5
+    },
+    {
+      "id": "social-skills-excellence-grade-3-boys",
+      "courseId": "social-skills",
+      "groupId": "excellence-grade-3-boys",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "social-skills-excellence-grade-4-mixed",
+      "courseId": "social-skills",
+      "groupId": "excellence-grade-4-mixed",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "social-skills-excellence-grade-4-girls",
+      "courseId": "social-skills",
+      "groupId": "excellence-grade-4-girls",
+      "semester": "annual",
+      "displayOrder": 5
+    },
+    {
+      "id": "social-skills-excellence-grade-4-boys",
+      "courseId": "social-skills",
+      "groupId": "excellence-grade-4-boys",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "social-skills-excellence-grade-5-mixed",
+      "courseId": "social-skills",
+      "groupId": "excellence-grade-5-mixed",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "social-skills-excellence-grade-5-girls",
+      "courseId": "social-skills",
+      "groupId": "excellence-grade-5-girls",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "social-skills-excellence-grade-5-boys",
+      "courseId": "social-skills",
+      "groupId": "excellence-grade-5-boys",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "social-skills-excellence-grade-6-mixed",
+      "courseId": "social-skills",
+      "groupId": "excellence-grade-6-mixed",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "social-skills-excellence-grade-6-girls",
+      "courseId": "social-skills",
+      "groupId": "excellence-grade-6-girls",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "social-skills-excellence-grade-6-boys",
+      "courseId": "social-skills",
+      "groupId": "excellence-grade-6-boys",
+      "semester": "annual",
+      "displayOrder": 4
+    },
+    {
+      "id": "future-designers-gifted-grades-8-9-mixed",
+      "courseId": "future-designers",
+      "groupId": "gifted-grades-8-9-mixed",
+      "semester": "annual",
+      "displayOrder": 3
+    }
+  ],
+  "registrationTargets": [],
+  "contacts": {}
+}

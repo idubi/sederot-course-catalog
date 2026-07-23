@@ -1,7 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import type { Catalog } from '../../../src/domain/catalog';
-import { formatImportedJson, validateWebCatalogUrl } from '../catalog-import';
+import {
+  catalogShapeMessage,
+  formatImportedJson,
+  isEditableCatalog,
+  isLegacyCatalog,
+  validateWebCatalogUrl,
+} from '../catalog-import';
 import {
   loadEditorText,
   persistEditorText,
@@ -12,6 +18,12 @@ import { ProgramGroupForms } from './ProgramGroupForms';
 import { RegistrationForms } from './RegistrationForms';
 
 type Message = { kind: 'error' | 'success'; text: string } | null;
+type ImportDiagnostic = {
+  code: string;
+  message: string;
+  path: PropertyKey[];
+  severity: 'error' | 'warning' | 'info';
+};
 
 async function requestJson(path: string, init?: RequestInit) {
   const response = await fetch(path, {
@@ -28,13 +40,31 @@ export function App() {
   const [message, setMessage] = useState<Message>(null);
   const [acknowledgeWarnings, setAcknowledgeWarnings] = useState(false);
   const [webCatalogUrl, setWebCatalogUrl] = useState('');
-  const parsedCatalog = useMemo(() => {
+  const [bootstrapFolder, setBootstrapFolder] = useState('');
+  const [importDiagnostics, setImportDiagnostics] = useState<
+    ImportDiagnostic[]
+  >([]);
+  const parsedJson = useMemo(() => {
     try {
-      return JSON.parse(text) as Catalog;
+      return JSON.parse(text) as unknown;
     } catch {
       return null;
     }
   }, [text]);
+  const parsedCatalog: Catalog | null = isEditableCatalog(parsedJson)
+    ? parsedJson
+    : null;
+  const shapeMessage = parsedJson ? catalogShapeMessage(parsedJson) : null;
+  const relationshipWarnings = parsedCatalog
+    ? parsedCatalog.courses
+        .filter(
+          (course) =>
+            !parsedCatalog.offerings.some(
+              ({ courseId }) => courseId === course.id,
+            ),
+        )
+        .map((course) => `הקורס אינו משויך לאף תוכנית או קבוצה: ${course.name}`)
+    : [];
 
   useEffect(() => {
     const timer = window.setTimeout(
@@ -67,10 +97,70 @@ export function App() {
   async function loadFile(file: File | undefined) {
     if (!file) return;
     try {
-      setText(formatImportedJson(await file.text()));
-      setMessage({ kind: 'success', text: `הקובץ ${file.name} נטען מהכונן` });
+      const source = await file.text();
+      const parsed = JSON.parse(source) as unknown;
+      if (isLegacyCatalog(parsed)) {
+        const result = await requestJson('/api/migrate-baseline', {
+          method: 'POST',
+          body: JSON.stringify({ catalog: parsed }),
+        });
+        const diagnostics = Array.isArray(result.diagnostics)
+          ? (result.diagnostics as ImportDiagnostic[])
+          : [];
+        setText(`${JSON.stringify(result.catalog, null, 2)}\n`);
+        setImportDiagnostics(diagnostics);
+        setMessage({
+          kind: 'success',
+          text: `הקובץ ${file.name} הומר לטיוטת הסכמה עם ${diagnostics.length} אבחונים`,
+        });
+      } else {
+        setText(formatImportedJson(source));
+        setImportDiagnostics([]);
+        setMessage({
+          kind: 'success',
+          text: `הקובץ ${file.name} נטען מהכונן`,
+        });
+      }
     } catch {
       setMessage({ kind: 'error', text: 'הקובץ שנבחר אינו JSON תקין' });
+    }
+  }
+
+  async function loadDocument(file: File | undefined) {
+    if (!file) return;
+    try {
+      const isDocx = file.name.toLowerCase().endsWith('.docx');
+      const dataBase64 = isDocx
+        ? await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onerror = () => reject(new Error('קריאת קובץ Word נכשלה'));
+            reader.onload = () =>
+              resolve(String(reader.result).split(',', 2)[1] ?? '');
+            reader.readAsDataURL(file);
+          })
+        : undefined;
+      const result = await requestJson('/api/import-document', {
+        method: 'POST',
+        body: JSON.stringify({
+          dataBase64,
+          fileName: file.name,
+          source: isDocx ? undefined : await file.text(),
+        }),
+      });
+      const diagnostics = Array.isArray(result.diagnostics)
+        ? (result.diagnostics as ImportDiagnostic[])
+        : [];
+      setText(`${JSON.stringify(result.catalog, null, 2)}\n`);
+      setImportDiagnostics(diagnostics);
+      setMessage({
+        kind: 'success',
+        text: `${file.name} הומר לטיוטת JSON עם ${diagnostics.length} אבחונים`,
+      });
+    } catch (error) {
+      setMessage({
+        kind: 'error',
+        text: error instanceof Error ? error.message : 'ייבוא מסמך המקור נכשל',
+      });
     }
   }
 
@@ -127,6 +217,29 @@ export function App() {
     }
   }
 
+  async function exportBootstrap() {
+    try {
+      const result = await requestJson('/api/catalog/bootstrap', {
+        method: 'POST',
+        body: JSON.stringify({
+          acknowledgeWarnings,
+          catalog: catalog(),
+          folderName: bootstrapFolder.trim(),
+          warnings: importDiagnostics.map(({ message }) => message),
+        }),
+      });
+      setMessage({
+        kind: 'success',
+        text: `bootstrap.json נשמר בתוך contents/${bootstrapFolder.trim()} (${JSON.stringify(result)})`,
+      });
+    } catch (error) {
+      setMessage({
+        kind: 'error',
+        text: error instanceof Error ? error.message : 'ייצוא Bootstrap נכשל',
+      });
+    }
+  }
+
   function reset() {
     if (
       !window.confirm(
@@ -138,7 +251,9 @@ export function App() {
     resetEditorState(localStorage);
     setText('');
     setWebCatalogUrl('');
+    setBootstrapFolder('');
     setAcknowledgeWarnings(false);
+    setImportDiagnostics([]);
     setMessage({
       kind: 'success',
       text: 'העורך אופס. קובצי הטיוטה והתוכן המאושר בכונן לא שונו.',
@@ -225,6 +340,45 @@ export function App() {
         </p>
       </section>
 
+      <section className="import-panel" aria-labelledby="document-title">
+        <h2 id="document-title">יצירת JSON ממסמך</h2>
+        <label>
+          מסמך Word, Markdown או טקסט
+          <input
+            type="file"
+            accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/markdown,text/plain,.docx,.md,.txt"
+            onChange={(event) => void loadDocument(event.target.files?.[0])}
+          />
+        </label>
+        <p>
+          המסמך נקרא בלבד ומומר לטיוטה הקרובה ביותר. תוכן חסר או לא ודאי נשאר
+          כאבחון לעריכה לפני ייצוא; קובץ המקור אינו משתנה.
+        </p>
+      </section>
+
+      <section className="import-panel" aria-labelledby="bootstrap-title">
+        <h2 id="bootstrap-title">ייצוא סביבת Bootstrap</h2>
+        <label>
+          שם תיקייה תחת contents
+          <input
+            dir="ltr"
+            required
+            pattern="[a-z0-9][a-z0-9._-]*"
+            placeholder="school-year-2026-2027"
+            value={bootstrapFolder}
+            onChange={(event) => setBootstrapFolder(event.target.value)}
+          />
+        </label>
+        <button
+          type="button"
+          disabled={!bootstrapFolder.trim()}
+          onClick={() => void exportBootstrap()}
+        >
+          ייצוא contents/&lt;folder&gt;/bootstrap.json
+        </button>
+        <p>הייצוא דורש Schema תקין ואישור אזהרות. הוא אינו משנה תוכן מאושר.</p>
+      </section>
+
       <label className="warning-check">
         <input
           type="checkbox"
@@ -238,6 +392,48 @@ export function App() {
         <p className={`message message--${message.kind}`} role="status">
           {message.text}
         </p>
+      )}
+
+      {shapeMessage && (
+        <p className="message message--error" role="alert">
+          {shapeMessage}
+        </p>
+      )}
+
+      {importDiagnostics.length > 0 && (
+        <details className="diagnostics-panel" open>
+          <summary>אבחוני המרה ({importDiagnostics.length})</summary>
+          <p>יש לפתור את כל השגיאות לפני ייצוא תוכן מאושר.</p>
+          <ul>
+            {importDiagnostics.map((diagnostic, index) => (
+              <li key={`${diagnostic.code}-${index}`}>
+                <strong>
+                  {diagnostic.severity === 'error'
+                    ? 'שגיאה'
+                    : diagnostic.severity === 'warning'
+                      ? 'אזהרה'
+                      : 'מידע'}
+                  :
+                </strong>{' '}
+                {diagnostic.message} <code>{diagnostic.path.join('.')}</code>
+              </li>
+            ))}
+          </ul>
+        </details>
+      )}
+
+      {relationshipWarnings.length > 0 && (
+        <section
+          className="diagnostics-panel"
+          aria-labelledby="relations-title"
+        >
+          <h2 id="relations-title">אזהרות שיוך</h2>
+          <ul>
+            {relationshipWarnings.map((warning) => (
+              <li key={warning}>{warning}</li>
+            ))}
+          </ul>
+        </section>
       )}
 
       {parsedCatalog && (

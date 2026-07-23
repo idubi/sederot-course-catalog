@@ -4,7 +4,7 @@
 
 1. Read this file and `README.md`.
 2. Run `git status --short --branch` and preserve existing work.
-3. Read `artifacts/SDD.md`, `artifacts/Sderot_Courses_SDD_v1.0_final.md`, `artifacts/Sderot_Courses_SDD_v1.1.md`, the applicable detailed-design and use-case Markdown files, applicable requirements, and the current `tasks/TASK-*.md` file before changing code.
+3. Read `artifacts/SDD.md`, `artifacts/Sderot_Courses_SDD_v1.0_final.md`, `artifacts/Sderot_Courses_SDD_v1.1.md`, the applicable detailed-design and use-case Markdown files, applicable requirements, and the current `tasks/{construction,bug-fix}/TASK-*.md` file before changing code.
 4. Load every skill named by the current task from `.codex/skills/<skill>/SKILL.md`.
 
 ## Permanent repository rules
@@ -12,6 +12,7 @@
 - `artifacts/` is the authoritative documentation directory. Do not create documentation under `docs/` unless explicitly requested.
 - `main` is the sole base and pull-request target. Ignore `dev` for task work.
 - Every development task starts from updated `main`, uses its own `task/NNN-short-name` branch and individual Markdown checklist, and opens one pull request directly to `main`. Never implement directly on `main`.
+- Task records are categorized: TASK-001 through TASK-033 are construction records under `tasks/construction/`; TASK-034 and later corrective tasks belong under `tasks/bug-fix/`. Preserve these directories and the matching master-list sections.
 - Verify dependencies before starting. Do not mix unrelated tasks in one branch or pull request.
 - A task is complete only after relevant tests, documentation, evidence, its PR to `main`, review, and approved merge are recorded.
 - Do not automatically merge pull requests; merge to `main` only after human approval.

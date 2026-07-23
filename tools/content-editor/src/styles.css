@@ -124,6 +124,23 @@ select {
   background: #fff0f0;
 }
 
+.diagnostics-panel {
+  margin-block: 1rem;
+  padding: 1rem;
+  border: 1px solid #b65050;
+  border-radius: 0.75rem;
+  background: #fff7f7;
+}
+
+.diagnostics-panel summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.diagnostics-panel li + li {
+  margin-block-start: 0.45rem;
+}
+
 .json-editor,
 .json-editor span {
   display: block;
@@ -221,6 +238,22 @@ select {
 .structured-editor fieldset div {
   display: flex;
   gap: 0.5rem;
+}
+
+.structured-editor .assignment-checklist > div {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.structured-editor .assignment-checklist label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 400;
+}
+
+.structured-editor .assignment-checklist input {
+  min-height: auto;
 }
 
 .editor-header h1 {

@@ -8,45 +8,54 @@ This backlog implements the current Markdown design and authoritative program-le
 
 Course cards and course details never initiate registration.
 
-## Task index
+## Construction
 
-- [x] [TASK-001: Repository bootstrap](../tasks/TASK-001-repository-bootstrap.md)
-- [ ] [TASK-002: Reconcile authoritative documentation and registration flow](../tasks/TASK-002-documentation-baseline.md)
-- [ ] [TASK-003: Create Astro static-site foundation](../tasks/TASK-003-astro-foundation.md) — Ready for review
-- [ ] [TASK-004: Establish TypeScript and quality gates](../tasks/TASK-004-typescript-quality.md)
-- [ ] [TASK-005: Define program-first catalog domain model](../tasks/TASK-005-json-domain-model.md)
-- [x] [TASK-006: Implement schemas and reference validation](../tasks/TASK-006-zod-schemas.md)
-- [x] [TASK-007: Create approved content structure and seed fixture](../tasks/TASK-007-approved-content.md)
-- [x] [TASK-008: Identify and map the current course-content source](../tasks/TASK-008-source-content-investigation.md)
-- [x] [TASK-009: Implement source-specific document reader](../tasks/TASK-009-docx-reader-parser.md)
-- [x] [TASK-010: Normalize programs, groups, courses, and offerings](../tasks/TASK-010-import-normalization.md)
-- [x] [TASK-011: Produce draft content and structured diagnostics](../tasks/TASK-011-import-diagnostics.md)
-- [x] [TASK-012: Add importer fixtures and regression tests](../tasks/TASK-012-importer-tests.md)
-- [x] [TASK-013: Create local-only content editor foundation](../tasks/TASK-013-editor-foundation.md)
-- [x] [TASK-014: Implement editor JSON load, save, and export](../tasks/TASK-014-editor-json-io.md)
-- [x] [TASK-015: Edit programs and audience groups](../tasks/TASK-015-editor-program-groups.md)
-- [x] [TASK-016: Edit courses and contextual offerings](../tasks/TASK-016-editor-courses-offerings.md)
-- [x] [TASK-017: Edit program-level registration information](../tasks/TASK-017-editor-registration.md)
-- [x] [TASK-018: Manage general and offering-specific images](../tasks/TASK-018-editor-images.md)
-- [x] [TASK-019: Finalize sanitation and production content validation](../tasks/TASK-019-content-validation.md)
-- [x] [TASK-020: Build the public application shell and view models](../tasks/TASK-020-catalog-foundation.md)
-- [x] [TASK-021: Implement program, grade, and audience selection](../tasks/TASK-021-selection-funnel.md)
-- [x] [TASK-022: Implement program group and course-cluster page](../tasks/TASK-022-program-group-page.md) — Complete
-- [x] [TASK-023: Implement contextual course cards and details](../tasks/TASK-023-course-details.md) — Complete
-- [x] [TASK-024: Implement registration-information and external-link flow](../tasks/TASK-024-registration-information.md) — Complete
-- [x] [TASK-025: Implement contextual contact actions](../tasks/TASK-025-contact-actions.md) — Complete
-- [x] [TASK-026: Implement RTL print and PDF support](../tasks/TASK-026-print-support.md) — Complete
-- [x] [TASK-027: Complete responsive RTL and accessibility behavior](../tasks/TASK-027-responsive-accessibility.md) — Complete
-- [x] [TASK-028: Add unit and component coverage](../tasks/TASK-028-unit-component-tests.md) — Complete
-- [x] [TASK-029: Add end-to-end program and editor flows](../tasks/TASK-029-end-to-end-tests.md) — Complete
-- [x] [TASK-030: Enforce production build and content gates](../tasks/TASK-030-production-gates.md) — Complete
-- [x] [TASK-031: Deploy validated main to temporary hosting](../tasks/TASK-031-temporary-deployment.md) — Complete
-- [ ] [TASK-032: Connect council subdomain and operations](../tasks/TASK-032-subdomain-operations.md) — Deferred by owner; council hostname/DNS access unavailable
-- [ ] [TASK-033: Complete MVP acceptance and handoff](../tasks/TASK-033-mvp-acceptance.md) — Blocked on real approved content and content-owner approval
+TASK-001 through TASK-033 are the historical environment and application construction series. Their records live under `tasks/construction/`.
+
+- [x] [TASK-001: Repository bootstrap](../tasks/construction/TASK-001-repository-bootstrap.md)
+- [ ] [TASK-002: Reconcile authoritative documentation and registration flow](../tasks/construction/TASK-002-documentation-baseline.md)
+- [ ] [TASK-003: Create Astro static-site foundation](../tasks/construction/TASK-003-astro-foundation.md) — Ready for review
+- [ ] [TASK-004: Establish TypeScript and quality gates](../tasks/construction/TASK-004-typescript-quality.md)
+- [ ] [TASK-005: Define program-first catalog domain model](../tasks/construction/TASK-005-json-domain-model.md)
+- [x] [TASK-006: Implement schemas and reference validation](../tasks/construction/TASK-006-zod-schemas.md)
+- [x] [TASK-007: Create approved content structure and seed fixture](../tasks/construction/TASK-007-approved-content.md)
+- [x] [TASK-008: Identify and map the current course-content source](../tasks/construction/TASK-008-source-content-investigation.md)
+- [x] [TASK-009: Implement source-specific document reader](../tasks/construction/TASK-009-docx-reader-parser.md)
+- [x] [TASK-010: Normalize programs, groups, courses, and offerings](../tasks/construction/TASK-010-import-normalization.md)
+- [x] [TASK-011: Produce draft content and structured diagnostics](../tasks/construction/TASK-011-import-diagnostics.md)
+- [x] [TASK-012: Add importer fixtures and regression tests](../tasks/construction/TASK-012-importer-tests.md)
+- [x] [TASK-013: Create local-only content editor foundation](../tasks/construction/TASK-013-editor-foundation.md)
+- [x] [TASK-014: Implement editor JSON load, save, and export](../tasks/construction/TASK-014-editor-json-io.md)
+- [x] [TASK-015: Edit programs and audience groups](../tasks/construction/TASK-015-editor-program-groups.md)
+- [x] [TASK-016: Edit courses and contextual offerings](../tasks/construction/TASK-016-editor-courses-offerings.md)
+- [x] [TASK-017: Edit program-level registration information](../tasks/construction/TASK-017-editor-registration.md)
+- [x] [TASK-018: Manage general and offering-specific images](../tasks/construction/TASK-018-editor-images.md)
+- [x] [TASK-019: Finalize sanitation and production content validation](../tasks/construction/TASK-019-content-validation.md)
+- [x] [TASK-020: Build the public application shell and view models](../tasks/construction/TASK-020-catalog-foundation.md)
+- [x] [TASK-021: Implement program, grade, and audience selection](../tasks/construction/TASK-021-selection-funnel.md)
+- [x] [TASK-022: Implement program group and course-cluster page](../tasks/construction/TASK-022-program-group-page.md) — Complete
+- [x] [TASK-023: Implement contextual course cards and details](../tasks/construction/TASK-023-course-details.md) — Complete
+- [x] [TASK-024: Implement registration-information and external-link flow](../tasks/construction/TASK-024-registration-information.md) — Complete
+- [x] [TASK-025: Implement contextual contact actions](../tasks/construction/TASK-025-contact-actions.md) — Complete
+- [x] [TASK-026: Implement RTL print and PDF support](../tasks/construction/TASK-026-print-support.md) — Complete
+- [x] [TASK-027: Complete responsive RTL and accessibility behavior](../tasks/construction/TASK-027-responsive-accessibility.md) — Complete
+- [x] [TASK-028: Add unit and component coverage](../tasks/construction/TASK-028-unit-component-tests.md) — Complete
+- [x] [TASK-029: Add end-to-end program and editor flows](../tasks/construction/TASK-029-end-to-end-tests.md) — Complete
+- [x] [TASK-030: Enforce production build and content gates](../tasks/construction/TASK-030-production-gates.md) — Complete
+- [x] [TASK-031: Deploy validated main to temporary hosting](../tasks/construction/TASK-031-temporary-deployment.md) — Complete
+- [ ] [TASK-032: Connect council subdomain and operations](../tasks/construction/TASK-032-subdomain-operations.md) — Deferred by owner; council hostname/DNS access unavailable
+- [ ] [TASK-033: Complete MVP acceptance and handoff](../tasks/construction/TASK-033-mvp-acceptance.md) — Blocked on real approved content and content-owner approval
+
+## Bug fixes
+
+TASK-034 and subsequent corrective tasks live under `tasks/bug-fix/`.
+
+- [ ] [TASK-034: Fix JSON anomalies](../tasks/bug-fix/TASK-034-fix-json-anomalies.md) — In progress; legacy editor safety fixed, baseline migration and owner approval pending
 
 ## Execution rules
 
 - Execute tasks in dependency order.
+- Keep construction records under `tasks/construction/` and corrective work from TASK-034 onward under `tasks/bug-fix/`.
 - Start each task branch from current `main`.
 - Check completion in the task form and record evidence before opening the PR.
 - Open one reviewed PR directly to `main`; do not use `dev` and do not auto-merge.

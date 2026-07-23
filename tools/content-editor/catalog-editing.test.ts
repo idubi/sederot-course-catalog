@@ -10,6 +10,7 @@ import {
   updateOffering,
   updateProgram,
   resolveRegistrationTarget,
+  setCourseGroupAssignment,
   updateRegistrationTarget,
   resolveOfferingImage,
 } from './catalog-editing';
@@ -62,6 +63,36 @@ describe('program and audience-group editing', () => {
 
   it('keeps a lone offering in place', () => {
     expect(reorderOffering(catalog, catalog.offerings[0]!.id, 1)).toBe(catalog);
+  });
+
+  it('adds and removes a course assignment through the group checklist', () => {
+    const courseId = catalog.courses[0]!.id;
+    const groupId = catalog.audienceGroups[0]!.id;
+    const withoutAssignment = {
+      ...catalog,
+      offerings: catalog.offerings.filter(
+        (offering) =>
+          offering.courseId !== courseId ||
+          offering.audienceGroupId !== groupId,
+      ),
+    };
+    const assigned = setCourseGroupAssignment(
+      withoutAssignment,
+      courseId,
+      groupId,
+      true,
+    );
+
+    expect(
+      assigned.offerings.some(
+        (offering) =>
+          offering.courseId === courseId &&
+          offering.audienceGroupId === groupId,
+      ),
+    ).toBe(true);
+    expect(
+      setCourseGroupAssignment(assigned, courseId, groupId, false).offerings,
+    ).toEqual(withoutAssignment.offerings);
   });
 
   it('resolves a group target before the program default', () => {

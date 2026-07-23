@@ -1,7 +1,13 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 
+import { sanitizeDescriptionHtml } from '../../src/content/sanitize-html';
+import { migrateBaselineCatalog } from '../baseline-migrator/migrate-baseline';
+import { extractDocxBlueprint } from './docx-import';
+import { importBlueprintDocument } from './document-import';
+
 import {
   exportApproved,
+  exportBootstrap,
   loadCatalog,
   saveDraft,
   validateEditorCatalog,
@@ -9,12 +15,17 @@ import {
 import { saveImageUpload, type ImageUpload } from './image-files';
 
 export const EDITOR_API_PREFIX = '/api/';
-const MAX_BODY_BYTES = 5 * 1024 * 1024;
+const MAX_BODY_BYTES = 40 * 1024 * 1024;
 
 interface CatalogRequest {
   acknowledgeWarnings?: boolean;
   catalog?: unknown;
   warnings?: string[];
+  value?: string;
+  folderName?: string;
+  fileName?: string;
+  source?: string;
+  dataBase64?: string;
 }
 
 type EditorRequest = CatalogRequest & Partial<ImageUpload>;
@@ -73,6 +84,57 @@ export async function handleLocalApi(
       return true;
     }
 
+    if (request.method === 'POST' && url.pathname === '/api/migrate-baseline') {
+      const body = await readJson(request);
+      writeJson(response, 200, migrateBaselineCatalog(body.catalog));
+      return true;
+    }
+
+    if (request.method === 'POST' && url.pathname === '/api/import-document') {
+      const body = await readJson(request);
+      if (typeof body.fileName !== 'string')
+        throw new Error('Missing document filename');
+      let source = body.source;
+      let extractionMessages: string[] = [];
+      if (/\.docx$/iu.test(body.fileName)) {
+        if (typeof body.dataBase64 !== 'string')
+          throw new Error('Missing DOCX content');
+        const extracted = await extractDocxBlueprint(
+          Buffer.from(body.dataBase64, 'base64'),
+        );
+        source = extracted.source;
+        extractionMessages = extracted.messages;
+      } else if (!/\.(?:md|txt)$/iu.test(body.fileName)) {
+        throw new Error('Only DOCX, Markdown, or text documents are supported');
+      }
+      if (typeof source !== 'string')
+        throw new Error('Missing document source');
+      const imported = importBlueprintDocument(source, body.fileName);
+      imported.diagnostics.unshift(
+        ...extractionMessages.map((message) => ({
+          code: 'docx-extraction',
+          message,
+          path: ['source'],
+          severity: 'info' as const,
+        })),
+      );
+      writeJson(response, 200, imported);
+      return true;
+    }
+
+    if (
+      request.method === 'POST' &&
+      url.pathname === '/api/sanitize-description'
+    ) {
+      const body = await readJson(request);
+      if (typeof body.value !== 'string')
+        throw new Error('Missing description value');
+      writeJson(response, 200, {
+        value: sanitizeDescriptionHtml(body.value),
+      });
+      return true;
+    }
+
     if (request.method === 'POST' && url.pathname === '/api/images') {
       const body = await readJson(request);
       if (!body.dataBase64 || !body.entityId || !body.kind || !body.mimeType)
@@ -100,6 +162,30 @@ export async function handleLocalApi(
       writeJson(response, result.valid && !blockedByWarnings ? 200 : 422, {
         ...result,
         exported: result.valid && !blockedByWarnings,
+        warningsRequireAcknowledgement: blockedByWarnings,
+      });
+      return true;
+    }
+
+    if (
+      request.method === 'POST' &&
+      url.pathname === '/api/catalog/bootstrap'
+    ) {
+      const body = await readJson(request);
+      if (typeof body.folderName !== 'string')
+        throw new Error('Missing Bootstrap folder name');
+      const result = await exportBootstrap(
+        body.catalog,
+        body.folderName,
+        body.warnings ?? [],
+        body.acknowledgeWarnings === true,
+      );
+      const blockedByWarnings =
+        result.warnings.length > 0 && body.acknowledgeWarnings !== true;
+      writeJson(response, result.valid && !blockedByWarnings ? 200 : 422, {
+        ...result,
+        exported: result.valid && !blockedByWarnings,
+        folder: `contents/${body.folderName}`,
         warningsRequireAcknowledgement: blockedByWarnings,
       });
       return true;

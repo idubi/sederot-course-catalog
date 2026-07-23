@@ -21,3 +21,39 @@ test('editor loads approved JSON and validates without writing files', async ({
   await page.getByRole('button', { name: 'אימות' }).click();
   await expect(page.getByRole('status')).toContainText('התוכן תקין');
 });
+
+test('editor migrates a legacy groups catalog without crashing structured forms', async ({
+  page,
+}) => {
+  const pageErrors: Error[] = [];
+  page.on('pageerror', (error) => pageErrors.push(error));
+
+  await page.goto('/');
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+  await page.getByLabel('מהמחשב או מכונן מסונכרן').setInputFiles({
+    name: 'legacy-catalog.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(
+      JSON.stringify({
+        schemaVersion: '1.0',
+        academicYear: '2026-2027',
+        programs: [],
+        groups: [],
+        courses: [],
+        offerings: [],
+        registrationTargets: [],
+        contacts: {},
+      }),
+    ),
+  });
+
+  await expect(page.getByRole('status')).toContainText('הומר לטיוטת הסכמה');
+  await expect(page.getByText(/אבחוני המרה/)).toBeVisible();
+  await expect(page.getByLabel('קטלוג JSON')).toContainText('"audienceGroups"');
+  await expect(page.getByLabel('קטלוג JSON')).not.toContainText('"groups"');
+  await expect(
+    page.getByRole('heading', { name: 'תוכניות וקבוצות קהל' }),
+  ).toBeVisible();
+  expect(pageErrors).toEqual([]);
+});

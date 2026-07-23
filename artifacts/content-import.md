@@ -50,16 +50,23 @@ The local HTML editor is used to:
 - add images
 - add registration targets
 
-The editor autosaves the current JSON text in browser Local Storage and exposes explicit repository writes through its loopback-only API. Draft save is confined to `content/draft/editor/catalog.json`; approved export is confined to `content/approved/catalog.json`. Both writes are atomic. Approved export uses the shared catalog schema, blocks all errors, requires explicit acknowledgement when warnings are supplied, and serializes identical input byte-for-byte identically.
+The editor accepts canonical or legacy JSON, DOCX, and Markdown/text blueprint documents. DOCX extraction runs only in the loopback editor API, reads the uploaded bytes in memory without modifying the source file, and preserves headings, paragraphs, lists, and table rows for the existing parser. A document import produces the closest canonical editable draft and structured diagnostics; it never silently treats missing values as approved. The editor autosaves the current JSON text in browser Local Storage and exposes explicit repository writes through its loopback-only API. Draft save is confined to `content/draft/editor/catalog.json`; approved export is confined to `content/approved/catalog.json`. Both writes are atomic. Approved export uses the shared catalog schema, blocks all errors, requires explicit acknowledgement when warnings are supplied, and serializes identical input byte-for-byte identically.
+
+Course/group relationships are represented only by canonical offerings. The editor exposes the same relationships in both directions: group checkboxes on every course and attached-course lists on every program and audience group. During source import, the group course lists are compared with each course detail table. A missing relationship in either direction is a warning; a course with no program/group relationship is also a warning.
+
+For an isolated development dataset, the editor can explicitly export a schema-valid catalog to `contents/<folder-name>/bootstrap.json`. Run it with `npm run dev -- --data=./contents/<folder-name>`. The development launcher accepts only a folder beneath this repository's `contents/` directory, requires the exact `bootstrap.json` filename, and rejects path traversal and symlink escape. This export never changes approved content. The override is forbidden when `NODE_ENV=production`; normal builds continue to consume approved JSON only.
 
 The approved JSON, not the DOCX, is the direct input to the Astro build.
 
 ## Repository content boundaries
 
+- `content/baseline/catalog_2026-2027.json` is the owner-designated immutable JSON baseline for academic year 2026–2027. Its approved filename and SHA-256 `cc7440cc19542e8a1aca012c1cba9ca79edbf437f26facc4138f10409755a5ca` are enforced by `npm run content:migrate-baseline`; it is never a production build input.
+- Baseline migration writes only to ignored `content/draft/baseline/catalog.json` and `content/diagnostics/baseline-migration.json`. It maps legacy structural fields deterministically, preserves every course and offering, and reports missing or unsafe values instead of inventing production content.
 - `content/approved/catalog.json` is committed and is the only catalog input imported by production code.
 - `content/draft/` contains local importer/editor working files. Its directory policy ignores every payload.
 - `content/diagnostics/` contains local structured diagnostics and source excerpts. Its directory policy ignores every payload.
-- `src/content/catalog-loader.ts` has no configurable path and statically imports only the approved catalog.
+- `contents/<folder-name>/bootstrap.json` is an explicit editor export for an isolated local development run. It is not a production input and must not enter `dist/`.
+- `src/content/catalog-loader.ts` statically imports approved content by default and permits the validated `contents/` override only through the local development launcher.
 - `npm run content:validate` parses the approved catalog with the shared schema and is invoked before every Astro build.
 
 The committed catalog is a technical seed marked “not for publication.” Reserved `.invalid` contact and registration destinations prevent accidental live use. It must be replaced by business-approved content before deployment.

@@ -179,6 +179,8 @@ The editor under `tools/content-editor` must:
 ├── tools/docx-importer/
 ├── tools/content-editor/
 ├── tasks/
+│   ├── construction/                # TASK-001–TASK-033 construction records
+│   └── bug-fix/                     # TASK-034+ corrective work
 └── tests/
 ```
 

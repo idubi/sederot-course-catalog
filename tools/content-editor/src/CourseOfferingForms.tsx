@@ -3,10 +3,10 @@ import type {
   Course,
   CourseOffering,
 } from '../../../src/domain/catalog';
-import { sanitizeDescriptionHtml } from '../../../src/content/sanitize-html';
 import {
   reorderOffering,
   resolveOfferingImage,
+  setCourseGroupAssignment,
   updateCourse,
   updateOffering,
 } from '../catalog-editing';
@@ -18,6 +18,20 @@ export function CourseOfferingForms({
   catalog: Catalog;
   onChange: (value: Catalog) => void;
 }) {
+  const sanitizeDescription = async (value: string): Promise<string> => {
+    const response = await fetch('/api/sanitize-description', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ value }),
+    });
+    const result = (await response.json()) as {
+      error?: string;
+      value?: string;
+    };
+    if (!response.ok || typeof result.value !== 'string')
+      throw new Error(result.error ?? 'Sanitization failed');
+    return result.value;
+  };
   const uploadImage = async (
     file: File | undefined,
     entityId: string,
@@ -104,6 +118,47 @@ export function CourseOfferingForms({
               }
             />
           </label>
+          <fieldset className="assignment-checklist">
+            <legend>תוכניות וקבוצות שבהן הקורס מופיע</legend>
+            {catalog.programs.map((programValue) => (
+              <div key={programValue.id}>
+                <strong>{programValue.name}</strong>
+                {catalog.audienceGroups
+                  .filter(({ programId }) => programId === programValue.id)
+                  .map((groupValue) => {
+                    const assigned = catalog.offerings.some(
+                      ({ audienceGroupId, courseId }) =>
+                        courseId === value.id &&
+                        audienceGroupId === groupValue.id,
+                    );
+                    return (
+                      <label key={groupValue.id}>
+                        <input
+                          type="checkbox"
+                          checked={assigned}
+                          onChange={(event) =>
+                            onChange(
+                              setCourseGroupAssignment(
+                                catalog,
+                                value.id,
+                                groupValue.id,
+                                event.target.checked,
+                              ),
+                            )
+                          }
+                        />
+                        {groupValue.gradeLabels.join('-')} —{' '}
+                        {groupValue.gender === 'boys'
+                          ? 'בנים'
+                          : groupValue.gender === 'girls'
+                            ? 'בנות'
+                            : 'מעורב'}
+                      </label>
+                    );
+                  })}
+              </div>
+            ))}
+          </fieldset>
           <label>
             תיאור HTML
             <textarea
@@ -113,9 +168,11 @@ export function CourseOfferingForms({
                 course(value.id, { descriptionHtml: e.target.value })
               }
               onBlur={(e) =>
-                course(value.id, {
-                  descriptionHtml: sanitizeDescriptionHtml(e.target.value),
-                })
+                void sanitizeDescription(e.target.value)
+                  .then((descriptionHtml) =>
+                    course(value.id, { descriptionHtml }),
+                  )
+                  .catch((error: Error) => window.alert(error.message))
               }
             />
           </label>

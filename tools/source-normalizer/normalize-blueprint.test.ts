@@ -75,4 +75,42 @@ describe('blueprint normalization', () => {
 
     expect(serialized).not.toContain('registration');
   });
+
+  it('normalizes both sides of a time range to HH:MM', async () => {
+    const draft = normalizeBlueprint(await readApprovedBlueprint());
+
+    expect(draft.audienceGroups[0]).toMatchObject({
+      startTime: '08:15',
+      endTime: '13:15',
+    });
+    expect(
+      draft.audienceGroups.every(
+        ({ startTime, endTime }) =>
+          /^\d{2}:\d{2}$/u.test(startTime) && /^\d{2}:\d{2}$/u.test(endTime),
+      ),
+    ).toBe(true);
+  });
+
+  it('links course descriptions and instructor names from detail sections', async () => {
+    const draft = normalizeBlueprint(await readApprovedBlueprint());
+    const disney = draft.courses.find(({ name }) => name === 'האקדמיה לדיסני');
+    const microcode = draft.courses.find(({ name }) => name === 'מיקרוקוד');
+
+    expect(disney?.instructors).toEqual(['לבנת שלזינגר', 'רוני כהן']);
+    expect(microcode?.instructors).toEqual(['אלכס גולוד']);
+    expect(microcode?.descriptionHtml).toContain('<p>תכנות הוא');
+    expect(
+      draft.courses.find(({ name }) => name === 'תעלומות במוזיאון')
+        ?.instructors,
+    ).toEqual(['ענת וינשטיין ברקוביץ', 'אולגה אסיפוב']);
+    expect(
+      draft.courses.find(({ name }) => name === 'NLPפלייבק')?.instructors,
+    ).toEqual(['ימית הוסטר']);
+    expect(
+      draft.courses.find(({ name }) => name === 'גנטיקה/שירלי')?.instructors,
+    ).toEqual([`ד"ר שירלי גזית`]);
+    expect(
+      draft.courses.find(({ name }) => name === 'פיתוח VR')?.instructors,
+    ).toEqual(['LoginVR']);
+  });
 });
